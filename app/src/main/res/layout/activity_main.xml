@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3772E7"
+    android:background="@color/main_blue"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -27,8 +27,8 @@
             android:paddingStart="12dp"
             android:paddingTop="14dp"
             android:paddingBottom="16dp"
-            android:text="Playlist maker"
-            android:textColor="#ffffff"
+            android:text="@string/playlist_maker"
+            android:textColor="@color/white"
 
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -49,17 +49,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:backgroundTint="#ffffff"
+            android:backgroundTint="@color/white"
 
-            android:text="Поиск"
+            android:text="@string/search"
 
-            android:textColor="@color/text_black"
+            android:textColor="@color/black_button_text"
             android:textSize="22sp"
             app:cornerRadius="16dp"
             app:icon="@drawable/search"
             app:iconGravity="textStart"
             app:iconPadding="10dp"
-            app:iconTint="@color/text_black"
+            app:iconTint="@color/black_button_text"
             app:layout_constraintTop_toBottomOf="@+id/title_container" />
 
         <Button
@@ -69,16 +69,16 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1"
 
-            android:backgroundTint="#ffffff"
+            android:backgroundTint="@color/white"
 
-            android:text="Медиатека"
-            android:textColor="@color/text_black"
+            android:text="@string/library"
+            android:textColor="@color/black_button_text"
             android:textSize="22sp"
             app:cornerRadius="16dp"
             app:icon="@drawable/library"
             app:iconGravity="textStart"
             app:iconPadding="10dp"
-            app:iconTint="@color/text_black"
+            app:iconTint="@color/black_button_text"
             app:layout_constraintTop_toBottomOf="@+id/search_button" />
 
         <Button
@@ -87,17 +87,17 @@
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
-            android:backgroundTint="#ffffff"
+            android:backgroundTint="@color/white"
 
             android:text="@string/settings"
 
-            android:textColor="@color/text_black"
+            android:textColor="@color/black_button_text"
             android:textSize="22sp"
             app:cornerRadius="16dp"
             app:icon="@drawable/library"
             app:iconGravity="textStart"
             app:iconPadding="10dp"
-            app:iconTint="@color/text_black"
+            app:iconTint="@color/black_button_text"
             app:layout_constraintTop_toBottomOf="@+id/library_button" />
     </LinearLayout>
 
