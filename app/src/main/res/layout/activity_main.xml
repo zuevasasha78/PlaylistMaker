@@ -6,15 +6,88 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#3772E7"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <FrameLayout
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:paddingStart="12dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="16dp"
+            android:text="Playlist maker"
+
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#ffffff"
+
+        android:text="Поиск"
+
+        android:textColor="#1A1B22"
+        android:textSize="22sp"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/search"
+        app:iconGravity="textStart"
+        app:iconPadding="10dp"
+        app:iconTint="#1A1B22"
+        app:layout_constraintTop_toBottomOf="@+id/title_container" />
+
+    <Button
+        android:id="@+id/library_button"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#ffffff"
+
+        android:text="Медиатека"
+
+        android:textColor="#1A1B22"
+        android:textSize="22sp"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/library"
+        app:iconGravity="textStart"
+        app:iconPadding="10dp"
+        app:iconTint="#1A1B22"
+        app:layout_constraintTop_toBottomOf="@+id/search_button" />
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#ffffff"
+
+        android:text="Настройки"
+
+        android:textColor="#1A1B22"
+        android:textSize="22sp"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/library"
+        app:iconGravity="textStart"
+        app:iconPadding="10dp"
+        app:iconTint="#1A1B22"
+        app:layout_constraintTop_toBottomOf="@+id/library_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
