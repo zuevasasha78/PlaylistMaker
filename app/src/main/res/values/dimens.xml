@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_margin_top">16dp</dimen>
+    <dimen name="radius_button">16dp</dimen>
+    <dimen name="text_size_main">22sp</dimen>
+    <dimen name="text_size_settings">16sp</dimen>
+</resources>

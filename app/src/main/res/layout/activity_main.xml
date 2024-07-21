@@ -30,7 +30,7 @@
             android:text="@string/playlist_maker"
             android:textColor="@color/white"
 
-            android:textSize="22sp"
+            android:textSize="@dimen/text_size_main"
             android:textStyle="bold" />
     </FrameLayout>
 
@@ -54,8 +54,8 @@
             android:text="@string/search"
 
             android:textColor="@color/black_button_text"
-            android:textSize="22sp"
-            app:cornerRadius="16dp"
+            android:textSize="@dimen/text_size_main"
+            app:cornerRadius="@dimen/radius_button"
             app:icon="@drawable/search"
             app:iconGravity="textStart"
             app:iconPadding="10dp"
@@ -66,15 +66,15 @@
             android:id="@+id/library_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/button_margin_top"
             android:layout_weight="1"
 
             android:backgroundTint="@color/white"
 
             android:text="@string/library"
             android:textColor="@color/black_button_text"
-            android:textSize="22sp"
-            app:cornerRadius="16dp"
+            android:textSize="@dimen/text_size_main"
+            app:cornerRadius="@dimen/radius_button"
             app:icon="@drawable/library"
             app:iconGravity="textStart"
             app:iconPadding="10dp"
@@ -85,15 +85,15 @@
             android:id="@+id/settings_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/button_margin_top"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
 
             android:text="@string/settings"
 
             android:textColor="@color/black_button_text"
-            android:textSize="22sp"
-            app:cornerRadius="16dp"
+            android:textSize="@dimen/text_size_main"
+            app:cornerRadius="@dimen/radius_button"
             app:icon="@drawable/library"
             app:iconGravity="textStart"
             app:iconPadding="10dp"
