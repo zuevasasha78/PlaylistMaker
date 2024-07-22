@@ -31,8 +31,8 @@ class MainActivity : AppCompatActivity() {
         val settingsButton = findViewById<Button>(R.id.settings_button)
         val settingsListener: View.OnClickListener = object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val settingsActivity = Intent(this@MainActivity, SettingsActivity::class.java)
-                startActivity(settingsActivity)
+                val settingsIntent = Intent(this@MainActivity, SettingsActivity::class.java)
+                startActivity(settingsIntent)
             }
         }
         settingsButton.setOnClickListener(settingsListener)
