@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         val libraryButton = findViewById<Button>(R.id.library_button)
         libraryButton.setOnClickListener {
             Toast.makeText(this@MainActivity, "Нажали на Медиатека", Toast.LENGTH_SHORT).show()
-
         }
 
         val settingsButton = findViewById<Button>(R.id.settings_button)
