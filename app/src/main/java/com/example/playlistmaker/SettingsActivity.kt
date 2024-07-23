@@ -66,7 +66,7 @@ class SettingsActivity : AppCompatActivity() {
         shareButton.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, "https://practicum.yandex.ru/android-developer/?from=catalog")
+                putExtra(Intent.EXTRA_TEXT, "https://practicum.yandex.ru/android-developer")
             }
             startIntent(Intent.createChooser(shareIntent, "Поделиться приложением"))
         }
