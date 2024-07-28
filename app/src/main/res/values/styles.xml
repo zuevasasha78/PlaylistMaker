@@ -15,12 +15,12 @@
     <style name="WhiteBigButton">
         <item name="android:backgroundTint">@color/white</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textColor">@color/main_screen_black_button_text</item>
+        <item name="android:textColor">@color/black_gray</item>
         <item name="android:textSize">@dimen/text_size_main</item>
         <item name="cornerRadius">@dimen/radius_button</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">10dp</item>
-        <item name="iconTint">@color/main_screen_black_button_text</item>
+        <item name="iconTint">@color/black_gray</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_weight">1</item>
@@ -51,13 +51,22 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textColor">@color/main_screen_black_button_text</item>
+        <item name="android:textColor">@color/black_gray</item>
         <item name="android:textSize">@dimen/text_size_main</item>
         <item name="android:layout_toEndOf">@id/back_button</item>
         <item name="layout_constraintBottom_toBottomOf">@id/back_button</item>
         <item name="layout_constraintStart_toEndOf">@id/back_button</item>
         <item name="layout_constraintTop_toTopOf">@id/back_button</item>
+    </style>
 
+    <style name="SettingsText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:paddingVertical">21dp</item>
+        <item name="android:textColor">@color/black_gray</item>
+        <item name="android:textSize">@dimen/text_size_settings</item>
     </style>
 
 </resources>
