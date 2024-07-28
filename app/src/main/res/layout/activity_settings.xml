@@ -22,11 +22,8 @@
 
     <FrameLayout
         android:id="@+id/dark_theme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        style="@style/SettingsLayoutMargin"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="18dp"
         app:layout_constraintTop_toBottomOf="@+id/back_button">
 
         <TextView
@@ -43,10 +40,7 @@
 
     <FrameLayout
         android:id="@+id/share_app"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="18dp"
+        style="@style/SettingsLayoutMargin"
         app:layout_constraintTop_toBottomOf="@+id/dark_theme">
 
         <TextView
@@ -54,23 +48,13 @@
             android:text="@string/share_app" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:backgroundTint="@android:color/transparent"
-            android:backgroundTintMode="multiply"
-            android:foregroundTint="@color/white"
-            android:src="@drawable/share"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/ImageSettings"
+            android:src="@drawable/share" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/call_support"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="18dp"
+        style="@style/SettingsLayoutMargin"
         app:layout_constraintTop_toBottomOf="@+id/share_app">
 
         <TextView
@@ -78,23 +62,13 @@
             android:text="@string/call_support" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:backgroundTint="@android:color/transparent"
-            android:backgroundTintMode="multiply"
-            android:foregroundTint="@color/white"
-            android:src="@drawable/support"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/ImageSettings"
+            android:src="@drawable/support" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/legal_agreement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="18dp"
+        style="@style/SettingsLayoutMargin"
         app:layout_constraintTop_toBottomOf="@+id/call_support">
 
         <TextView
@@ -102,15 +76,8 @@
             android:text="@string/user_agreement" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:backgroundTint="@android:color/transparent"
-            android:backgroundTintMode="multiply"
-            android:foregroundTint="@color/white"
-            android:src="@drawable/arrow_forward"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/ImageSettings"
+            android:src="@drawable/arrow_forward" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
