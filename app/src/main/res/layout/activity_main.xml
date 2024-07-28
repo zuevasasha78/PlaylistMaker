@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/BlueColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/BlueColor"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -51,9 +51,7 @@
             android:id="@+id/library_button"
             style="@style/WhiteBigButton"
             android:layout_width="match_parent"
-
             android:layout_marginTop="@dimen/button_margin_top"
-
             android:text="@string/library"
             app:icon="@drawable/library"
             app:layout_constraintTop_toBottomOf="@+id/search_button" />
@@ -62,8 +60,6 @@
             android:id="@+id/settings_button"
             style="@style/WhiteBigButton"
             android:layout_width="match_parent"
-
-
             android:layout_marginTop="@dimen/button_margin_top"
             android:text="@string/settings"
             app:icon="@drawable/library"
