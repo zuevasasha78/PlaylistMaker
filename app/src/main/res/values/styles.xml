@@ -31,7 +31,7 @@
     </style>
 
     <style name="BackgroundColor">
-        <item name="android:background">@color/main_background</item>
+        <item name="android:background">@color/background_color</item>
     </style>
 
     <style name="BackButton">
@@ -51,7 +51,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textColor">@color/black_gray</item>
+        <item name="android:textColor">@color/black_gray_settings</item>
         <item name="android:textSize">@dimen/text_size_main</item>
         <item name="android:layout_toEndOf">@id/back_button</item>
         <item name="layout_constraintBottom_toBottomOf">@id/back_button</item>
@@ -65,7 +65,7 @@
         <item name="android:layout_gravity">start</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:paddingVertical">21dp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/settings_text_row</item>
         <item name="android:textSize">@dimen/text_size_settings</item>
     </style>
 
@@ -85,6 +85,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">18dp</item>
+    </style>
+
+    <style name="Switch">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>
