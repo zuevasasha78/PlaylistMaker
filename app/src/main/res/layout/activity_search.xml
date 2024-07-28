@@ -16,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:backgroundTint="@android:color/transparent"
         android:backgroundTintMode="multiply"
-        android:foregroundTint="@color/white_main_screen"
+        android:foregroundTint="@color/white"
         android:src="@drawable/arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
