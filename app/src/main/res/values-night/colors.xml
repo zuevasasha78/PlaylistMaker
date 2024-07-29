@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main_background">#1A1B22</color>
+    <color name="mai_title_text">#ffffff</color>
+    <color name="big_button_background">#ffffff</color>
+    <color name="big_button_text">#1A1B22</color>
+    <color name="background_color">#1A1B22</color>
+    <color name="back_title">#ffffff</color>
+
+
     <color name="black_gray">#1A1B22</color>
     <color name="white">#ffffff</color>
     <color name="black_gray_settings">#ffffff</color>
     <color name="settings_text_row">#ffffff</color>
-    <color name="background_color">#1A1B22</color>
-
-
-    <color name="gray">#AEAFB4</color>
-    <color name="gray_search">#E6E8EB</color>
+    <color name="gray_search">#ffffff</color>
+    <color name="settings_icon_background">#AEAFB4</color>
 </resources>
