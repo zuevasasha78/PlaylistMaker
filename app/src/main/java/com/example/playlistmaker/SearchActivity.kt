@@ -1,10 +1,12 @@
 package com.example.playlistmaker
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -30,8 +32,10 @@ class SearchActivity : AppCompatActivity() {
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
-        clearButton.setOnClickListener {
+        clearButton.setOnClickListener { v ->
             inputEditText.setText("")
+            setViewVisible(v, false)
+            hideKeyboard(v)
         }
 
         val textWatcher = object : TextWatcher {
@@ -61,5 +65,10 @@ class SearchActivity : AppCompatActivity() {
         } else {
             v.visibility = View.GONE
         }
+    }
+
+    private fun hideKeyboard(v: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }

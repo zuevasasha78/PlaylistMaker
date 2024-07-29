@@ -45,20 +45,18 @@
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:textCursorDrawable="@drawable/cursor_color"
             android:fontFamily="@font/ys_display_regular"
             android:hint="@string/search"
-
             android:inputType="text"
-
             android:lines="1"
             android:maxLength="30"
-            android:textColorHint="@color/search_input" />
+            android:textColorHint="@color/search_input"
+            android:textCursorDrawable="@drawable/cursor_color" />
 
         <ImageView
             android:id="@+id/clearIcon"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="8dp"
             android:src="@android:drawable/ic_menu_close_clear_cancel"

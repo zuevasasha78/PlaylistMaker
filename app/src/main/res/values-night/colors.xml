@@ -3,7 +3,7 @@
     <!-- colors -->
     <color name="white">#ffffff</color>
     <color name="black_gray">#1A1B22</color>
-    <color name="blue">#3772E74</color>
+    <color name="blue">#3772E7</color>
 
     <color name="background_color">@color/black_gray</color>
 
