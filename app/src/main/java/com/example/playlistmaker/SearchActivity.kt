@@ -12,10 +12,10 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class SearchActivity : AppCompatActivity() {
+
+    private var savedText: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +29,12 @@ class SearchActivity : AppCompatActivity() {
         }
 
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
+        savedInstanceState?.let {
+            val savedText = savedInstanceState.getString(SEARCH_TEXT)
+            inputEditText.setText(savedText)
+        }
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
-
         clearButton.setOnClickListener { v ->
             inputEditText.setText("")
             setViewVisible(v, false)
@@ -47,16 +50,20 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                savedText = s.toString()
             }
         }
         inputEditText.addTextChangedListener(textWatcher)
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        savedText?.let { outState.putString(SEARCH_TEXT, savedText) }
+    }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+    private fun hideKeyboard(v: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
     private fun setViewVisible(v: View, visible: Boolean) {
@@ -67,8 +74,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideKeyboard(v: View) {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(v.windowToken, 0)
+    companion object {
+        const val SEARCH_TEXT = "SEARCH_TEXT"
     }
 }
