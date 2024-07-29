@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_background">#1A1B22</color>
-    <color name="mai_title_text">#ffffff</color>
-    <color name="big_button_background">#ffffff</color>
-    <color name="big_button_text">#1A1B22</color>
+    <!-- colors -->
+    <color name="white">#ffffff</color>
+    <color name="black_gray">#1A1B22</color>
 
-    <color name="background_color">#1A1B22</color>
+    <color name="background_color">@color/black_gray</color>
 
-    <color name="back_title">#ffffff</color>
+    <color name="back_title">@color/white</color>
 
-    <color name="settings_text_row">#ffffff</color>
-    <color name="settings_icon_background">#ffffff</color>
+    <!-- Main screen colors -->
+    <color name="main_background">@color/black_gray</color>
+    <color name="mai_title_text">@color/white</color>
+    <color name="big_button_background">@color/white</color>
+    <color name="big_button_text">@color/black_gray</color>
 
-    <color name="search_background">#ffffff</color>
-    <color name="search_input">#1A1B22</color>
+    <!-- Settings screen colors -->
+    <color name="settings_text_row">@color/white</color>
+    <color name="settings_icon_background">@color/white</color>
+
+    <!-- Search search colors -->
+    <color name="search_background">@color/white</color>
+    <color name="search_input">@color/black_gray</color>
 </resources>
