@@ -20,6 +20,9 @@
         <item name="cornerRadius">@dimen/radius_button</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">10dp</item>
+        <item name="android:shadowColor">@android:color/transparent</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
         <item name="iconTint">@color/big_button_text</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_width">match_parent</item>
