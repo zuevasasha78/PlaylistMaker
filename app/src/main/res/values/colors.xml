@@ -4,13 +4,14 @@
     <color name="white">#ffffff</color>
     <color name="black_gray">#1A1B22</color>
     <color name="gray">#AEAFB4</color>
+    <color name="blue">#3772E74</color>
 
     <color name="background_color">@color/white</color>
 
     <color name="back_title">@color/black_gray</color>
 
     <!-- Main screen colors -->
-    <color name="main_background">#3772E7</color>
+    <color name="main_background">@color/blue</color>
     <color name="mai_title_text">@color/white</color>
     <color name="big_button_background">@color/white</color>
     <color name="big_button_text">@color/black_gray</color>
@@ -22,4 +23,5 @@
     <!-- Search search colors -->
     <color name="search_background">#E6E8EB</color>
     <color name="search_input">@color/gray</color>
+    <color name="cursor">@color/blue</color>
 </resources>

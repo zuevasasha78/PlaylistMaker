@@ -3,6 +3,7 @@
     <!-- colors -->
     <color name="white">#ffffff</color>
     <color name="black_gray">#1A1B22</color>
+    <color name="blue">#3772E74</color>
 
     <color name="background_color">@color/black_gray</color>
 
@@ -21,4 +22,5 @@
     <!-- Search search colors -->
     <color name="search_background">@color/white</color>
     <color name="search_input">@color/black_gray</color>
+    <color name="cursor">@color/blue</color>
 </resources>
