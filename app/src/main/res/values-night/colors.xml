@@ -4,16 +4,14 @@
     <color name="mai_title_text">#ffffff</color>
     <color name="big_button_background">#ffffff</color>
     <color name="big_button_text">#1A1B22</color>
+
     <color name="background_color">#1A1B22</color>
+
     <color name="back_title">#ffffff</color>
+
     <color name="settings_text_row">#ffffff</color>
     <color name="settings_icon_background">#ffffff</color>
+
     <color name="search_background">#ffffff</color>
     <color name="search_input">#1A1B22</color>
-
-
-    <color name="black_gray">#1A1B22</color>
-    <color name="white">#ffffff</color>
-    <color name="black_gray_settings">#ffffff</color>
-    <color name="gray_search">#ffffff</color>
 </resources>
