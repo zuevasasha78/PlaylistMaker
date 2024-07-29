@@ -53,7 +53,7 @@ class SettingsActivity : AppCompatActivity() {
         callSupportButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).apply {
                 data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, "zuevasasha78@gmail.com")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("test@example.com"))
                 putExtra(Intent.EXTRA_SUBJECT, "Сообщение разработчикам и разработчицам приложения Playlist Maker")
                 putExtra(Intent.EXTRA_TEXT, "Спасибо разработчикам и разработчицам за крутое приложение!")
             }
