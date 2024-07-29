@@ -24,4 +24,5 @@
     <color name="search_background">#E6E8EB</color>
     <color name="search_input">@color/gray</color>
     <color name="cursor">@color/blue</color>
+    <color name="search_text">@color/black_gray</color>
 </resources>
