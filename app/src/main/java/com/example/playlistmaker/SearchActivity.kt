@@ -1,7 +1,6 @@
 package com.example.playlistmaker
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +11,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 
 class SearchActivity : AppCompatActivity() {
 
@@ -24,8 +24,7 @@ class SearchActivity : AppCompatActivity() {
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
-            val mainIntent = Intent(this, MainActivity::class.java)
-            startActivity(mainIntent)
+            finish()
         }
 
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
@@ -67,11 +66,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setViewVisible(v: View, visible: Boolean) {
-        if (visible) {
-            v.visibility = View.VISIBLE
-        } else {
-            v.visibility = View.GONE
-        }
+        v.isVisible = visible
     }
 
     companion object {
