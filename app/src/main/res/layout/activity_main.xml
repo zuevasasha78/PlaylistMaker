@@ -43,6 +43,9 @@
         <Button
             android:id="@+id/search_button"
             style="@style/WhiteBigButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="@string/search"
             app:icon="@drawable/search"
             app:layout_constraintTop_toBottomOf="@+id/title_container" />
@@ -51,6 +54,8 @@
             android:id="@+id/library_button"
             style="@style/WhiteBigButton"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="@dimen/button_margin_top"
             android:text="@string/library"
             app:icon="@drawable/library"
@@ -60,6 +65,8 @@
             android:id="@+id/settings_button"
             style="@style/WhiteBigButton"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="@dimen/button_margin_top"
             android:text="@string/settings"
             app:icon="@drawable/library"
