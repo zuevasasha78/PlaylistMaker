@@ -53,8 +53,8 @@ class SettingsActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_SEND).apply {
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf("test@example.com"))
-                putExtra(Intent.EXTRA_SUBJECT, "Сообщение разработчикам и разработчицам приложения Playlist Maker")
-                putExtra(Intent.EXTRA_TEXT, "Спасибо разработчикам и разработчицам за крутое приложение!")
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subtitle))
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text))
             }
 
             startIntent(intent)
@@ -67,7 +67,7 @@ class SettingsActivity : AppCompatActivity() {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, "https://practicum.yandex.ru/android-developer")
             }
-            startIntent(Intent.createChooser(shareIntent, "Поделиться приложением"))
+            startIntent(Intent.createChooser(shareIntent, getString(R.string.share_app)))
         }
     }
 
