@@ -34,28 +34,17 @@
         <item name="android:background">@color/background_color</item>
     </style>
 
-    <style name="BackButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="layout_constraintTop_toTopOf">parent</item>
-        <item name="android:src">@drawable/arrow</item>
-        <item name="android:backgroundTintMode">multiply</item>
-        <item name="android:backgroundTint">@android:color/transparent</item>
-        <item name="android:layout_marginVertical">16dp</item>
-        <item name="android:layout_marginStart">16dp</item>
+    <style name="Toolbar">
+        <item name="titleMarginStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="contentInsetStart">12dp</item>
+        <item name="navigationIcon">@drawable/arrow</item>
     </style>
 
-    <style name="BackTitle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textColor">@color/back_title</item>
+    <style name="ToolbarText">
+        <item name="fontFamily">@font/ys_display_medium</item>
         <item name="android:textSize">@dimen/text_size_main</item>
-        <item name="android:layout_toEndOf">@id/back_button</item>
-        <item name="layout_constraintBottom_toBottomOf">@id/back_button</item>
-        <item name="layout_constraintStart_toEndOf">@id/back_button</item>
-        <item name="layout_constraintTop_toTopOf">@id/back_button</item>
+        <item name="titleTextColor">@color/back_title</item>
     </style>
 
     <style name="SettingsText">
