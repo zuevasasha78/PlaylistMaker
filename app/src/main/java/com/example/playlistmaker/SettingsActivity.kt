@@ -3,7 +3,8 @@ package com.example.playlistmaker
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.FrameLayout
+import android.view.View
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -21,13 +22,13 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
-        val shareButton = findViewById<FrameLayout>(R.id.share_app)
+        val shareButton = findViewById<TextView>(R.id.share_app)
         addShareButtonListener(shareButton)
 
-        val callSupportButton = findViewById<FrameLayout>(R.id.call_support)
+        val callSupportButton = findViewById<TextView>(R.id.call_support)
         addCallSupportListener(callSupportButton)
 
-        val userAgreementButton = findViewById<FrameLayout>(R.id.legal_agreement)
+        val userAgreementButton = findViewById<TextView>(R.id.legal_agreement)
         addUserAgreementListener(userAgreementButton)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.settings)) { v, insets ->
@@ -37,35 +38,33 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun addUserAgreementListener(userAgreementButton: FrameLayout) {
-        userAgreementButton.setOnClickListener {
+    private fun addUserAgreementListener(view: View) {
+        view.setOnClickListener {
             val url = "https://yandex.ru/legal/practicum_offer/"
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse(url)
             }
-
             startIntent(intent)
         }
     }
 
-    private fun addCallSupportListener(callSupportButton: FrameLayout) {
-        callSupportButton.setOnClickListener {
+    private fun addCallSupportListener(view: View) {
+        view.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).apply {
                 data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf("test@example.com"))
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_address)))
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subtitle))
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text))
             }
-
             startIntent(intent)
         }
     }
 
-    private fun addShareButtonListener(shareButton: FrameLayout) {
-        shareButton.setOnClickListener {
+    private fun addShareButtonListener(view: View) {
+        view.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, "https://practicum.yandex.ru/android-developer")
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.practicum_link))
             }
             startIntent(Intent.createChooser(shareIntent, getString(R.string.share_app)))
         }
