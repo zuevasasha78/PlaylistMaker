@@ -59,4 +59,17 @@
         <item name="android:backgroundTintMode">multiply</item>
     </style>
 
+    <style name="SearchInput">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/search_text</item>
+        <item name="android:textColorHint">@color/search_input</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_color</item>
+    </style>
+
+    <style name="SearchHint">
+        <item name="android:textSize">@dimen/text_search_hint</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textColor">@color/search_hint</item>
+    </style>
+
 </resources>
