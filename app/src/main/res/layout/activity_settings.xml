@@ -27,93 +27,51 @@
         style="@style/SettingsText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="12dp"
         android:text="@string/dark_theme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <FrameLayout
+    <TextView
         android:id="@+id/share_app"
-        android:layout_width="0dp"
+        style="@style/SettingsText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="12dp"
+        android:text="@string/share_app"
+        app:drawableEndCompat="@drawable/share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dark_theme">
+        app:layout_constraintTop_toBottomOf="@+id/dark_theme" />
 
-        <TextView
-            style="@style/SettingsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/share_app" />
-
-        <ImageButton
-            style="@style/ImageSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:src="@drawable/share"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </FrameLayout>
-
-    <FrameLayout
+    <TextView
         android:id="@+id/call_support"
-        android:layout_width="0dp"
+        style="@style/SettingsText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="12dp"
+        android:text="@string/call_support"
+        app:drawableEndCompat="@drawable/support"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/share_app">
+        app:layout_constraintTop_toBottomOf="@+id/share_app" />
 
-        <TextView
-            style="@style/SettingsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/call_support" />
-
-        <ImageButton
-            style="@style/ImageSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:src="@drawable/support"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </FrameLayout>
-
-    <FrameLayout
+    <TextView
         android:id="@+id/legal_agreement"
-        android:layout_width="0dp"
+        style="@style/SettingsText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="12dp"
+        android:text="@string/user_agreement"
+        app:drawableEndCompat="@drawable/arrow_forward"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/call_support">
-
-        <TextView
-            style="@style/SettingsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/user_agreement" />
-
-        <ImageButton
-            style="@style/ImageSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:src="@drawable/arrow_forward"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/call_support" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
