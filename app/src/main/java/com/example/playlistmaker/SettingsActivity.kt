@@ -40,7 +40,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun addUserAgreementListener(view: View) {
         view.setOnClickListener {
-            val url = "https://yandex.ru/legal/practicum_offer/"
+            val url = getString(R.string.practicum_offer)
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse(url)
             }
