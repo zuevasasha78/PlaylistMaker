@@ -5,6 +5,7 @@
     <color name="black_gray">#1A1B22</color>
     <color name="gray">#AEAFB4</color>
     <color name="blue">#3772E7</color>
+    <color name="black">#000000</color>
 
     <color name="background_color">@color/white</color>
 
@@ -17,7 +18,7 @@
     <color name="big_button_text">@color/black_gray</color>
 
     <!-- Settings screen colors -->
-    <color name="settings_text_row">#000000</color>
+    <color name="settings_text_row">@color/black</color>
     <color name="settings_icon_background">@color/gray</color>
 
     <!-- Search search colors -->
@@ -26,4 +27,5 @@
     <color name="cursor">@color/blue</color>
     <color name="search_text">@color/black_gray</color>
     <color name="search_hint">#818C99</color>
+    <color name="clear_text_button">@color/gray</color>
 </resources>
