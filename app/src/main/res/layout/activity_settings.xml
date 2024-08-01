@@ -23,7 +23,7 @@
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/dark_theme"
-        style="@style/SettingsText"
+        android:theme="@style/Theme.Switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

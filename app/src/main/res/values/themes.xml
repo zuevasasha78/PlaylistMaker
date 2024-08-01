@@ -1,14 +1,18 @@
 <resources>
 
-    <style name="Theme.MainScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:background">@color/main_background</item>
-    </style>
-
     <style name="Theme.DefaultBackground" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:background">@color/background_color</item>
     </style>
 
-    <style name="Theme.SearchInput" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MainScreen" parent="Theme.DefaultBackground">
+        <item name="android:background">@color/main_background</item>
+    </style>
+
+    <style name="Theme.SearchInput" parent="Theme.DefaultBackground">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Switch" parent="SettingsText">
+        <item name="colorAccent">@color/blue</item>
     </style>
 </resources>
