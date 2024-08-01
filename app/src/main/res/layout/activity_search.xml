@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search"
-    style="@style/BackgroundColor"
+    android:theme="@style/Theme.BackgroundScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
@@ -29,6 +29,7 @@
         android:layout_marginVertical="8dp"
         android:background="@drawable/round_rect"
         android:orientation="horizontal"
+        android:theme="@style/SearchInput"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <ImageView

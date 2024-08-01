@@ -26,14 +26,6 @@
         <item name="iconTint">@color/big_button_text</item>
     </style>
 
-    <style name="BlueBackgroundColor">
-        <item name="android:background">@color/main_background</item>
-    </style>
-
-    <style name="BackgroundColor">
-        <item name="android:background">@color/background_color</item>
-    </style>
-
     <style name="Toolbar">
         <item name="titleMarginStart">0dp</item>
         <item name="contentInsetStartWithNavigation">0dp</item>

@@ -1,9 +1,14 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Base.Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+    <style name="Theme.MainScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:background">@color/main_background</item>
     </style>
 
-    <style name="Theme.PlaylistMaker" parent="Base.Theme.PlaylistMaker" />
+    <style name="Theme.BackgroundScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:background">@color/background_color</item>
+    </style>
+
+    <style name="Theme.SearchInput" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>
