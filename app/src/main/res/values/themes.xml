@@ -4,7 +4,7 @@
         <item name="android:background">@color/main_background</item>
     </style>
 
-    <style name="Theme.BackgroundScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.DefaultBackground" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:background">@color/background_color</item>
     </style>
 
