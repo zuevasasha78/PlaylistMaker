@@ -4,4 +4,5 @@
     <dimen name="radius_button">16dp</dimen>
     <dimen name="text_size_main">22sp</dimen>
     <dimen name="text_size_settings">16sp</dimen>
+    <dimen name="text_search_hint">16sp</dimen>
 </resources>
