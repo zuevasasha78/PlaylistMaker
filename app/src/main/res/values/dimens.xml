@@ -5,4 +5,7 @@
     <dimen name="text_size_main">22sp</dimen>
     <dimen name="text_size_settings">16sp</dimen>
     <dimen name="text_search_hint">16sp</dimen>
+    <dimen name="text_track_name">16sp</dimen>
+    <dimen name="text_artist_name">11sp</dimen>
+
 </resources>

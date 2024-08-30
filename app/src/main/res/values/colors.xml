@@ -28,4 +28,7 @@
     <color name="search_text">@color/black_gray</color>
     <color name="search_hint">#818C99</color>
     <color name="clear_text_button">@color/gray</color>
+    <color name="track_name">@color/black</color>
+    <color name="artist_name">@color/gray</color>
+
 </resources>
