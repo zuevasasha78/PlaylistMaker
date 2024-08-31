@@ -27,4 +27,7 @@
     <color name="cursor">@color/blue</color>
     <color name="search_text">@color/black_gray</color>
     <color name="clear_text_button">@color/black</color>
+    <color name="track_name">@color/white</color>
+    <color name="artist_name">@color/white</color>
+    <color name="dot">@color/white</color>
 </resources>
