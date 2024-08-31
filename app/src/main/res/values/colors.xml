@@ -30,5 +30,6 @@
     <color name="clear_text_button">@color/gray</color>
     <color name="track_name">@color/black</color>
     <color name="artist_name">@color/gray</color>
+    <color name="dot">@color/gray</color>
 
 </resources>
