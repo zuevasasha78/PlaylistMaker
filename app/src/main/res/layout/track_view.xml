@@ -29,6 +29,8 @@
             style="@style/TrackName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
             tool:text="Whole Lotta Love" />
 
         <LinearLayout
@@ -42,6 +44,8 @@
                 style="@style/ArtistName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 tool:text="Nirvana" />
 
             <ImageView
