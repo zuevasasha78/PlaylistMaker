@@ -40,10 +40,16 @@ class TrackAdapter(private val tracks: List<Track>) : RecyclerView.Adapter<Track
             artistNameView.text = track.artistName
             trackTimeView.text = track.trackTime
 
+            val roundValue = 2
             Glide.with(itemView.context)
                 .load(track.artworkUrl100)
                 .placeholder(R.drawable.placeholder)
-                .transform(FitCenter(), RoundedCorners(200))
+                .transform(
+                    FitCenter(),
+                    RoundedCorners(
+                        roundValue * (itemView.context.resources.displayMetrics.density).toInt()
+                    )
+                )
                 .into(trackImageView)
         }
     }
