@@ -64,4 +64,15 @@
         <item name="android:textColor">@color/search_hint</item>
     </style>
 
+    <style name="TrackName">
+        <item name="android:textSize">@dimen/text_track_name</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textColor">@color/track_name</item>
+    </style>
+
+    <style name="ArtistName">
+        <item name="android:textSize">@dimen/text_artist_name</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textColor">@color/artist_name</item>
+    </style>
 </resources>

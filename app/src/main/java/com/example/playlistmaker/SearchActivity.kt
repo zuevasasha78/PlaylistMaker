@@ -14,6 +14,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.data.trackList
+import com.example.playlistmaker.trackview.TrackAdapter
 
 class SearchActivity : AppCompatActivity() {
 
@@ -61,6 +65,11 @@ class SearchActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val recyclerView = findViewById<RecyclerView>(R.id.trackList)
+
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = TrackAdapter(tracks = trackList)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
