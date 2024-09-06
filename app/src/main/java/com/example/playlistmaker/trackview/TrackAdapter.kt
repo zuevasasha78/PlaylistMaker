@@ -11,6 +11,8 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.network.data.Track
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TrackAdapter() : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
 
@@ -40,7 +42,11 @@ class TrackAdapter() : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
         fun bind(track: Track) {
             trackNameView.text = track.trackName
             artistNameView.text = track.artistName
-            trackTimeView.text = track.trackTime
+
+            val time = track.trackTimeMillis
+            if (time != null) {
+                trackTimeView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(time)
+            }
 
             val roundValue = 2
             Glide.with(itemView.context)
