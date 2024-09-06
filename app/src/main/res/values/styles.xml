@@ -75,4 +75,10 @@
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textColor">@color/artist_name</item>
     </style>
+
+    <style name="ErrorTrack">
+        <item name="android:textSize">@dimen/error_track_text</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textColor">@color/error_track</item>
+    </style>
 </resources>

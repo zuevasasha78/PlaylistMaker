@@ -7,5 +7,6 @@
     <dimen name="text_search_hint">16sp</dimen>
     <dimen name="text_track_name">16sp</dimen>
     <dimen name="text_artist_name">11sp</dimen>
+    <dimen name="error_track_text">19sp</dimen>
 
 </resources>
