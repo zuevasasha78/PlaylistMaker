@@ -32,5 +32,6 @@
     <color name="artist_name">@color/gray</color>
     <color name="dot">@color/gray</color>
     <color name="error_track">@color/black</color>
+    <color name="update_track">@color/white</color>
 
 </resources>

@@ -81,4 +81,10 @@
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textColor">@color/error_track</item>
     </style>
+
+    <style name="UpdateTrack">
+        <item name="android:textSize">@dimen/update_track_text</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textColor">@color/update_track</item>
+    </style>
 </resources>
