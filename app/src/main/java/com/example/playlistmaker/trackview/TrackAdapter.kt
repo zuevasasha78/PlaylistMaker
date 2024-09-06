@@ -14,7 +14,7 @@ import com.example.playlistmaker.network.data.Track
 
 class TrackAdapter() : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
 
-    private var tracks: List<Track> = emptyList()
+    var tracks: List<Track> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.track_view, parent, false)

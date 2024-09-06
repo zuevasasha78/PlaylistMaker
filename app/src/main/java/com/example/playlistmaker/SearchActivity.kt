@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -16,8 +17,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.data.trackList
+import com.example.playlistmaker.network.RetrofitClient.iTunesService
+import com.example.playlistmaker.network.data.TrackList
 import com.example.playlistmaker.trackview.TrackAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SearchActivity : AppCompatActivity() {
 
@@ -68,8 +73,31 @@ class SearchActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.trackList)
 
+        val adapter = TrackAdapter()
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = TrackAdapter(tracks = trackList)
+        recyclerView.adapter = adapter
+
+        inputEditText.setOnEditorActionListener { textView, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                iTunesService.search(textView.text.toString()).enqueue(object : Callback<TrackList> {
+                    override fun onResponse(call: Call<TrackList>, response: Response<TrackList>) {
+                        if (response.isSuccessful) {
+                            val trackList = response.body() ?: return
+                            val tracks = trackList.results ?: return
+                            adapter.tracks = tracks
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<TrackList>, t: Throwable) {
+                        println()
+                        TODO("Not yet implemented")
+                    }
+                })
+                true
+            }
+            false
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
