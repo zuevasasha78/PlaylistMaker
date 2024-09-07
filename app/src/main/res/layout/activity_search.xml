@@ -100,13 +100,15 @@
 
     <Button
         android:id="@+id/updateButton"
-        style="@style/UpdateTrack"
+        style="@style/UpdateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="134dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="135dp"
         android:text="@string/update_button"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
