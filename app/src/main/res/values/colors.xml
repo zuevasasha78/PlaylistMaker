@@ -34,5 +34,6 @@
     <color name="error_track">@color/black</color>
     <color name="update_track_text">@color/white</color>
     <color name="update_track_background">@color/black</color>
+    <color name="error_track_image">@color/black</color>
 
 </resources>
