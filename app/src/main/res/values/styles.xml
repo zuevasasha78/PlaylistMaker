@@ -85,6 +85,7 @@
     <style name="UpdateTrack">
         <item name="android:textSize">@dimen/update_track_text</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textColor">@color/update_track</item>
+        <item name="android:textColor">@color/update_track_text</item>
+        <item name="backgroundColor">@color/update_track_background</item>
     </style>
 </resources>
