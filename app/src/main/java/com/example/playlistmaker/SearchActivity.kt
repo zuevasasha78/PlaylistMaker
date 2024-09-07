@@ -7,8 +7,10 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -84,20 +86,43 @@ class SearchActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             val trackList = response.body() ?: return
                             val tracks = trackList.results ?: return
-                            adapter.tracks = tracks
-                            adapter.notifyDataSetChanged()
+                            if (tracks.isNotEmpty()) {
+                                adapter.tracks = tracks
+                                adapter.notifyDataSetChanged()
+                            } else {
+                                val text = "Ничего не нашлось"
+                                showPlaceholder(recyclerView, R.drawable.empty_list_tracks, text)
+                            }
                         }
                     }
 
                     override fun onFailure(call: Call<TrackList>, t: Throwable) {
-                        println()
-                        TODO("Not yet implemented")
+                        val text = "Проблемы со связью\n" +
+                            "\n" +
+                            "Загрузка не удалась. Проверьте подключение к интернету"
+                        showPlaceholder(recyclerView, R.drawable.track_internet_error, text)
+
+                        val updateButtonView = findViewById<Button>(R.id.updateButton)
+                        updateButtonView.visibility = View.VISIBLE
                     }
                 })
                 true
             }
             false
         }
+    }
+
+    private fun showPlaceholder(recyclerView: RecyclerView, imageRes: Int, errorText: String) {
+        recyclerView.visibility = View.GONE
+
+        val imageErrorView = findViewById<ImageView>(R.id.emptyImageView)
+        val errorTextView = findViewById<TextView>(R.id.errorText)
+
+        imageErrorView.visibility = View.VISIBLE
+        imageErrorView.setImageResource(imageRes)
+
+        errorTextView.visibility = View.VISIBLE
+        errorTextView.text = errorText
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
