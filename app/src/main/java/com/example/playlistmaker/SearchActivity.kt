@@ -93,23 +93,29 @@ class SearchActivity : AppCompatActivity() {
                                 val text = "Ничего не нашлось"
                                 showPlaceholder(recyclerView, R.drawable.empty_list_tracks, text)
                             }
+                        } else {
+                            internetError(recyclerView)
                         }
                     }
 
                     override fun onFailure(call: Call<TrackList>, t: Throwable) {
-                        val text = "Проблемы со связью\n" +
-                            "\n" +
-                            "Загрузка не удалась. Проверьте подключение к интернету"
-                        showPlaceholder(recyclerView, R.drawable.track_internet_error, text)
-
-                        val updateButtonView = findViewById<Button>(R.id.updateButton)
-                        updateButtonView.visibility = View.VISIBLE
+                        internetError(recyclerView)
                     }
                 })
                 true
             }
             false
         }
+    }
+
+    private fun internetError(recyclerView: RecyclerView) {
+        val text = "Проблемы со связью\n" +
+            "\n" +
+            "Загрузка не удалась. Проверьте подключение к интернету"
+        showPlaceholder(recyclerView, R.drawable.track_internet_error, text)
+
+        val updateButtonView = findViewById<Button>(R.id.updateButton)
+        updateButtonView.visibility = View.VISIBLE
     }
 
     private fun showPlaceholder(recyclerView: RecyclerView, imageRes: Int, errorText: String) {
