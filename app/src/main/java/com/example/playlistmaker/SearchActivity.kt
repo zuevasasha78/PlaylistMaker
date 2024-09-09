@@ -29,6 +29,7 @@ import retrofit2.Response
 class SearchActivity : AppCompatActivity() {
 
     private var savedText: String? = null
+    private var searchText: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,56 +80,20 @@ class SearchActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapter
 
+        val updateButtonView = findViewById<Button>(R.id.updateButton)
+
         inputEditText.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                iTunesService.search(textView.text.toString()).enqueue(object : Callback<TrackList> {
-                    override fun onResponse(call: Call<TrackList>, response: Response<TrackList>) {
-                        if (response.isSuccessful) {
-                            val trackList = response.body() ?: return
-                            val tracks = trackList.results ?: return
-                            if (tracks.isNotEmpty()) {
-                                adapter.tracks = tracks
-                                adapter.notifyDataSetChanged()
-                            } else {
-                                val text = "Ничего не нашлось"
-                                showPlaceholder(recyclerView, R.drawable.empty_list_tracks, text)
-                            }
-                        } else {
-                            internetError(recyclerView)
-                        }
-                    }
-
-                    override fun onFailure(call: Call<TrackList>, t: Throwable) {
-                        internetError(recyclerView)
-                    }
-                })
+                searchText = textView.text.toString()
+                executeSearchRequest(searchText, adapter, recyclerView, updateButtonView)
                 true
             }
             false
         }
-    }
 
-    private fun internetError(recyclerView: RecyclerView) {
-        val text = "Проблемы со связью\n" +
-            "\n" +
-            "Загрузка не удалась. Проверьте подключение к интернету"
-        showPlaceholder(recyclerView, R.drawable.track_internet_error, text)
-
-        val updateButtonView = findViewById<Button>(R.id.updateButton)
-        updateButtonView.visibility = View.VISIBLE
-    }
-
-    private fun showPlaceholder(recyclerView: RecyclerView, imageRes: Int, errorText: String) {
-        recyclerView.visibility = View.GONE
-
-        val imageErrorView = findViewById<ImageView>(R.id.emptyImageView)
-        val errorTextView = findViewById<TextView>(R.id.errorText)
-
-        imageErrorView.visibility = View.VISIBLE
-        imageErrorView.setImageResource(imageRes)
-
-        errorTextView.visibility = View.VISIBLE
-        errorTextView.text = errorText
+        updateButtonView.setOnClickListener { view ->
+            executeSearchRequest(searchText, adapter, recyclerView, view)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -143,6 +108,59 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setViewVisible(v: View, visible: Boolean) {
         v.isVisible = visible
+    }
+
+    private fun executeSearchRequest(
+        searchText: String?,
+        adapter: TrackAdapter,
+        recyclerView: RecyclerView,
+        updateButtonView: View
+    ) {
+        if (!searchText.isNullOrEmpty()) {
+            iTunesService.search(searchText).enqueue(object : Callback<TrackList> {
+                override fun onResponse(call: Call<TrackList>, response: Response<TrackList>) {
+                    if (response.isSuccessful) {
+                        val trackList = response.body() ?: return
+                        val tracks = trackList.results ?: return
+                        if (tracks.isNotEmpty()) {
+                            adapter.tracks = tracks
+                            adapter.notifyDataSetChanged()
+                        } else {
+                            val text = "Ничего не нашлось"
+                            showPlaceholder(recyclerView, R.drawable.empty_list_tracks, text)
+                        }
+                    } else {
+                        internetError(recyclerView, updateButtonView)
+                    }
+                }
+
+                override fun onFailure(call: Call<TrackList>, t: Throwable) {
+                    internetError(recyclerView, updateButtonView)
+                }
+            })
+        }
+    }
+
+    private fun internetError(recyclerView: RecyclerView, button: View) {
+        val text = "Проблемы со связью\n" +
+            "\n" +
+            "Загрузка не удалась. Проверьте подключение к интернету"
+        showPlaceholder(recyclerView, R.drawable.track_internet_error, text)
+
+        button.visibility = View.VISIBLE
+    }
+
+    private fun showPlaceholder(recyclerView: RecyclerView, imageRes: Int, errorText: String) {
+        recyclerView.visibility = View.GONE
+
+        val imageErrorView = findViewById<ImageView>(R.id.emptyImageView)
+        val errorTextView = findViewById<TextView>(R.id.errorText)
+
+        imageErrorView.visibility = View.VISIBLE
+        imageErrorView.setImageResource(imageRes)
+
+        errorTextView.visibility = View.VISIBLE
+        errorTextView.text = errorText
     }
 
     companion object {
