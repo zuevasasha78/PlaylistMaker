@@ -1,9 +1,11 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -148,8 +150,19 @@ class SearchActivity : AppCompatActivity() {
             "\n" +
             "Загрузка не удалась. Проверьте подключение к интернету"
         showPlaceholder(recyclerView, R.drawable.track_internet_error, text)
-
+        makeButtonRound(button)
         button.visibility = View.VISIBLE
+    }
+
+    private fun makeButtonRound(button: View) {
+        val drawable = GradientDrawable()
+        drawable.shape = GradientDrawable.RECTANGLE
+
+        val cornerRadiusInPx = resources.getDimensionPixelSize(R.dimen.radius_update_button).toFloat()
+        drawable.cornerRadius = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, cornerRadiusInPx, resources.displayMetrics
+        )
+        button.background = drawable
     }
 
     private fun showPlaceholder(recyclerView: RecyclerView, imageRes: Int, errorText: String) {
