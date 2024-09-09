@@ -82,10 +82,21 @@
         <item name="android:textColor">@color/error_track</item>
     </style>
 
-    <style name="UpdateTrack">
-        <item name="android:textSize">@dimen/update_track_text</item>
+    <style name="UpdateButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:backgroundTint">@color/update_track_background</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/update_track_text</item>
         <item name="android:textColor">@color/update_track_text</item>
-        <item name="backgroundColor">@color/update_track_background</item>
+        <item name="cornerRadius">@dimen/radius_update_button</item>
+        <item name="iconTint">@color/big_button_text</item>
+        <item name="iconGravity">textStart</item>
+        <item name="android:shadowColor">@android:color/transparent</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+
+        <!--
+                <item name="iconPadding">10dp</item>
+        -->
+
     </style>
 </resources>
