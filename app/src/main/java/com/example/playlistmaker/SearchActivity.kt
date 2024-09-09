@@ -47,11 +47,21 @@ class SearchActivity : AppCompatActivity() {
             inputEditText.setText(savedText)
         }
 
+        val recyclerView = findViewById<RecyclerView>(R.id.trackList)
+
+        val adapter = TrackAdapter()
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = adapter
+
+        val updateButtonView = findViewById<Button>(R.id.updateButton)
+
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
         clearButton.setOnClickListener { v ->
             inputEditText.setText("")
             setViewVisible(v, false)
             hideKeyboard(v)
+            adapter.tracks = emptyList()
+            adapter.notifyDataSetChanged()
         }
 
         val textWatcher = object : TextWatcher {
@@ -73,14 +83,6 @@ class SearchActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        val recyclerView = findViewById<RecyclerView>(R.id.trackList)
-
-        val adapter = TrackAdapter()
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = adapter
-
-        val updateButtonView = findViewById<Button>(R.id.updateButton)
 
         inputEditText.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
