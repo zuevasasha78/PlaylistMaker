@@ -64,6 +64,8 @@ class SearchActivity : AppCompatActivity() {
             hideKeyboard(v)
             adapter.tracks = emptyList()
             adapter.notifyDataSetChanged()
+
+            hideError(recyclerView)
         }
 
         val textWatcher = object : TextWatcher {
@@ -130,8 +132,7 @@ class SearchActivity : AppCompatActivity() {
                             adapter.tracks = tracks
                             adapter.notifyDataSetChanged()
 
-                            hideError()
-                            recyclerView.isVisible = true
+                            hideError(recyclerView)
                         } else {
                             val text = "Ничего не нашлось"
                             showPlaceholder(recyclerView, R.drawable.empty_list_tracks, text)
@@ -148,13 +149,15 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideError() {
+    private fun hideError(recyclerView: RecyclerView) {
         val imageErrorView = findViewById<ImageView>(R.id.emptyImageView)
         val errorTextView = findViewById<TextView>(R.id.errorText)
         val updateButtonView = findViewById<Button>(R.id.updateButton)
         updateButtonView.isVisible = false
         imageErrorView.isVisible = false
         errorTextView.isVisible = false
+
+        recyclerView.isVisible = true
     }
 
     private fun internetError(recyclerView: RecyclerView, button: View) {
