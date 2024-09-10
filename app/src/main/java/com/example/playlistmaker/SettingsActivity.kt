@@ -49,9 +49,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun saveThemeToPref(checked: Boolean, app: App) {
-        app.sharedPrefs?.let {
-            it.edit().putString(DARK_THEME_KEY, checked.toString()).apply()
-        }
+        app.sharedPrefs.edit().putBoolean(DARK_THEME_KEY, checked).apply()
     }
 
     private fun addUserAgreementListener(view: View) {
