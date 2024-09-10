@@ -128,8 +128,10 @@ class SearchActivity : AppCompatActivity() {
                         val tracks = trackList.results ?: return
                         if (tracks.isNotEmpty()) {
                             adapter.tracks = tracks
-                            hideError()
                             adapter.notifyDataSetChanged()
+
+                            hideError()
+                            recyclerView.isVisible = true
                         } else {
                             val text = "Ничего не нашлось"
                             showPlaceholder(recyclerView, R.drawable.empty_list_tracks, text)
