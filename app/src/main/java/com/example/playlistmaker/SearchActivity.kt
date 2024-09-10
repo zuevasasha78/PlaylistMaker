@@ -151,7 +151,7 @@ class SearchActivity : AppCompatActivity() {
             "Загрузка не удалась. Проверьте подключение к интернету"
         showPlaceholder(recyclerView, R.drawable.track_internet_error, text)
         makeButtonRound(button)
-        button.visibility = View.VISIBLE
+        button.isVisible = true
     }
 
     private fun makeButtonRound(button: View) {
@@ -166,15 +166,15 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showPlaceholder(recyclerView: RecyclerView, imageRes: Int, errorText: String) {
-        recyclerView.visibility = View.GONE
+        recyclerView.isVisible = false
 
         val imageErrorView = findViewById<ImageView>(R.id.emptyImageView)
         val errorTextView = findViewById<TextView>(R.id.errorText)
 
-        imageErrorView.visibility = View.VISIBLE
+        imageErrorView.isVisible = true
         imageErrorView.setImageResource(imageRes)
 
-        errorTextView.visibility = View.VISIBLE
+        errorTextView.isVisible = true
         errorTextView.text = errorText
     }
 
