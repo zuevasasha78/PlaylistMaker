@@ -33,35 +33,49 @@
             android:maxLines="1"
             tool:text="Whole Lotta Love" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/trackName">
 
             <TextView
                 android:id="@+id/artistName"
                 style="@style/ArtistName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/dot"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="wrap"
                 tool:text="Nirvana" />
 
             <ImageView
+                android:id="@+id/dot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/dot" />
+                android:src="@drawable/dot"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/trackTime"
+                app:layout_constraintStart_toEndOf="@id/artistName"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/trackTime"
                 style="@style/ArtistName"
-                android:layout_width="wrap_content"
+                android:layout_width="64dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/dot"
+                app:layout_constraintTop_toTopOf="parent"
                 tool:text="4:11" />
 
-        </LinearLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
