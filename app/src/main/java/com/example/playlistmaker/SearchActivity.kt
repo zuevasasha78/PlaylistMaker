@@ -128,6 +128,7 @@ class SearchActivity : AppCompatActivity() {
                         val tracks = trackList.results ?: return
                         if (tracks.isNotEmpty()) {
                             adapter.tracks = tracks
+                            hideError()
                             adapter.notifyDataSetChanged()
                         } else {
                             val text = "Ничего не нашлось"
@@ -143,6 +144,15 @@ class SearchActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    private fun hideError() {
+        val imageErrorView = findViewById<ImageView>(R.id.emptyImageView)
+        val errorTextView = findViewById<TextView>(R.id.errorText)
+        val updateButtonView = findViewById<Button>(R.id.updateButton)
+        updateButtonView.isVisible = false
+        imageErrorView.isVisible = false
+        errorTextView.isVisible = false
     }
 
     private fun internetError(recyclerView: RecyclerView, button: View) {
