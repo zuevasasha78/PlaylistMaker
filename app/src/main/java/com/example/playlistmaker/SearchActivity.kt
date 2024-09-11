@@ -22,7 +22,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.network.RetrofitClient.iTunesService
-import com.example.playlistmaker.network.data.TrackList
+import com.example.playlistmaker.network.data.TrackListResponse
 import com.example.playlistmaker.trackview.TrackAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -123,8 +123,8 @@ class SearchActivity : AppCompatActivity() {
         updateButtonView: View
     ) {
         if (!searchText.isNullOrEmpty()) {
-            iTunesService.search(searchText).enqueue(object : Callback<TrackList> {
-                override fun onResponse(call: Call<TrackList>, response: Response<TrackList>) {
+            iTunesService.search(searchText).enqueue(object : Callback<TrackListResponse> {
+                override fun onResponse(call: Call<TrackListResponse>, response: Response<TrackListResponse>) {
                     if (response.isSuccessful) {
                         val trackList = response.body() ?: return
                         val tracks = trackList.results ?: return
@@ -142,7 +142,7 @@ class SearchActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<TrackList>, t: Throwable) {
+                override fun onFailure(call: Call<TrackListResponse>, t: Throwable) {
                     internetError(recyclerView, updateButtonView)
                 }
             })
