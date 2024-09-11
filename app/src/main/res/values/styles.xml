@@ -85,8 +85,8 @@
     <style name="UpdateButton" parent="Widget.Material3.Button">
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textSize">@dimen/update_track_text</item>
-        <item name="android:textColor">@color/update_track_text</item>
+        <item name="android:textColor">@color/white_black_by_theme</item>
         <item name="iconGravity">textStart</item>
-        <item name="backgroundTint">@color/update_track_background</item>
+        <item name="backgroundTint">@color/black_white_by_theme</item>
     </style>
 </resources>

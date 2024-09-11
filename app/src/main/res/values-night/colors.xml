@@ -31,8 +31,7 @@
     <color name="artist_name">@color/white</color>
     <color name="dot">@color/white</color>
     <color name="black_white_by_theme">@color/white</color>
-    <color name="update_track_text">@color/black</color>
-    <color name="update_track_background">@color/white</color>
+    <color name="white_black_by_theme">@color/black</color>
     <color name="error_track_image">@color/white</color>
 
 </resources>
