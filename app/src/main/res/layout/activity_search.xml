@@ -88,7 +88,7 @@
 
     <TextView
         android:id="@+id/errorText"
-        style="@style/ErrorTrack"
+        style="@style/YsDisplayMedium19"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
@@ -110,5 +110,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/errorText" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/youSearch"
+            style="@style/YsDisplayMedium19"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/you_search"
+            app:layout_constraintTop_toBottomOf="@+id/searchHistory" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trackListHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/youSearch" />
+
+        <Button
+            android:id="@+id/clearHistory"
+            style="@style/UpdateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/clear_history"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trackListHistory" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
