@@ -5,9 +5,6 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 
-const val PLAYLIST_MAKER_PREFERENCES = "playlist_maker_preferences"
-const val DARK_THEME_KEY = "dark_theme_key"
-
 class App : Application() {
 
     var isDarkTheme = false
@@ -32,5 +29,10 @@ class App : Application() {
     private fun isSystemInDarkMode(): Boolean {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    companion object {
+        const val PLAYLIST_MAKER_PREFERENCES = "playlist_maker_preferences"
+        const val DARK_THEME_KEY = "dark_theme_key"
     }
 }

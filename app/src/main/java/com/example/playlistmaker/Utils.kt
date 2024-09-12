@@ -21,6 +21,10 @@ fun makeButtonRound(button: View) {
 fun stringToTrackList(jsonString: String?): MutableList<Track> {
     val gson = Gson()
     val listType = object : TypeToken<MutableList<Track>>() {}.type
-    val trackList: MutableList<Track> = gson.fromJson(jsonString, listType)
-    return trackList
+
+    return if (jsonString.isNullOrEmpty()) {
+        mutableListOf()
+    } else {
+        gson.fromJson(jsonString, listType)
+    }
 }
