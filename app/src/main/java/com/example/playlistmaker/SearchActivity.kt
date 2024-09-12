@@ -36,28 +36,30 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val app = applicationContext as App
+
         setContentView(R.layout.activity_search)
 
+        val clearButton = findViewById<ImageView>(R.id.clearIcon)
+        val recyclerView = findViewById<RecyclerView>(R.id.trackList)
+        val updateButtonView = findViewById<Button>(R.id.updateButton)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val inputEditText = findViewById<EditText>(R.id.inputEditText)
+
         toolbar.setNavigationOnClickListener {
             finish()
         }
 
-        val inputEditText = findViewById<EditText>(R.id.inputEditText)
         savedInstanceState?.let {
             val savedText = savedInstanceState.getString(SEARCH_TEXT)
             inputEditText.setText(savedText)
         }
 
-        val recyclerView = findViewById<RecyclerView>(R.id.trackList)
 
         val adapter = TrackAdapter()
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapter
 
-        val updateButtonView = findViewById<Button>(R.id.updateButton)
-
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
         clearButton.setOnClickListener { v ->
             inputEditText.setText("")
             setViewVisible(v, false)
