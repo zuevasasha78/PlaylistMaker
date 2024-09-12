@@ -11,6 +11,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.playlistmaker.App.Companion.DARK_THEME_KEY
 
 class SettingsActivity : AppCompatActivity() {
 

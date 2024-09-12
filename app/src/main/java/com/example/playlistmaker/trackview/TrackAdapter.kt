@@ -14,9 +14,10 @@ import com.example.playlistmaker.network.data.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class TrackAdapter() : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+class TrackAdapter : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
 
     var tracks: List<Track> = emptyList()
+    var tracksHistory = mutableListOf<Track>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.track_view, parent, false)
@@ -28,8 +29,15 @@ class TrackAdapter() : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(tracks[position])
-        holder.itemView.setOnClickListener {}
+        val track = tracks[position]
+        holder.bind(track)
+        holder.itemView.setOnClickListener {
+            tracksHistory.indexOf(track).takeIf { it > 0 }?.let {
+                tracksHistory.removeAt(it)
+                tracksHistory.add(0, track)
+            }
+            //todo Log.e("!!!", "ee $tracksHistory")
+        }
     }
 
     class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
