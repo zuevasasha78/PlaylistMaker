@@ -1,23 +1,14 @@
 package com.example.playlistmaker.trackview
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.FitCenter
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.network.data.Track
-import java.text.SimpleDateFormat
-import java.util.Locale
 
-class TrackAdapter : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>() {
 
     var tracks: List<Track> = emptyList()
-    var tracksHistory = mutableListOf<Track>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.track_view, parent, false)
@@ -29,44 +20,7 @@ class TrackAdapter : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        val track = tracks[position]
-        holder.bind(track)
-        holder.itemView.setOnClickListener {
-            tracksHistory.indexOf(track).takeIf { it > 0 }?.let {
-                tracksHistory.removeAt(it)
-                tracksHistory.add(0, track)
-            }
-            //todo Log.e("!!!", "ee $tracksHistory")
-        }
-    }
-
-    class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val trackNameView: TextView = itemView.findViewById(R.id.trackName)
-        private val artistNameView: TextView = itemView.findViewById(R.id.artistName)
-        private val trackTimeView: TextView = itemView.findViewById(R.id.trackTime)
-        private val trackImageView: ImageView = itemView.findViewById(R.id.trackImage)
-
-        fun bind(track: Track) {
-            trackNameView.text = track.trackName
-            artistNameView.text = track.artistName
-
-            val time = track.trackTimeMillis
-            if (time != null) {
-                trackTimeView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(time)
-            }
-
-            val roundValue = 2
-            Glide.with(itemView.context)
-                .load(track.artworkUrl100)
-                .placeholder(R.drawable.placeholder)
-                .transform(
-                    FitCenter(),
-                    RoundedCorners(
-                        roundValue * (itemView.context.resources.displayMetrics.density).toInt()
-                    )
-                )
-                .into(trackImageView)
-        }
+        holder.bind(tracks[position])
+        holder.itemView.setOnClickListener {}
     }
 }
