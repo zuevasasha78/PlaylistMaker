@@ -2,7 +2,7 @@ package com.example.playlistmaker.network.data
 
 data class TrackListResponse(
     val resultCount: Int? = null,
-    val results: List<Track>? = null
+    val results: MutableList<Track>? = null
 )
 
 data class Track(

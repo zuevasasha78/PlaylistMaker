@@ -22,6 +22,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.network.RetrofitClient.iTunesService
+import com.example.playlistmaker.network.data.Track
 import com.example.playlistmaker.network.data.TrackListResponse
 import com.example.playlistmaker.trackview.TrackAdapter
 import retrofit2.Call
@@ -32,11 +33,16 @@ class SearchActivity : AppCompatActivity() {
 
     private var savedText: String? = null
     private var searchText: String? = null
+    private val trackList = mutableListOf<Track>()
+    private val trackListHistory = mutableListOf<Track>()
+    private lateinit var trackAdapter: TrackAdapter
+    private lateinit var searchHistory: SearchHistory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val app = applicationContext as App
+        searchHistory = SearchHistory(app.sharedPrefs)
 
         setContentView(R.layout.activity_search)
 
@@ -55,17 +61,19 @@ class SearchActivity : AppCompatActivity() {
             inputEditText.setText(savedText)
         }
 
+        trackAdapter = TrackAdapter(trackList) { track ->
+            trackListHistory.add(track)
+        }
 
-        val adapter = TrackAdapter()
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = trackAdapter
 
         clearButton.setOnClickListener { v ->
             inputEditText.setText("")
             setViewVisible(v, false)
             hideKeyboard(v)
-            adapter.tracks = emptyList()
-            adapter.notifyDataSetChanged()
+            trackAdapter.trackList = mutableListOf()
+            trackAdapter.notifyDataSetChanged()
 
             hideError(recyclerView)
         }
@@ -93,15 +101,25 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 searchText = textView.text.toString()
-                executeSearchRequest(searchText, adapter, recyclerView, updateButtonView)
+                executeSearchRequest(searchText, trackAdapter, recyclerView, updateButtonView)
                 true
             }
             false
         }
 
         updateButtonView.setOnClickListener { view ->
-            executeSearchRequest(searchText, adapter, recyclerView, view)
+            executeSearchRequest(searchText, trackAdapter, recyclerView, view)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        trackAdapter.trackList = searchHistory.getTrackList()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        searchHistory.updateTrackList(trackListHistory)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -131,7 +149,7 @@ class SearchActivity : AppCompatActivity() {
                         val trackList = response.body() ?: return
                         val tracks = trackList.results ?: return
                         if (tracks.isNotEmpty()) {
-                            adapter.tracks = tracks
+                            adapter.trackList = tracks
                             adapter.notifyDataSetChanged()
 
                             hideError(recyclerView)
