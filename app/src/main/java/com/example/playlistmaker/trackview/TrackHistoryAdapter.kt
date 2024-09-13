@@ -7,7 +7,7 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.network.data.Track
 
 class TrackHistoryAdapter(
-    private val tracksHistory: List<Track>,
+    var tracksHistory: MutableList<Track>
 ) : RecyclerView.Adapter<TrackViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {

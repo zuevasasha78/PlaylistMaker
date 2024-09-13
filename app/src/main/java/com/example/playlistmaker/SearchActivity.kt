@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -25,6 +26,7 @@ import com.example.playlistmaker.network.RetrofitClient.iTunesService
 import com.example.playlistmaker.network.data.Track
 import com.example.playlistmaker.network.data.TrackListResponse
 import com.example.playlistmaker.trackview.TrackAdapter
+import com.example.playlistmaker.trackview.TrackHistoryAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,6 +38,7 @@ class SearchActivity : AppCompatActivity() {
     private val trackList = mutableListOf<Track>()
     private val trackListHistory = mutableListOf<Track>()
     private lateinit var trackAdapter: TrackAdapter
+    private lateinit var trackHistoryAdapter: TrackHistoryAdapter
     private lateinit var searchHistory: SearchHistory
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +51,7 @@ class SearchActivity : AppCompatActivity() {
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
         val recyclerView = findViewById<RecyclerView>(R.id.trackList)
+        val recyclerViewHistoryTracks = findViewById<RecyclerView>(R.id.trackListHistory)
         val updateButtonView = findViewById<Button>(R.id.updateButton)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
@@ -107,6 +111,8 @@ class SearchActivity : AppCompatActivity() {
             false
         }
 
+        addSearchHistoryRecyclerView(inputEditText, recyclerView, recyclerViewHistoryTracks)
+
         updateButtonView.setOnClickListener { view ->
             executeSearchRequest(searchText, trackAdapter, recyclerView, view)
         }
@@ -125,6 +131,37 @@ class SearchActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         savedText?.let { outState.putString(SEARCH_TEXT, savedText) }
+    }
+
+    private fun addSearchHistoryRecyclerView(
+        inputEditText: EditText,
+        recyclerViewTracks: RecyclerView,
+        recyclerViewHistoryTracks: RecyclerView
+    ) {
+        trackHistoryAdapter = TrackHistoryAdapter(mutableListOf())
+        if (searchHistory.getTrackList().isNotEmpty()) {
+            trackHistoryAdapter.tracksHistory = searchHistory.getTrackList()
+        }
+
+        recyclerViewHistoryTracks.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerViewHistoryTracks.adapter = trackHistoryAdapter
+
+        val searchHistoryView = findViewById<ConstraintLayout>(R.id.searchHistory)
+        inputEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus &&
+                inputEditText.text.isNullOrEmpty()
+            ) {
+                if (trackHistoryAdapter.tracksHistory.isNotEmpty()) {
+                    searchHistoryView.isVisible = true
+                    trackHistoryAdapter.notifyDataSetChanged()
+                    recyclerViewTracks.isVisible = false
+                } else {
+                    searchHistoryView.isVisible = false
+                }
+            } else {
+                searchHistoryView.isVisible = false
+            }
+        }
     }
 
     private fun hideKeyboard(v: View) {
