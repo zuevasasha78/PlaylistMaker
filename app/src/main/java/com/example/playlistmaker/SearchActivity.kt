@@ -36,7 +36,6 @@ class SearchActivity : AppCompatActivity() {
     private var savedText: String? = null
     private var searchText: String? = null
     private val trackList = mutableListOf<Track>()
-    private val trackListHistory = mutableListOf<Track>()
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var trackHistoryAdapter: TrackHistoryAdapter
     private lateinit var searchHistory: SearchHistory
@@ -44,17 +43,20 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val app = applicationContext as App
-        searchHistory = SearchHistory(app.sharedPrefs)
 
         setContentView(R.layout.activity_search)
-
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
         val recyclerView = findViewById<RecyclerView>(R.id.trackList)
         val recyclerViewHistoryTracks = findViewById<RecyclerView>(R.id.trackListHistory)
         val updateButtonView = findViewById<Button>(R.id.updateButton)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
+        val clearHistory = findViewById<Button>(R.id.clearHistory)
+        val searchHistoryView = findViewById<ConstraintLayout>(R.id.searchHistory)
+
+        val app = applicationContext as App
+        searchHistory = SearchHistory(app.sharedPrefs)
+        trackHistoryAdapter = TrackHistoryAdapter(mutableListOf())
 
         toolbar.setNavigationOnClickListener {
             finish()
@@ -66,7 +68,14 @@ class SearchActivity : AppCompatActivity() {
         }
 
         trackAdapter = TrackAdapter(trackList) { track ->
-            trackListHistory.add(track)
+            val existingTrackIndex = trackHistoryAdapter.tracksHistory.indexOfFirst { it.trackId == track.trackId }
+            if (existingTrackIndex != -1) {
+                trackHistoryAdapter.tracksHistory.removeAt(existingTrackIndex)
+            }
+            trackHistoryAdapter.tracksHistory.add(0, track)
+            if (trackHistoryAdapter.tracksHistory.size > 10) {
+                trackHistoryAdapter.tracksHistory.removeAt(trackHistoryAdapter.tracksHistory.size - 1)
+            }
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -80,6 +89,8 @@ class SearchActivity : AppCompatActivity() {
             trackAdapter.notifyDataSetChanged()
 
             hideError(recyclerView)
+            searchHistoryView.isVisible = true
+            trackHistoryAdapter.notifyDataSetChanged()
         }
 
         val textWatcher = object : TextWatcher {
@@ -88,6 +99,12 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 setViewVisible(clearButton, !s.isNullOrEmpty())
+                if (s.isNullOrEmpty()) {
+                    searchHistoryView.isVisible = true
+                    trackHistoryAdapter.notifyDataSetChanged()
+                } else {
+                    searchHistoryView.isVisible = false
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -116,6 +133,12 @@ class SearchActivity : AppCompatActivity() {
         updateButtonView.setOnClickListener { view ->
             executeSearchRequest(searchText, trackAdapter, recyclerView, view)
         }
+
+        clearHistory.setOnClickListener {
+            trackHistoryAdapter.tracksHistory = mutableListOf()
+            searchHistory.clearTrackList()
+            searchHistoryView.isVisible = false
+        }
     }
 
     override fun onResume() {
@@ -125,7 +148,7 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        searchHistory.updateTrackList(trackListHistory)
+        searchHistory.updateTrackList(trackHistoryAdapter.tracksHistory)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -138,7 +161,6 @@ class SearchActivity : AppCompatActivity() {
         recyclerViewTracks: RecyclerView,
         recyclerViewHistoryTracks: RecyclerView
     ) {
-        trackHistoryAdapter = TrackHistoryAdapter(mutableListOf())
         if (searchHistory.getTrackList().isNotEmpty()) {
             trackHistoryAdapter.tracksHistory = searchHistory.getTrackList()
         }

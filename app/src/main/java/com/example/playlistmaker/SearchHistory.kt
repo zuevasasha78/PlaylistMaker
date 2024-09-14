@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.example.playlistmaker.network.data.Track
 import com.google.gson.Gson
 
-class SearchHistory(val sharedPreferences: SharedPreferences) {
+class SearchHistory(private val sharedPreferences: SharedPreferences) {
 
     fun getTrackList(): MutableList<Track> {
         val tracksSt = sharedPreferences.getString(TRACKS_HISTORY_KEY, null)
@@ -16,6 +16,7 @@ class SearchHistory(val sharedPreferences: SharedPreferences) {
             TRACKS_HISTORY_KEY,
             null
         ).apply()
+        println()
     }
 
     fun updateTrackList(trackListHistory: MutableList<Track>) {
