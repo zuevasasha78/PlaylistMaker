@@ -89,8 +89,11 @@ class SearchActivity : AppCompatActivity() {
             trackAdapter.notifyDataSetChanged()
 
             hideError(recyclerView)
-            searchHistoryView.isVisible = true
-            trackHistoryAdapter.notifyDataSetChanged()
+
+            if (trackHistoryAdapter.tracksHistory.isNotEmpty()) {
+                searchHistoryView.isVisible = true
+                trackHistoryAdapter.notifyDataSetChanged()
+            }
         }
 
         val textWatcher = object : TextWatcher {
@@ -99,9 +102,10 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 setViewVisible(clearButton, !s.isNullOrEmpty())
-                if (s.isNullOrEmpty()) {
+                if (s.isNullOrEmpty() && trackHistoryAdapter.tracksHistory.isNotEmpty()) {
                     searchHistoryView.isVisible = true
                     trackHistoryAdapter.notifyDataSetChanged()
+                    recyclerView.isVisible = false
                 } else {
                     searchHistoryView.isVisible = false
                 }
