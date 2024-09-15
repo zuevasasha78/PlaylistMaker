@@ -16,10 +16,10 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.network.RetrofitClient.iTunesService
@@ -52,7 +52,7 @@ class SearchActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
         val clearHistory = findViewById<Button>(R.id.clearHistory)
-        val searchHistoryView = findViewById<ConstraintLayout>(R.id.searchHistory)
+        val searchHistoryView = findViewById<NestedScrollView>(R.id.searchHistory)
 
         val app = applicationContext as App
         searchHistory = SearchHistory(app.sharedPrefs)
@@ -88,8 +88,7 @@ class SearchActivity : AppCompatActivity() {
             trackAdapter.trackList = mutableListOf()
             trackAdapter.notifyDataSetChanged()
 
-            hideError(recyclerView)
-
+            hideError()
             if (trackHistoryAdapter.tracksHistory.isNotEmpty()) {
                 searchHistoryView.isVisible = true
                 trackHistoryAdapter.notifyDataSetChanged()
@@ -172,7 +171,7 @@ class SearchActivity : AppCompatActivity() {
         recyclerViewHistoryTracks.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewHistoryTracks.adapter = trackHistoryAdapter
 
-        val searchHistoryView = findViewById<ConstraintLayout>(R.id.searchHistory)
+        val searchHistoryView = findViewById<NestedScrollView>(R.id.searchHistory)
         inputEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus &&
                 inputEditText.text.isNullOrEmpty()
@@ -214,8 +213,8 @@ class SearchActivity : AppCompatActivity() {
                         if (tracks.isNotEmpty()) {
                             adapter.trackList = tracks
                             adapter.notifyDataSetChanged()
-
-                            hideError(recyclerView)
+                            recyclerView.isVisible = true
+                            hideError()
                         } else {
                             val text = "Ничего не нашлось"
                             showPlaceholder(recyclerView, R.drawable.empty_list_tracks, text)
@@ -232,15 +231,13 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideError(recyclerView: RecyclerView) {
+    private fun hideError() {
         val imageErrorView = findViewById<ImageView>(R.id.emptyImageView)
         val errorTextView = findViewById<TextView>(R.id.errorText)
         val updateButtonView = findViewById<Button>(R.id.updateButton)
         updateButtonView.isVisible = false
         imageErrorView.isVisible = false
         errorTextView.isVisible = false
-
-        recyclerView.isVisible = true
     }
 
     private fun internetError(recyclerView: RecyclerView, button: View) {
