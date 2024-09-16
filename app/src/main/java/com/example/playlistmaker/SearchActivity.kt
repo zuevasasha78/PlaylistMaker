@@ -27,6 +27,7 @@ import com.example.playlistmaker.network.RetrofitClient.iTunesService
 import com.example.playlistmaker.network.data.Track
 import com.example.playlistmaker.network.data.TrackListResponse
 import com.example.playlistmaker.trackview.TrackAdapter
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -56,8 +57,8 @@ class SearchActivity : AppCompatActivity() {
 
         val app = applicationContext as App
         searchHistory = SearchHistory(app.sharedPrefs)
-        trackHistoryAdapter = TrackAdapter(mutableListOf()) {
-            startAudioPlayer()
+        trackHistoryAdapter = TrackAdapter(mutableListOf()) { track ->
+            startAudioPlayer(track)
         }
 
         toolbar.setNavigationOnClickListener {
@@ -79,7 +80,7 @@ class SearchActivity : AppCompatActivity() {
                 trackHistoryAdapter.trackList.removeAt(trackHistoryAdapter.trackList.size - 1)
             }
 
-            startAudioPlayer()
+            startAudioPlayer(track)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -163,8 +164,10 @@ class SearchActivity : AppCompatActivity() {
         savedText?.let { outState.putString(SEARCH_TEXT, savedText) }
     }
 
-    private fun startAudioPlayer() {
-        val audioPlayerIntent = Intent(this, AudioPlayerActivity::class.java)
+    private fun startAudioPlayer(track: Track) {
+        val audioPlayerIntent = Intent(this, AudioPlayerActivity::class.java).apply {
+            putExtra(TRACK_DATA, Gson().toJson(track))
+        }
         startActivity(audioPlayerIntent)
     }
 
@@ -284,5 +287,6 @@ class SearchActivity : AppCompatActivity() {
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
+        const val TRACK_DATA = "TRACK_DATA"
     }
 }
