@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
@@ -26,7 +27,6 @@ import com.example.playlistmaker.network.RetrofitClient.iTunesService
 import com.example.playlistmaker.network.data.Track
 import com.example.playlistmaker.network.data.TrackListResponse
 import com.example.playlistmaker.trackview.TrackAdapter
-import com.example.playlistmaker.trackview.TrackHistoryAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,7 +37,7 @@ class SearchActivity : AppCompatActivity() {
     private var searchText: String? = null
     private val trackList = mutableListOf<Track>()
     private lateinit var trackAdapter: TrackAdapter
-    private lateinit var trackHistoryAdapter: TrackHistoryAdapter
+    private lateinit var trackHistoryAdapter: TrackAdapter
     private lateinit var searchHistory: SearchHistory
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +56,9 @@ class SearchActivity : AppCompatActivity() {
 
         val app = applicationContext as App
         searchHistory = SearchHistory(app.sharedPrefs)
-        trackHistoryAdapter = TrackHistoryAdapter(mutableListOf())
+        trackHistoryAdapter = TrackAdapter(mutableListOf()) {
+            startAudioPlayer()
+        }
 
         toolbar.setNavigationOnClickListener {
             finish()
@@ -68,14 +70,16 @@ class SearchActivity : AppCompatActivity() {
         }
 
         trackAdapter = TrackAdapter(trackList) { track ->
-            val existingTrackIndex = trackHistoryAdapter.tracksHistory.indexOfFirst { it.trackId == track.trackId }
+            val existingTrackIndex = trackHistoryAdapter.trackList.indexOfFirst { it.trackId == track.trackId }
             if (existingTrackIndex != -1) {
-                trackHistoryAdapter.tracksHistory.removeAt(existingTrackIndex)
+                trackHistoryAdapter.trackList.removeAt(existingTrackIndex)
             }
-            trackHistoryAdapter.tracksHistory.add(0, track)
-            if (trackHistoryAdapter.tracksHistory.size > 10) {
-                trackHistoryAdapter.tracksHistory.removeAt(trackHistoryAdapter.tracksHistory.size - 1)
+            trackHistoryAdapter.trackList.add(0, track)
+            if (trackHistoryAdapter.trackList.size > 10) {
+                trackHistoryAdapter.trackList.removeAt(trackHistoryAdapter.trackList.size - 1)
             }
+
+            startAudioPlayer()
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -89,7 +93,7 @@ class SearchActivity : AppCompatActivity() {
             trackAdapter.notifyDataSetChanged()
 
             hideError()
-            if (trackHistoryAdapter.tracksHistory.isNotEmpty()) {
+            if (trackHistoryAdapter.trackList.isNotEmpty()) {
                 searchHistoryView.isVisible = true
                 trackHistoryAdapter.notifyDataSetChanged()
             }
@@ -101,7 +105,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 setViewVisible(clearButton, !s.isNullOrEmpty())
-                if (s.isNullOrEmpty() && trackHistoryAdapter.tracksHistory.isNotEmpty()) {
+                if (s.isNullOrEmpty() && trackHistoryAdapter.trackList.isNotEmpty()) {
                     searchHistoryView.isVisible = true
                     trackHistoryAdapter.notifyDataSetChanged()
                     recyclerView.isVisible = false
@@ -138,7 +142,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         clearHistory.setOnClickListener {
-            trackHistoryAdapter.tracksHistory = mutableListOf()
+            trackHistoryAdapter.trackList = mutableListOf()
             searchHistory.clearTrackList()
             searchHistoryView.isVisible = false
         }
@@ -151,12 +155,17 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        searchHistory.updateTrackList(trackHistoryAdapter.tracksHistory)
+        searchHistory.updateTrackList(trackHistoryAdapter.trackList)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         savedText?.let { outState.putString(SEARCH_TEXT, savedText) }
+    }
+
+    private fun startAudioPlayer() {
+        val audioPlayerIntent = Intent(this, AudioPlayerActivity::class.java)
+        startActivity(audioPlayerIntent)
     }
 
     private fun addSearchHistoryRecyclerView(
@@ -165,7 +174,7 @@ class SearchActivity : AppCompatActivity() {
         recyclerViewHistoryTracks: RecyclerView
     ) {
         if (searchHistory.getTrackList().isNotEmpty()) {
-            trackHistoryAdapter.tracksHistory = searchHistory.getTrackList()
+            trackHistoryAdapter.trackList = searchHistory.getTrackList()
         }
 
         recyclerViewHistoryTracks.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -176,7 +185,7 @@ class SearchActivity : AppCompatActivity() {
             if (hasFocus &&
                 inputEditText.text.isNullOrEmpty()
             ) {
-                if (trackHistoryAdapter.tracksHistory.isNotEmpty()) {
+                if (trackHistoryAdapter.trackList.isNotEmpty()) {
                     searchHistoryView.isVisible = true
                     trackHistoryAdapter.notifyDataSetChanged()
                     recyclerViewTracks.isVisible = false
