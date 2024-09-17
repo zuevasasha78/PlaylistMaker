@@ -3,6 +3,7 @@ package com.example.playlistmaker
 import android.graphics.drawable.GradientDrawable
 import android.util.TypedValue
 import android.view.View
+import com.example.playlistmaker.network.data.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -17,14 +18,18 @@ fun makeButtonRound(button: View) {
     button.background = drawable
 }
 
-fun <T> stringToList(jsonString: String?): T? {
+fun stringToTrackList(jsonString: String?): MutableList<Track> {
     val gson = Gson()
-    val type = object : TypeToken<T>() {}.type
-    return gson.fromJson(jsonString, type)
+    val listType = object : TypeToken<MutableList<Track>>() {}.type
+
+    return if (jsonString.isNullOrEmpty()) {
+        mutableListOf()
+    } else {
+        gson.fromJson(jsonString, listType)
+    }
 }
 
-inline fun <reified T> stringToObject(jsonString: String?): T {
+fun <T> stringToObject(jsonString: String?, clazz: Class<T>): T {
     val gson = Gson()
-    val type = object : TypeToken<T>() {}.type
-    return gson.fromJson<T>(jsonString, type)
+    return gson.fromJson(jsonString, clazz)
 }

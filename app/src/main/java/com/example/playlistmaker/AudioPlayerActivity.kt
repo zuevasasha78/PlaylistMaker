@@ -24,7 +24,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val trackImage = findViewById<ImageView>(R.id.trackImage)
 
-        track = stringToObject<Track>(intent.getStringExtra(TRACK_DATA))
+        track = stringToObject(intent.getStringExtra(TRACK_DATA), Track::class.java)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.audioplayer)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
