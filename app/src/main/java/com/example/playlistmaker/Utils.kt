@@ -17,8 +17,14 @@ fun makeButtonRound(button: View) {
     button.background = drawable
 }
 
-fun <T> stringToTrackList(jsonString: String?): T? {
+fun <T> stringToList(jsonString: String?): T? {
     val gson = Gson()
     val type = object : TypeToken<T>() {}.type
     return gson.fromJson(jsonString, type)
+}
+
+inline fun <reified T> stringToObject(jsonString: String?): T {
+    val gson = Gson()
+    val type = object : TypeToken<T>() {}.type
+    return gson.fromJson<T>(jsonString, type)
 }

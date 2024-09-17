@@ -8,7 +8,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
 
     fun getTrackList(): MutableList<Track> {
         val tracksSt = sharedPreferences.getString(TRACKS_HISTORY_KEY, null)
-        var tracks = stringToTrackList<MutableList<Track>>(tracksSt)
+        var tracks = stringToList<MutableList<Track>>(tracksSt)
         if (tracks.isNullOrEmpty()) tracks = mutableListOf()
         return tracks
     }
