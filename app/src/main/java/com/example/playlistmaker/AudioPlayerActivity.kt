@@ -2,6 +2,7 @@ package com.example.playlistmaker
 
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -23,6 +24,8 @@ class AudioPlayerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_audioplayer)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val trackImage = findViewById<ImageView>(R.id.trackImage)
+        val trackName = findViewById<TextView>(R.id.trackName)
+        val artistName = findViewById<TextView>(R.id.artistName)
 
         track = stringToObject(intent.getStringExtra(TRACK_DATA), Track::class.java)
 
@@ -37,6 +40,8 @@ class AudioPlayerActivity : AppCompatActivity() {
         }
 
         uploadImage(trackImage)
+        trackName.text = track.trackName
+        artistName.text = track.artistName
     }
 
     override fun onResume() {
@@ -51,8 +56,9 @@ class AudioPlayerActivity : AppCompatActivity() {
 
     private fun uploadImage(trackImage: ImageView) {
         val roundValue = 8
+        val url = track.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
         Glide.with(this)
-            .load(track.artworkUrl100)
+            .load(url)
             .placeholder(R.drawable.placeholder)
             .transform(
                 FitCenter(),
