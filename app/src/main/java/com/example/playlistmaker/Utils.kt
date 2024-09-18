@@ -7,6 +7,8 @@ import com.example.playlistmaker.network.data.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 fun makeButtonRound(button: View) {
@@ -36,8 +38,14 @@ fun <T> stringToObject(jsonString: String?, clazz: Class<T>): T {
     return gson.fromJson(jsonString, clazz)
 }
 
-fun convertTimeFormat(trackTimeMillis: Int?): String? {
+fun convertMsToData(trackTimeMillis: Int?, format: String): String? {
     return trackTimeMillis?.let {
-        SimpleDateFormat("mm:ss", Locale.getDefault()).format(it)
+        SimpleDateFormat(format, Locale.getDefault()).format(it)
     }
+}
+
+fun convertStringToData(time: String, format: String): String? {
+    val zonedDateTime = ZonedDateTime.parse(time)
+    val formatter = DateTimeFormatter.ofPattern(format)
+    return zonedDateTime.format(formatter)
 }

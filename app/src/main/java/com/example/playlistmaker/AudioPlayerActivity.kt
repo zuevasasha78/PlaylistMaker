@@ -28,6 +28,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         val artistName = findViewById<TextView>(R.id.artistName)
         val durationValue = findViewById<TextView>(R.id.durationValue)
         val albumText = findViewById<TextView>(R.id.albumText)
+        val yearValue = findViewById<TextView>(R.id.yearValue)
 
         track = stringToObject(intent.getStringExtra(TRACK_DATA), Track::class.java)
 
@@ -44,8 +45,9 @@ class AudioPlayerActivity : AppCompatActivity() {
         uploadImage(trackImage)
         trackName.text = track.trackName
         artistName.text = track.artistName
-        durationValue.text = convertTimeFormat(track.trackTimeMillis)
+        durationValue.text = convertMsToData(track.trackTimeMillis, "mm:ss")
         albumText.text = track.collectionName
+        yearValue.text = convertStringToData(track.releaseDate, "yyyy")
     }
 
     override fun onResume() {

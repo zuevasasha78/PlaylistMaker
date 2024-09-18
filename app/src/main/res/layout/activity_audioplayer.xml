@@ -151,8 +151,33 @@
         style="@style/YsDisplayRegularBlack13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:lines="1"
+        android:maxLength="30"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="@+id/rightGuidelineDesc"
         app:layout_constraintStart_toEndOf="@+id/album"
         app:layout_constraintTop_toTopOf="@+id/album"
         tool:text="Album name" />
+
+    <TextView
+        android:id="@+id/year"
+        style="@style/YsDisplayRegular13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="@string/year"
+        app:layout_constraintEnd_toStartOf="@+id/yearValue"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/leftGuidelineDesc"
+        app:layout_constraintTop_toBottomOf="@+id/album" />
+
+    <TextView
+        android:id="@+id/yearValue"
+        style="@style/YsDisplayRegularBlack13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/rightGuidelineDesc"
+        app:layout_constraintStart_toEndOf="@+id/year"
+        app:layout_constraintTop_toTopOf="@+id/year"
+        tool:text="2000" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
-import com.example.playlistmaker.convertTimeFormat
+import com.example.playlistmaker.convertMsToData
 import com.example.playlistmaker.network.data.Track
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -21,7 +21,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(track: Track) {
         trackNameView.text = track.trackName
         artistNameView.text = track.artistName
-        trackTimeView.text = convertTimeFormat(track.trackTimeMillis)
+        trackTimeView.text = convertMsToData(track.trackTimeMillis, "mm:ss")
 
         val roundValue = 2
         Glide.with(itemView.context)
