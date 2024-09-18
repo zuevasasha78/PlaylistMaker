@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.Group
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -52,7 +53,8 @@ class AudioPlayerActivity : AppCompatActivity() {
         if (!track.collectionName.isNullOrEmpty()) {
             albumText.text = track.collectionName
         } else {
-            albumText.isVisible = false
+            val albumLine = findViewById<Group>(R.id.albumLine)
+            albumLine.isVisible = false
         }
         yearValue.text = convertStringToData(track.releaseDate, "yyyy")
         genreName.text = track.primaryGenreName

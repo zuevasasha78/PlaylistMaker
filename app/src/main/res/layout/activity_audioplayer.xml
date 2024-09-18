@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/audioplayer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -73,10 +74,10 @@
             app:layout_constraintTop_toBottomOf="@+id/trackName" />
 
         <ImageView
-            android:id="@+id/add_button"
+            android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="54dp"
+            android:layout_marginTop="52dp"
             android:src="@drawable/add_button"
             app:layout_constraintEnd_toStartOf="@+id/playButton"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -88,20 +89,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/play_button"
-            app:layout_constraintBottom_toBottomOf="@id/add_button"
+            app:layout_constraintBottom_toBottomOf="@id/addButton"
             app:layout_constraintEnd_toStartOf="@id/likeButton"
-            app:layout_constraintStart_toEndOf="@id/add_button"
-            app:layout_constraintTop_toTopOf="@id/add_button" />
+            app:layout_constraintStart_toEndOf="@id/addButton"
+            app:layout_constraintTop_toTopOf="@id/addButton" />
 
         <ImageView
             android:id="@+id/likeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/like_button"
-            app:layout_constraintBottom_toBottomOf="@id/add_button"
+            app:layout_constraintBottom_toBottomOf="@id/addButton"
             app:layout_constraintEnd_toEndOf="@+id/rightGuideline"
             app:layout_constraintStart_toEndOf="@id/playButton"
-            app:layout_constraintTop_toTopOf="@id/add_button" />
+            app:layout_constraintTop_toTopOf="@id/addButton" />
 
         <TextView
             android:id="@+id/stopOnTime"
@@ -138,7 +139,7 @@
             app:layout_constraintEnd_toStartOf="@+id/durationValue"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="@id/leftGuidelineDesc"
-            app:layout_constraintTop_toBottomOf="@+id/add_button" />
+            app:layout_constraintTop_toBottomOf="@+id/addButton" />
 
         <TextView
             android:id="@+id/durationValue"
@@ -149,6 +150,13 @@
             app:layout_constraintStart_toEndOf="@+id/duration"
             app:layout_constraintTop_toTopOf="@+id/duration"
             tool:text="5:40" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/albumLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="album,albumText" />
 
         <TextView
             android:id="@+id/album"
