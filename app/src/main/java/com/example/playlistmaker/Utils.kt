@@ -6,6 +6,8 @@ import android.view.View
 import com.example.playlistmaker.network.data.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 fun makeButtonRound(button: View) {
     val drawable = GradientDrawable()
@@ -32,4 +34,10 @@ fun stringToTrackList(jsonString: String?): MutableList<Track> {
 fun <T> stringToObject(jsonString: String?, clazz: Class<T>): T {
     val gson = Gson()
     return gson.fromJson(jsonString, clazz)
+}
+
+fun convertTimeFormat(trackTimeMillis: Int?): String? {
+    return trackTimeMillis?.let {
+        SimpleDateFormat("mm:ss", Locale.getDefault()).format(it)
+    }
 }

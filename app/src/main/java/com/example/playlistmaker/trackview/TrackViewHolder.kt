@@ -8,9 +8,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
+import com.example.playlistmaker.convertTimeFormat
 import com.example.playlistmaker.network.data.Track
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -22,11 +21,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(track: Track) {
         trackNameView.text = track.trackName
         artistNameView.text = track.artistName
-
-        val time = track.trackTimeMillis
-        if (time != null) {
-            trackTimeView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(time)
-        }
+        trackTimeView.text = convertTimeFormat(track.trackTimeMillis)
 
         val roundValue = 2
         Glide.with(itemView.context)

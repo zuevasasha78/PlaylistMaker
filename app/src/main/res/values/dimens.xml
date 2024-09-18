@@ -9,6 +9,7 @@
     <dimen name="text_artist_name">11sp</dimen>
     <dimen name="sp_19">19sp</dimen>
     <dimen name="update_track_text">14sp</dimen>
+    <dimen name="description_track_text">13sp</dimen>
     <dimen name="radius_update_button">54px</dimen>
 
 </resources>

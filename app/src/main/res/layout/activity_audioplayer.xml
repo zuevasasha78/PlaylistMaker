@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/audioplayer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -97,4 +98,61 @@
         app:layout_constraintStart_toEndOf="@id/playButton"
         app:layout_constraintTop_toTopOf="@id/add_button" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftGuidelineDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightGuidelineDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <TextView
+        android:id="@+id/duration"
+        style="@style/YsDisplayRegular13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:text="@string/duration"
+        app:layout_constraintEnd_toStartOf="@+id/durationValue"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/leftGuidelineDesc"
+        app:layout_constraintTop_toBottomOf="@+id/add_button" />
+
+    <TextView
+        android:id="@+id/durationValue"
+        style="@style/YsDisplayRegularBlack13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/rightGuidelineDesc"
+        app:layout_constraintStart_toEndOf="@+id/duration"
+        app:layout_constraintTop_toTopOf="@+id/duration"
+        tool:text="5:40" />
+
+    <TextView
+        android:id="@+id/album"
+        style="@style/YsDisplayRegular13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="@string/album"
+        app:layout_constraintEnd_toStartOf="@+id/albumText"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/leftGuidelineDesc"
+        app:layout_constraintTop_toBottomOf="@+id/duration" />
+
+    <TextView
+        android:id="@+id/albumText"
+        style="@style/YsDisplayRegularBlack13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/rightGuidelineDesc"
+        app:layout_constraintStart_toEndOf="@+id/album"
+        app:layout_constraintTop_toTopOf="@+id/album"
+        tool:text="Album name" />
 </androidx.constraintlayout.widget.ConstraintLayout>
