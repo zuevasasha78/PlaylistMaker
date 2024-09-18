@@ -98,6 +98,17 @@
         app:layout_constraintStart_toEndOf="@id/playButton"
         app:layout_constraintTop_toTopOf="@id/add_button" />
 
+    <TextView
+        android:id="@+id/stopOnTime"
+        style="@style/YsDisplayMedium14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/playButton"
+        app:layout_constraintStart_toStartOf="@+id/playButton"
+        app:layout_constraintTop_toBottomOf="@+id/playButton"
+        tool:text="00:30" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/leftGuidelineDesc"
         android:layout_width="wrap_content"
