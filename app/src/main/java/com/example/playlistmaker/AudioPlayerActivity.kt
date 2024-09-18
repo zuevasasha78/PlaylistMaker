@@ -63,12 +63,10 @@ class AudioPlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // todo для фонового режима???
     }
 
-    override fun onStop() {
-        super.onStop()
-        // todo для фонового режима???
+    override fun onPause() {
+        super.onPause()
     }
 
     private fun uploadImage(trackImage: ImageView) {
