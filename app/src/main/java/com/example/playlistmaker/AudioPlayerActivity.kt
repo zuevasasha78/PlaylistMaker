@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -48,7 +49,11 @@ class AudioPlayerActivity : AppCompatActivity() {
         trackName.text = track.trackName
         artistName.text = track.artistName
         durationValue.text = convertMsToData(track.trackTimeMillis, "mm:ss")
-        albumText.text = track.collectionName
+        if (!track.collectionName.isNullOrEmpty()) {
+            albumText.text = track.collectionName
+        } else {
+            albumText.isVisible = false
+        }
         yearValue.text = convertStringToData(track.releaseDate, "yyyy")
         genreName.text = track.primaryGenreName
         countryName.text = track.country
