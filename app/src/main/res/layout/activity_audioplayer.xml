@@ -198,8 +198,36 @@
         style="@style/YsDisplayRegularBlack13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:lines="1"
+        android:maxLength="30"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="@+id/rightGuidelineDesc"
         app:layout_constraintStart_toEndOf="@+id/genre"
         app:layout_constraintTop_toTopOf="@+id/genre"
         tool:text="genre" />
+
+    <TextView
+        android:id="@+id/country"
+        style="@style/YsDisplayRegular13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="@string/country"
+        app:layout_constraintEnd_toStartOf="@+id/countryName"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/leftGuidelineDesc"
+        app:layout_constraintTop_toBottomOf="@+id/genre" />
+
+    <TextView
+        android:id="@+id/countryName"
+        style="@style/YsDisplayRegularBlack13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:maxLength="30"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="@+id/rightGuidelineDesc"
+        app:layout_constraintStart_toEndOf="@+id/country"
+        app:layout_constraintTop_toTopOf="@+id/country"
+        tool:text="Индия" />
 </androidx.constraintlayout.widget.ConstraintLayout>

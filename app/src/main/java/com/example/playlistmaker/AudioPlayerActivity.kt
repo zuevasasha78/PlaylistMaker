@@ -30,6 +30,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         val albumText = findViewById<TextView>(R.id.albumText)
         val yearValue = findViewById<TextView>(R.id.yearValue)
         val genreName = findViewById<TextView>(R.id.genreName)
+        val countryName = findViewById<TextView>(R.id.countryName)
 
         track = stringToObject(intent.getStringExtra(TRACK_DATA), Track::class.java)
 
@@ -50,6 +51,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         albumText.text = track.collectionName
         yearValue.text = convertStringToData(track.releaseDate, "yyyy")
         genreName.text = track.primaryGenreName
+        countryName.text = track.country
     }
 
     override fun onResume() {
