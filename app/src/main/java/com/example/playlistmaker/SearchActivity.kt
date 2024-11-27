@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -58,6 +59,7 @@ class SearchActivity : AppCompatActivity() {
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
         val clearHistory = findViewById<Button>(R.id.clearHistory)
         val searchHistoryView = findViewById<NestedScrollView>(R.id.searchHistory)
+        val progressBarView = findViewById<ProgressBar>(R.id.progressBar)
 
         val app = applicationContext as App
         searchHistory = SearchHistory(app.sharedPrefs)
@@ -125,7 +127,7 @@ class SearchActivity : AppCompatActivity() {
 
                 searchRunnable = Runnable {
                     searchText = s.toString()
-                    executeSearchRequest(searchText, trackAdapter, recyclerView, updateButtonView)
+                    executeSearchRequest(searchText, trackAdapter, recyclerView, updateButtonView, progressBarView)
                 }
                 handler.postDelayed(searchRunnable!!, SEARCH_DEBOUNCE_DELAY)
             }
@@ -149,7 +151,7 @@ class SearchActivity : AppCompatActivity() {
             searchRunnable?.let { handler.removeCallbacks(it) }
 
             searchRunnable = Runnable {
-                executeSearchRequest(searchText, trackAdapter, recyclerView, view)
+                executeSearchRequest(searchText, trackAdapter, recyclerView, view, progressBarView)
             }
             handler.postDelayed(searchRunnable!!, SEARCH_DEBOUNCE_DELAY)
         }
@@ -226,11 +228,14 @@ class SearchActivity : AppCompatActivity() {
         searchText: String?,
         adapter: TrackAdapter,
         recyclerView: RecyclerView,
-        updateButtonView: View
+        updateButtonView: View,
+        progressBarView: View
     ) {
+        progressBarView.visibility = View.VISIBLE
         if (!searchText.isNullOrEmpty()) {
             iTunesService.search(searchText).enqueue(object : Callback<TrackListResponse> {
                 override fun onResponse(call: Call<TrackListResponse>, response: Response<TrackListResponse>) {
+                    progressBarView.visibility = View.GONE
                     if (response.isSuccessful) {
                         val trackList = response.body() ?: return
                         val tracks = trackList.results ?: return
@@ -302,6 +307,6 @@ class SearchActivity : AppCompatActivity() {
         const val SEARCH_TEXT = "SEARCH_TEXT"
         const val TRACK_DATA = "TRACK_DATA"
 
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val SEARCH_DEBOUNCE_DELAY = 2_000L
     }
 }
