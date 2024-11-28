@@ -1,6 +1,9 @@
 package com.example.playlistmaker
 
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +22,8 @@ import com.example.playlistmaker.network.data.Track
 class AudioPlayerActivity : AppCompatActivity() {
 
     private lateinit var track: Track
+    private lateinit var mediaPlayer: MediaPlayer
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +38,8 @@ class AudioPlayerActivity : AppCompatActivity() {
         val yearValue = findViewById<TextView>(R.id.yearValue)
         val genreName = findViewById<TextView>(R.id.genreName)
         val countryName = findViewById<TextView>(R.id.countryName)
+        val playButton = findViewById<ImageView>(R.id.playButton)
+        val stopOnTime = findViewById<TextView>(R.id.stopOnTime)
 
         track = stringToObject(intent.getStringExtra(TRACK_DATA), Track::class.java)
 
@@ -59,14 +66,41 @@ class AudioPlayerActivity : AppCompatActivity() {
         yearValue.text = convertStringToData(track.releaseDate, "yyyy")
         genreName.text = track.primaryGenreName
         countryName.text = track.country
-    }
+        stopOnTime.text = durationFormat(0)
 
-    override fun onResume() {
-        super.onResume()
+        //media player
+        mediaPlayer = MediaPlayer()
+        mediaPlayer.setDataSource(track.previewUrl)
+        mediaPlayer.prepareAsync()
+
+        val updateTimeRunnable = object : Runnable {
+            override fun run() {
+                if (mediaPlayer.isPlaying) {
+                    val currentPosition = mediaPlayer.currentPosition
+                    stopOnTime.text = durationFormat(currentPosition)
+                    handler.postDelayed(this, 1_000)
+                }
+            }
+        }
+
+        playButton.setOnClickListener {
+            if (!mediaPlayer.isPlaying) {
+                mediaPlayer.start()
+                playButton.setImageResource(R.drawable.pause_button)
+                handler.post(updateTimeRunnable)
+            } else {
+                mediaPlayer.pause()
+                playButton.setImageResource(R.drawable.play_button)
+                handler.removeCallbacks(updateTimeRunnable)
+            }
+        }
     }
 
     override fun onPause() {
         super.onPause()
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
+        }
     }
 
     private fun uploadImage(trackImage: ImageView) {
@@ -83,5 +117,4 @@ class AudioPlayerActivity : AppCompatActivity() {
             )
             .into(trackImage)
     }
-
 }
