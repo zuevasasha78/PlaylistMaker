@@ -21,6 +21,10 @@ import com.example.playlistmaker.network.data.Track
 
 class AudioPlayerActivity : AppCompatActivity() {
 
+    companion object {
+        private const val MAX_DURATION = 29977
+    }
+
     private lateinit var track: Track
     private lateinit var mediaPlayer: MediaPlayer
     private val handler = Handler(Looper.getMainLooper())
@@ -75,6 +79,10 @@ class AudioPlayerActivity : AppCompatActivity() {
 
         val updateTimeRunnable = object : Runnable {
             override fun run() {
+                if (mediaPlayer.currentPosition >= MAX_DURATION) {
+                    mediaPlayer.seekTo(0)
+                    playButton.setImageResource(R.drawable.play_button)
+                }
                 if (mediaPlayer.isPlaying) {
                     val currentPosition = mediaPlayer.currentPosition
                     stopOnTime.text = durationFormat(currentPosition)
