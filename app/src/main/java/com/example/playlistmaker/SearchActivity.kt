@@ -231,35 +231,39 @@ class SearchActivity : AppCompatActivity() {
         updateButtonView: View,
         progressBarView: View
     ) {
-        progressBarView.visibility = View.VISIBLE
-        if (!searchText.isNullOrEmpty()) {
-            iTunesService.search(searchText).enqueue(object : Callback<TrackListResponse> {
-                override fun onResponse(call: Call<TrackListResponse>, response: Response<TrackListResponse>) {
-                    progressBarView.visibility = View.GONE
-                    if (response.isSuccessful) {
-                        val trackList = response.body() ?: return
-                        val tracks = trackList.results ?: return
-                        if (tracks.isNotEmpty()) {
-                            adapter.trackList = tracks
-                            adapter.notifyDataSetChanged()
-                            recyclerView.isVisible = true
-                            hideError()
-                        } else {
-                            val text = "Ничего не нашлось"
-                            showPlaceholder(recyclerView, R.drawable.empty_list_tracks, text)
-                        }
-                    } else {
-                        internetError(recyclerView, updateButtonView)
-                    }
-                }
+        if (searchText.isNullOrEmpty()) return
 
-                override fun onFailure(call: Call<TrackListResponse>, t: Throwable) {
+        progressBarView.isVisible = true
+        recyclerView.isVisible = false
+        updateButtonView.isVisible = false
+        hideError()
+
+        iTunesService.search(searchText).enqueue(object : Callback<TrackListResponse> {
+            override fun onResponse(call: Call<TrackListResponse>, response: Response<TrackListResponse>) {
+                progressBarView.isVisible = false
+
+                if (response.isSuccessful) {
+                    val trackList = response.body() ?: return
+                    val tracks = trackList.results ?: return
+
+                    if (tracks.isNotEmpty()) {
+                        adapter.trackList = tracks
+                        adapter.notifyDataSetChanged()
+                        recyclerView.isVisible = true
+                    } else {
+                        showPlaceholder(recyclerView, R.drawable.empty_list_tracks, "Ничего не нашлось")
+                    }
+                } else {
                     internetError(recyclerView, updateButtonView)
                 }
-            })
-        }
-    }
+            }
 
+            override fun onFailure(call: Call<TrackListResponse>, t: Throwable) {
+                progressBarView.isVisible = false
+                internetError(recyclerView, updateButtonView)
+            }
+        })
+    }
 
     private fun hideError() {
         val imageErrorView = findViewById<ImageView>(R.id.emptyImageView)
