@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="YsDisplayMediumBlackText">
+    <style name="YsDisplayMediumBlack22">
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textSize">@dimen/text_size_main</item>
+        <item name="android:textColor">@color/black_white_by_theme</item>
+    </style>
+
+    <style name="YsDisplayMedium14">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/update_track_text</item>
+        <item name="android:textColor">@color/black_white_by_theme</item>
+    </style>
+
+    <style name="YsDisplayRegular13">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/description_track_text</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="YsDisplayRegularBlack13">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/description_track_text</item>
+        <item name="android:textColor">@color/black_white_by_theme</item>
     </style>
 
     <style name="YsDisplayMediumWhiteText">
