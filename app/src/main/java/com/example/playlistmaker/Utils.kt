@@ -49,3 +49,9 @@ fun convertStringToData(time: String, format: String): String? {
     val formatter = DateTimeFormatter.ofPattern(format)
     return zonedDateTime.format(formatter)
 }
+
+fun durationFormat(milliseconds: Int): String {
+    val minutes = (milliseconds / 1000) / 60
+    val seconds = (milliseconds / 1000) % 60
+    return String.format("%d:%02d", minutes, seconds)
+}

@@ -4,15 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +43,9 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var trackHistoryAdapter: TrackAdapter
     private lateinit var searchHistory: SearchHistory
 
+    private val handler = Handler(Looper.getMainLooper())
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -54,6 +59,7 @@ class SearchActivity : AppCompatActivity() {
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
         val clearHistory = findViewById<Button>(R.id.clearHistory)
         val searchHistoryView = findViewById<NestedScrollView>(R.id.searchHistory)
+        val progressBarView = findViewById<ProgressBar>(R.id.progressBar)
 
         val app = applicationContext as App
         searchHistory = SearchHistory(app.sharedPrefs)
@@ -101,11 +107,16 @@ class SearchActivity : AppCompatActivity() {
         }
 
         val textWatcher = object : TextWatcher {
+            private var searchRunnable: Runnable? = null
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 setViewVisible(clearButton, !s.isNullOrEmpty())
+
+                searchRunnable?.let { handler.removeCallbacks(it) }
+
                 if (s.isNullOrEmpty() && trackHistoryAdapter.trackList.isNotEmpty()) {
                     searchHistoryView.isVisible = true
                     trackHistoryAdapter.notifyDataSetChanged()
@@ -113,6 +124,12 @@ class SearchActivity : AppCompatActivity() {
                 } else {
                     searchHistoryView.isVisible = false
                 }
+
+                searchRunnable = Runnable {
+                    searchText = s.toString()
+                    executeSearchRequest(searchText, trackAdapter, recyclerView, updateButtonView, progressBarView)
+                }
+                handler.postDelayed(searchRunnable!!, SEARCH_DEBOUNCE_DELAY)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -127,19 +144,16 @@ class SearchActivity : AppCompatActivity() {
             insets
         }
 
-        inputEditText.setOnEditorActionListener { textView, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                searchText = textView.text.toString()
-                executeSearchRequest(searchText, trackAdapter, recyclerView, updateButtonView)
-                true
-            }
-            false
-        }
-
         addSearchHistoryRecyclerView(inputEditText, recyclerView, recyclerViewHistoryTracks)
 
         updateButtonView.setOnClickListener { view ->
-            executeSearchRequest(searchText, trackAdapter, recyclerView, view)
+            var searchRunnable: Runnable? = null
+            searchRunnable?.let { handler.removeCallbacks(it) }
+
+            searchRunnable = Runnable {
+                executeSearchRequest(searchText, trackAdapter, recyclerView, view, progressBarView)
+            }
+            handler.postDelayed(searchRunnable!!, SEARCH_DEBOUNCE_DELAY)
         }
 
         clearHistory.setOnClickListener {
@@ -214,22 +228,29 @@ class SearchActivity : AppCompatActivity() {
         searchText: String?,
         adapter: TrackAdapter,
         recyclerView: RecyclerView,
-        updateButtonView: View
+        updateButtonView: View,
+        progressBarView: View
     ) {
         if (!searchText.isNullOrEmpty()) {
+            progressBarView.isVisible = true
+            recyclerView.isVisible = false
+            updateButtonView.isVisible = false
+            hideError()
+
             iTunesService.search(searchText).enqueue(object : Callback<TrackListResponse> {
                 override fun onResponse(call: Call<TrackListResponse>, response: Response<TrackListResponse>) {
+                    progressBarView.isVisible = false
+
                     if (response.isSuccessful) {
                         val trackList = response.body() ?: return
                         val tracks = trackList.results ?: return
+
                         if (tracks.isNotEmpty()) {
                             adapter.trackList = tracks
                             adapter.notifyDataSetChanged()
                             recyclerView.isVisible = true
-                            hideError()
                         } else {
-                            val text = "Ничего не нашлось"
-                            showPlaceholder(recyclerView, R.drawable.empty_list_tracks, text)
+                            showPlaceholder(recyclerView, R.drawable.empty_list_tracks, "Ничего не нашлось")
                         }
                     } else {
                         internetError(recyclerView, updateButtonView)
@@ -237,6 +258,7 @@ class SearchActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<TrackListResponse>, t: Throwable) {
+                    progressBarView.isVisible = false
                     internetError(recyclerView, updateButtonView)
                 }
             })
@@ -288,5 +310,7 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
         const val TRACK_DATA = "TRACK_DATA"
+
+        private const val SEARCH_DEBOUNCE_DELAY = 2_000L
     }
 }
