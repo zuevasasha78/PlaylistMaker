@@ -27,9 +27,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.App
 import com.example.playlistmaker.R
-import com.example.playlistmaker.RetrofitClient.iTunesService
 import com.example.playlistmaker.SearchHistory
 import com.example.playlistmaker.data.dto.TrackListResponse
+import com.example.playlistmaker.data.network.RetrofitNetworkClient.iTunesService
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
 import com.google.gson.Gson
