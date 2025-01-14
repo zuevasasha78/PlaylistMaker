@@ -1,4 +1,4 @@
-package com.example.playlistmaker.trackview
+package com.example.playlistmaker.ui.tracks
 
 import android.os.Handler
 import android.os.Looper
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
-import com.example.playlistmaker.network.data.Track
+import com.example.playlistmaker.domain.models.Track
 
 class TrackAdapter(
     var trackList: MutableList<Track>, private val onClick: (Track) -> Unit

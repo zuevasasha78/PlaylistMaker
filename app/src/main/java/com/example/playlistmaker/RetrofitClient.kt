@@ -1,5 +1,6 @@
-package com.example.playlistmaker.network
+package com.example.playlistmaker
 
+import com.example.playlistmaker.data.network.ITunesService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

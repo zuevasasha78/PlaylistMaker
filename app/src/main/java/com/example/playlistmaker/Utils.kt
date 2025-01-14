@@ -3,7 +3,7 @@ package com.example.playlistmaker
 import android.graphics.drawable.GradientDrawable
 import android.util.TypedValue
 import android.view.View
-import com.example.playlistmaker.network.data.Track
+import com.example.playlistmaker.domain.models.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat

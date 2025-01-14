@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.tracks
 
 import android.content.Context
 import android.content.Intent
@@ -25,10 +25,13 @@ import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.network.RetrofitClient.iTunesService
-import com.example.playlistmaker.network.data.Track
-import com.example.playlistmaker.network.data.TrackListResponse
-import com.example.playlistmaker.trackview.TrackAdapter
+import com.example.playlistmaker.App
+import com.example.playlistmaker.R
+import com.example.playlistmaker.RetrofitClient.iTunesService
+import com.example.playlistmaker.SearchHistory
+import com.example.playlistmaker.data.dto.TrackListResponse
+import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback

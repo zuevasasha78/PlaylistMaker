@@ -1,4 +1,4 @@
-package com.example.playlistmaker.trackview
+package com.example.playlistmaker.ui.tracks
 
 import android.view.View
 import android.widget.ImageView
@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.convertMsToData
-import com.example.playlistmaker.network.data.Track
+import com.example.playlistmaker.domain.models.Track
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

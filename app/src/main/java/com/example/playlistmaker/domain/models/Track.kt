@@ -1,9 +1,4 @@
-package com.example.playlistmaker.network.data
-
-data class TrackListResponse(
-    val resultCount: Int? = null,
-    val results: MutableList<Track>? = null
-)
+package com.example.playlistmaker.domain.models
 
 data class Track(
     val trackId: Int,
