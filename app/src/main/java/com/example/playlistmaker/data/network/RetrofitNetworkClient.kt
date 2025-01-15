@@ -8,9 +8,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitNetworkClient : NetworkClient {
+class RetrofitNetworkClient : NetworkClient {
 
-    private const val BASE_URL = "https://itunes.apple.com/"
+    private val BASE_URL = "https://itunes.apple.com/"
 
     private val client = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
