@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.playlistmaker.databinding.ActivityMainBinding
 import com.example.playlistmaker.presentation.ui.library.LibraryActivity
 import com.example.playlistmaker.presentation.ui.settings.SettingsActivity
-import com.example.playlistmaker.presentation.ui.tracks.NSearchActivity
+import com.example.playlistmaker.presentation.ui.tracks.SearchActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         viewBinding.searchButton.setOnClickListener {
-            val searchIntent = Intent(this, NSearchActivity::class.java)
+            val searchIntent = Intent(this, SearchActivity::class.java)
             startActivity(searchIntent)
         }
 
