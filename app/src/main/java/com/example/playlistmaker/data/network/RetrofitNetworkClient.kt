@@ -13,6 +13,7 @@ class RetrofitNetworkClient : NetworkClient {
     private val BASE_URL = "https://itunes.apple.com/"
 
     private val client = OkHttpClient.Builder()
+        .retryOnConnectionFailure(true)
         .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
         .build()
 
