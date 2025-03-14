@@ -1,12 +1,12 @@
 package com.example.playlistmaker.domain.models
 
+import com.example.playlistmaker.domain.api.TracksData
 import com.example.playlistmaker.domain.api.TracksInteractor
 
-class TrackConsumerImpl(private val onTracksReceived: (List<Track>) -> Unit) : TracksInteractor.TrackConsumer {
-    private var list: List<Track> = emptyList()
+class TrackConsumerImpl(private val onTracksReceived: (TracksData<List<Track>>) -> Unit) :
+    TracksInteractor.TrackConsumer {
 
-    override fun consume(foundTracks: List<Track>) {
-        this.list = foundTracks
-        onTracksReceived(list)
+    override fun consume(data: TracksData<List<Track>>) {
+        onTracksReceived(data)
     }
 }
