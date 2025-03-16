@@ -1,5 +1,6 @@
-package com.example.playlistmaker.domain.api
+package com.example.playlistmaker.domain.use_case
 
+import com.example.playlistmaker.domain.api.TracksHistoryRepository
 import com.example.playlistmaker.domain.models.Track
 
 class TracksHistoryInteractor(private val repository: TracksHistoryRepository) {

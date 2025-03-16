@@ -20,9 +20,9 @@ import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.domain.api.TracksData
-import com.example.playlistmaker.domain.api.TracksHistoryInteractor
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.models.TrackConsumerImpl
+import com.example.playlistmaker.domain.use_case.TracksHistoryInteractor
 import com.example.playlistmaker.presentation.ui.audioplayer.AudioPlayerActivity
 import com.google.gson.Gson
 

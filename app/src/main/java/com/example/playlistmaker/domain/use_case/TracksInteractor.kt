@@ -1,5 +1,6 @@
-package com.example.playlistmaker.domain.api
+package com.example.playlistmaker.domain.use_case
 
+import com.example.playlistmaker.domain.api.TracksData
 import com.example.playlistmaker.domain.models.Track
 
 interface TracksInteractor {

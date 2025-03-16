@@ -16,6 +16,7 @@ import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivityAudioplayerBinding
 import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.domain.use_case.TrackInteractor
 import com.example.playlistmaker.durationFormat
 
 class AudioPlayerActivity : AppCompatActivity() {
@@ -28,7 +29,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         private const val TIMER_UPDATE_RATE = 300L
     }
 
-    private val interactor = Creator.providerGetTrackInteractor()
+    private lateinit var trackInteractor: TrackInteractor
     private lateinit var viewBinding: ActivityAudioplayerBinding
     private var playerState = STATE_DEFAULT
     private val handler = Handler(Looper.getMainLooper())
@@ -43,8 +44,10 @@ class AudioPlayerActivity : AppCompatActivity() {
         enableEdgeToEdge()
         viewBinding = ActivityAudioplayerBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        createInteractor()
 
-        track = interactor.execute(intent.extras)
+        track = trackInteractor.getTrack()
+
         mediaPlayer = MediaPlayer()
         preparePlayer()
 
@@ -85,6 +88,11 @@ class AudioPlayerActivity : AppCompatActivity() {
                 playbackControl()
             }
         }
+    }
+
+    private fun createInteractor() {
+        val providerTrackInteractor = Creator.provideTrackRepository(intent)
+        trackInteractor = Creator.providerTrackInteractor(providerTrackInteractor)
     }
 
     override fun onPause() {
