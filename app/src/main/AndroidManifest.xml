@@ -20,7 +20,7 @@
             android:name=".presentation.ui.library.LibraryActivity"
             android:exported="false" />
         <activity
-            android:name=".data.SearchActivity"
+            android:name=".presentation.ui.tracks.SearchActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.ui.settings.SettingsActivity"

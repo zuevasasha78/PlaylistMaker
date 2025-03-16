@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data
+package com.example.playlistmaker.presentation.ui.tracks
 
 import android.content.Context
 import android.content.Intent
@@ -19,13 +19,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.App
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
-import com.example.playlistmaker.SearchHistory
+import com.example.playlistmaker.data.SearchHistory
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.domain.api.TracksData
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.models.TrackConsumerImpl
 import com.example.playlistmaker.presentation.ui.audioplayer.AudioPlayerActivity
-import com.example.playlistmaker.presentation.ui.tracks.TrackAdapter
 import com.google.gson.Gson
 
 class SearchActivity : AppCompatActivity() {
