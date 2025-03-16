@@ -16,12 +16,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.playlistmaker.App
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
-import com.example.playlistmaker.data.SearchHistory
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.domain.api.TracksData
+import com.example.playlistmaker.domain.api.TracksHistoryInteractor
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.models.TrackConsumerImpl
 import com.example.playlistmaker.presentation.ui.audioplayer.AudioPlayerActivity
@@ -31,11 +30,12 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivitySearchBinding
 
-    private lateinit var searchHistory: SearchHistory
+    private lateinit var tracksHistoryInteractor: TracksHistoryInteractor
+    private val tracksInteractor = Creator.provideTracksInteractor()
+
     private lateinit var trackAdapter: TrackAdapter
     private val trackList = mutableListOf<Track>()
     private var trackListHistory = mutableListOf<Track>()
-    private val interactor = Creator.provideTracksInteractor()
     private var savedText: String? = null
     private var isClickAllowed = true
 
@@ -52,6 +52,7 @@ class SearchActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        createTrackHistoryInteractor()
 
         initTrackListView()
 
@@ -86,7 +87,7 @@ class SearchActivity : AppCompatActivity() {
 
         viewBinding.clearHistory.setOnClickListener {
             trackListHistory = mutableListOf()
-            searchHistory.clearTrackList()
+            tracksHistoryInteractor.clearTrackHistory()
             viewBinding.searchHistory.isVisible = false
         }
 
@@ -101,12 +102,18 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        searchHistory.updateTrackList(trackListHistory)
+        tracksHistoryInteractor.saveTrackHistory(trackListHistory)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         savedText?.let { outState.putString(SEARCH_TEXT, savedText) }
+    }
+
+    private fun createTrackHistoryInteractor() {
+        val provideSharedPreferences = Creator.provideSharedPreferences(applicationContext)
+        val provideTracksInteractor = Creator.provideTracksHistoryRepository(provideSharedPreferences)
+        tracksHistoryInteractor = Creator.provideTracksHistoryInteractor(provideTracksInteractor)
     }
 
     private fun showLoading() {
@@ -153,13 +160,11 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
         }
-        interactor.searchTracks(searchText, collection)
+        tracksInteractor.searchTracks(searchText, collection)
     }
 
     private fun initTrackListView() {
-        val app = applicationContext as App
-        searchHistory = SearchHistory(app.sharedPrefs)
-        trackListHistory = searchHistory.getTrackList()
+        trackListHistory = tracksHistoryInteractor.getTrackHistory()
 
         trackAdapter = TrackAdapter { track ->
             updateTrackListHistory(track)
