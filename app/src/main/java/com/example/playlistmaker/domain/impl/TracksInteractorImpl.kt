@@ -9,13 +9,6 @@ class TracksInteractorImpl(private val repository: TracksRepository) : TracksInt
     private val executor = Executors.newCachedThreadPool()
 
     override fun searchTracks(expression: String, consumer: TracksInteractor.TrackConsumer) {
-        // TODO: десь можно было бы пересортировать список фильмов,
-        //  отфильтровать, убрав ненужные результаты поиска,
-        //  но в нашем примере этого не требуется. Поэтому сразу передаём полученный результат в мето
-        //val t = Thread {
-        //    consumer.consume(repository.searchMovies(expression))
-        //}
-        //t.start()
         executor.execute {
             consumer.consume(repository.searchTracks(expression))
         }

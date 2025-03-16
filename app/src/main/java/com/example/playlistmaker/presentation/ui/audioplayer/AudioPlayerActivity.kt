@@ -13,8 +13,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
-import com.example.playlistmaker.convertMsToData
-import com.example.playlistmaker.convertStringToData
 import com.example.playlistmaker.databinding.ActivityAudioplayerBinding
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.durationFormat
@@ -63,13 +61,13 @@ class AudioPlayerActivity : AppCompatActivity() {
         uploadImage()
         viewBinding.trackName.text = track.trackName
         viewBinding.artistName.text = track.artistName
-        viewBinding.durationValue.text = convertMsToData(track.trackTimeMillis, "mm:ss")
+        viewBinding.durationValue.text = track.trackTimeMillis
         if (!track.collectionName.isNullOrEmpty()) {
             viewBinding.albumText.text = track.collectionName
         } else {
             viewBinding.albumLine.isVisible = false
         }
-        viewBinding.yearValue.text = convertStringToData(track.releaseDate, "yyyy")
+        viewBinding.yearValue.text = track.releaseDate
         viewBinding.genreName.text = track.primaryGenreName
         viewBinding.countryName.text = track.country
         viewBinding.stopOnTime.text = durationFormat(duration)

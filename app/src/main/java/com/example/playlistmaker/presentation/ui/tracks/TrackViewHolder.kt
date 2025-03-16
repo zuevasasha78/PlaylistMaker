@@ -7,7 +7,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
-import com.example.playlistmaker.convertMsToData
 import com.example.playlistmaker.databinding.TrackViewBinding
 import com.example.playlistmaker.domain.models.Track
 
@@ -16,7 +15,7 @@ class TrackViewHolder(private val viewBinding: TrackViewBinding) : RecyclerView.
     fun bind(track: Track) {
         viewBinding.trackName.text = track.trackName
         viewBinding.artistName.text = track.artistName
-        viewBinding.trackTime.text = convertMsToData(track.trackTimeMillis, "mm:ss")
+        viewBinding.trackTime.text = track.trackTimeMillis
 
         val roundValue = 2
         Glide.with(itemView.context)
