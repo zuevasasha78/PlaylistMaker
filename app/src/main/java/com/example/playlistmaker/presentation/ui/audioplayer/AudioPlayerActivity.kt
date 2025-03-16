@@ -12,12 +12,11 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivityAudioplayerBinding
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.durationFormat
-import com.example.playlistmaker.presentation.ui.tracks.SearchActivity.Companion.TRACK_DATA
-import com.example.playlistmaker.stringToObject
 
 class AudioPlayerActivity : AppCompatActivity() {
 
@@ -29,6 +28,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         private const val TIMER_UPDATE_RATE = 300L
     }
 
+    private val interactor = Creator.providerGetTrackInteractor()
     private lateinit var viewBinding: ActivityAudioplayerBinding
     private var playerState = STATE_DEFAULT
     private val handler = Handler(Looper.getMainLooper())
@@ -44,7 +44,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         viewBinding = ActivityAudioplayerBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        track = stringToObject(intent.getStringExtra(TRACK_DATA), Track::class.java)
+        track = interactor.execute(intent.extras)
         mediaPlayer = MediaPlayer()
         preparePlayer()
 
