@@ -63,7 +63,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun addCallSupportListener() {
         viewBinding.callSupport.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SEND).apply {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_address)))
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subtitle))
