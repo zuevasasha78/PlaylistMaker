@@ -1,15 +1,10 @@
-package com.example.playlistmaker.network.data
+package com.example.playlistmaker.data.dto
 
-data class TrackListResponse(
-    val resultCount: Int? = null,
-    val results: MutableList<Track>? = null
-)
-
-data class Track(
+data class TrackDto(
     val trackId: Int,
     val trackName: String,
     val artistName: String,
-    val trackTimeMillis: Int?,
+    val trackTimeMillis: Int,
     val artworkUrl100: String,
     val collectionName: String?,
     val releaseDate: String,
@@ -17,3 +12,4 @@ data class Track(
     val country: String,
     val previewUrl: String,
 )
+

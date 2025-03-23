@@ -1,48 +1,46 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation.ui.settings
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.playlistmaker.App
 import com.example.playlistmaker.App.Companion.DARK_THEME_KEY
+import com.example.playlistmaker.R
+import com.example.playlistmaker.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
+
+    private lateinit var viewBinding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_settings)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        viewBinding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+
+        val toolbar = viewBinding.toolbar
         toolbar.setNavigationOnClickListener {
             finish()
         }
 
-        val shareButton = findViewById<TextView>(R.id.share_app)
-        addShareButtonListener(shareButton)
-
-        val callSupportButton = findViewById<TextView>(R.id.call_support)
-        addCallSupportListener(callSupportButton)
-
-        val userAgreementButton = findViewById<TextView>(R.id.legal_agreement)
-        addUserAgreementListener(userAgreementButton)
+        addShareButtonListener()
+        addCallSupportListener()
+        addUserAgreementListener()
 
         val app = applicationContext as App
-        val darkTheme = findViewById<SwitchCompat>(R.id.dark_theme)
+        val darkTheme = viewBinding.darkTheme
         darkTheme.isChecked = app.isDarkTheme
         darkTheme.setOnCheckedChangeListener { switcher, checked ->
             saveThemeToPref(checked, app)
             app.switchTheme(checked)
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.settings)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.settings) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -53,8 +51,8 @@ class SettingsActivity : AppCompatActivity() {
         app.sharedPrefs.edit().putBoolean(DARK_THEME_KEY, checked).apply()
     }
 
-    private fun addUserAgreementListener(view: View) {
-        view.setOnClickListener {
+    private fun addUserAgreementListener() {
+        viewBinding.legalAgreement.setOnClickListener {
             val url = getString(R.string.practicum_offer)
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse(url)
@@ -63,9 +61,9 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun addCallSupportListener(view: View) {
-        view.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SEND).apply {
+    private fun addCallSupportListener() {
+        viewBinding.callSupport.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_address)))
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subtitle))
@@ -75,8 +73,8 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun addShareButtonListener(view: View) {
-        view.setOnClickListener {
+    private fun addShareButtonListener() {
+        viewBinding.shareApp.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.practicum_link))
