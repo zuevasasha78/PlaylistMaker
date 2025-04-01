@@ -1,4 +1,4 @@
-package com.example.playlistmaker.presentation.ui.main
+package com.example.playlistmaker.new.settings.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.playlistmaker.databinding.ActivityMainBinding
 import com.example.playlistmaker.presentation.ui.library.LibraryActivity
-import com.example.playlistmaker.presentation.ui.settings.SettingsActivity
 import com.example.playlistmaker.presentation.ui.tracks.SearchActivity
 
 class MainActivity : AppCompatActivity() {

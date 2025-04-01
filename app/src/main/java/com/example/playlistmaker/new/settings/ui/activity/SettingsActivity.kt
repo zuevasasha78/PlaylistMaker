@@ -1,4 +1,4 @@
-package com.example.playlistmaker.presentation.ui.settings
+package com.example.playlistmaker.new.settings.ui.activity
 
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.playlistmaker.App
-import com.example.playlistmaker.App.Companion.DARK_THEME_KEY
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySettingsBinding
 
@@ -48,7 +47,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun saveThemeToPref(checked: Boolean, app: App) {
-        app.sharedPrefs.edit().putBoolean(DARK_THEME_KEY, checked).apply()
+        app.sharedPrefs.edit().putBoolean(App.Companion.DARK_THEME_KEY, checked).apply()
     }
 
     private fun addUserAgreementListener() {
