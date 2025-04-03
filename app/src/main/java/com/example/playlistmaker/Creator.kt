@@ -14,10 +14,16 @@ import com.example.playlistmaker.domain.impl.TracksInteractorImpl
 import com.example.playlistmaker.domain.use_case.TrackInteractor
 import com.example.playlistmaker.domain.use_case.TracksHistoryInteractor
 import com.example.playlistmaker.domain.use_case.TracksInteractor
+import com.example.playlistmaker.new.settings.data.impl.SettingsRepositoryImpl
+import com.example.playlistmaker.new.settings.domain.SettingsRepository
 
 object Creator {
     private fun getTracksRepository(): TracksRepository {
         return TracksRepositoryImpl(RetrofitNetworkClient())
+    }
+
+    fun providerSettingsRepository(): SettingsRepository {
+        return SettingsRepositoryImpl()
     }
 
     fun provideSharedPreferences(context: Context): SharedPreferences {

@@ -4,8 +4,11 @@ import android.app.Application
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.playlistmaker.new.sharing.domain.SharingInteractor
+import com.example.playlistmaker.new.sharing.domain.impl.ExternalNavigatorImpl
+import com.example.playlistmaker.new.sharing.domain.impl.SharingInteractorImpl
 
-class App : Application() {
+class MyApplication : Application() {
 
     var isDarkTheme = false
     lateinit var sharedPrefs: SharedPreferences
@@ -29,6 +32,14 @@ class App : Application() {
     private fun isSystemInDarkMode(): Boolean {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    fun getExternalNavigator(): ExternalNavigatorImpl {
+        return ExternalNavigatorImpl(applicationContext)
+    }
+
+    fun provideSharingInteractor(): SharingInteractor {
+        return SharingInteractorImpl(getExternalNavigator())
     }
 
     companion object {

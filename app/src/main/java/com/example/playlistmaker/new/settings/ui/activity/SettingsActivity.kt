@@ -1,26 +1,30 @@
 package com.example.playlistmaker.new.settings.ui.activity
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.playlistmaker.App
-import com.example.playlistmaker.R
+import androidx.lifecycle.ViewModelProvider
+import com.example.playlistmaker.MyApplication
 import com.example.playlistmaker.databinding.ActivitySettingsBinding
+import com.example.playlistmaker.new.settings.ui.view_model.SettingsViewModel
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivitySettingsBinding
+    private lateinit var viewModel: SettingsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         viewBinding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        viewModel = ViewModelProvider(
+            this,
+            SettingsViewModel.getViewModelFactory()
+        )[SettingsViewModel::class.java]
 
         val toolbar = viewBinding.toolbar
         toolbar.setNavigationOnClickListener {
@@ -31,12 +35,12 @@ class SettingsActivity : AppCompatActivity() {
         addCallSupportListener()
         addUserAgreementListener()
 
-        val app = applicationContext as App
+        val myApplication = applicationContext as MyApplication
         val darkTheme = viewBinding.darkTheme
-        darkTheme.isChecked = app.isDarkTheme
+        darkTheme.isChecked = myApplication.isDarkTheme
         darkTheme.setOnCheckedChangeListener { switcher, checked ->
-            saveThemeToPref(checked, app)
-            app.switchTheme(checked)
+            saveThemeToPref(checked, myApplication)
+            myApplication.switchTheme(checked)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.settings) { v, insets ->
@@ -46,45 +50,40 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveThemeToPref(checked: Boolean, app: App) {
-        app.sharedPrefs.edit().putBoolean(App.Companion.DARK_THEME_KEY, checked).apply()
+    private fun saveThemeToPref(checked: Boolean, myApplication: MyApplication) {
+        myApplication.sharedPrefs.edit().putBoolean(MyApplication.Companion.DARK_THEME_KEY, checked)
+            .apply()
     }
 
     private fun addUserAgreementListener() {
         viewBinding.legalAgreement.setOnClickListener {
-            val url = getString(R.string.practicum_offer)
+/*            val url = getString(R.string.practicum_offer)
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse(url)
             }
-            startIntent(intent)
+            startIntent(intent)*/
         }
     }
 
     private fun addCallSupportListener() {
         viewBinding.callSupport.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_address)))
-                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subtitle))
-                putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text))
-            }
-            startIntent(intent)
+//            val intent = Intent(Intent.ACTION_SENDTO).apply {
+//                data = Uri.parse("mailto:")
+//                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_address)))
+//                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subtitle))
+//                putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text))
+//            }
+//            startIntent(intent)
         }
     }
 
     private fun addShareButtonListener() {
         viewBinding.shareApp.setOnClickListener {
-            val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, getString(R.string.practicum_link))
-            }
-            startIntent(Intent.createChooser(shareIntent, getString(R.string.share_app)))
-        }
-    }
-
-    private fun startIntent(intent: Intent) {
-        if (intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
+//            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+//                type = "text/plain"
+//                putExtra(Intent.EXTRA_TEXT, getString(R.string.practicum_link))
+//            }
+//            startIntent(Intent.createChooser(shareIntent, getString(R.string.share_app)))
         }
     }
 }

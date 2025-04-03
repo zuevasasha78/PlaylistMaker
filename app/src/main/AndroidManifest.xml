@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.example.playlistmaker.App"
+        android:name="com.example.playlistmaker.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -29,7 +29,7 @@
             android:name=".presentation.ui.audioplayer.AudioPlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".new.settings.ui.activity.MainActivity"
+            android:name=".new.main.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
