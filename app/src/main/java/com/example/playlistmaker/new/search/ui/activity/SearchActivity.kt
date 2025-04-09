@@ -1,6 +1,5 @@
-package com.example.playlistmaker.presentation.ui.tracks
+package com.example.playlistmaker.new.search.ui.activity
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -24,6 +23,7 @@ import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.models.TrackConsumerImpl
 import com.example.playlistmaker.domain.use_case.TracksHistoryInteractor
 import com.example.playlistmaker.presentation.ui.audioplayer.AudioPlayerActivity
+import com.example.playlistmaker.new.search.ui.activity.TrackAdapter
 import com.google.gson.Gson
 
 class SearchActivity : AppCompatActivity() {
@@ -240,7 +240,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun hideKeyboard() {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(viewBinding.clearIcon.windowToken, 0)
     }
 

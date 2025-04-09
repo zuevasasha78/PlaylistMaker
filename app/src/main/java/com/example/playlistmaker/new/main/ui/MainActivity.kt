@@ -9,8 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.playlistmaker.databinding.ActivityMainBinding
 import com.example.playlistmaker.new.settings.ui.activity.SettingsActivity
-import com.example.playlistmaker.presentation.ui.library.LibraryActivity
-import com.example.playlistmaker.presentation.ui.tracks.SearchActivity
+import com.example.playlistmaker.new.library.ui.LibraryActivity
+import com.example.playlistmaker.new.search.ui.activity.SearchActivity
 
 class MainActivity : AppCompatActivity() {
 

@@ -17,10 +17,10 @@
         android:theme="@style/Theme.DefaultBackground"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.ui.library.LibraryActivity"
+            android:name=".new.library.ui.LibraryActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ui.tracks.SearchActivity"
+            android:name=".new.search.ui.activity.SearchActivity"
             android:exported="false" />
         <activity
             android:name=".new.settings.ui.activity.SettingsActivity"

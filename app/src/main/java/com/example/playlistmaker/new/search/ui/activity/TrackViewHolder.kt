@@ -1,4 +1,4 @@
-package com.example.playlistmaker.presentation.ui.tracks
+package com.example.playlistmaker.new.search.ui.activity
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -38,4 +38,3 @@ class TrackViewHolder(private val viewBinding: TrackViewBinding) : RecyclerView.
         }
     }
 }
-
