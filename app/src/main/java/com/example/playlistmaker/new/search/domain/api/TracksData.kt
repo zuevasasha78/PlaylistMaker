@@ -1,4 +1,4 @@
-package com.example.playlistmaker.domain.api
+package com.example.playlistmaker.new.search.domain.api
 
 sealed interface TracksData<T> {
     data class Success<T>(val data: T) : TracksData<T>

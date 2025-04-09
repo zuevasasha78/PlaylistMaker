@@ -15,7 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivityAudioplayerBinding
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.new.search.domain.models.Track
 import com.example.playlistmaker.domain.use_case.TrackInteractor
 import com.example.playlistmaker.durationFormat
 

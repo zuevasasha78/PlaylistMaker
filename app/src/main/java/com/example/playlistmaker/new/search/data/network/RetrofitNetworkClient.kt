@@ -1,8 +1,8 @@
-package com.example.playlistmaker.data.network
+package com.example.playlistmaker.new.search.data.network
 
-import com.example.playlistmaker.data.NetworkClient
-import com.example.playlistmaker.data.dto.Response
-import com.example.playlistmaker.data.dto.TracksSearchRequest
+import com.example.playlistmaker.new.search.data.network.NetworkClient
+import com.example.playlistmaker.new.search.data.dto.Response
+import com.example.playlistmaker.new.search.data.dto.TracksSearchRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

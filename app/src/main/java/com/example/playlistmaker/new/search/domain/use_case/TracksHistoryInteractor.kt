@@ -1,7 +1,7 @@
-package com.example.playlistmaker.domain.use_case
+package com.example.playlistmaker.new.search.domain.use_case
 
-import com.example.playlistmaker.domain.api.TracksHistoryRepository
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.new.search.domain.api.TracksHistoryRepository
+import com.example.playlistmaker.new.search.domain.models.Track
 
 class TracksHistoryInteractor(private val repository: TracksHistoryRepository) {
 
@@ -17,4 +17,3 @@ class TracksHistoryInteractor(private val repository: TracksHistoryRepository) {
         return repository.getTracksList()
     }
 }
-

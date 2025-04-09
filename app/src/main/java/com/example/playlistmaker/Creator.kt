@@ -4,16 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import com.example.playlistmaker.data.TrackRepositoryImpl
-import com.example.playlistmaker.data.TracksHistoryRepositoryImpl
-import com.example.playlistmaker.data.TracksRepositoryImpl
-import com.example.playlistmaker.data.network.RetrofitNetworkClient
-import com.example.playlistmaker.domain.api.TrackRepository
-import com.example.playlistmaker.domain.api.TracksHistoryRepository
-import com.example.playlistmaker.domain.api.TracksRepository
-import com.example.playlistmaker.domain.impl.TracksInteractorImpl
+import com.example.playlistmaker.new.search.data.impl.TracksHistoryRepositoryImpl
+import com.example.playlistmaker.new.search.data.impl.TracksRepositoryImpl
+import com.example.playlistmaker.new.search.data.network.RetrofitNetworkClient
+import com.example.playlistmaker.new.search.domain.api.TrackRepository
+import com.example.playlistmaker.new.search.domain.api.TracksHistoryRepository
+import com.example.playlistmaker.new.search.domain.api.TracksRepository
+import com.example.playlistmaker.new.search.domain.impl.TracksInteractorImpl
 import com.example.playlistmaker.domain.use_case.TrackInteractor
-import com.example.playlistmaker.domain.use_case.TracksHistoryInteractor
-import com.example.playlistmaker.domain.use_case.TracksInteractor
+import com.example.playlistmaker.new.search.domain.use_case.TracksHistoryInteractor
+import com.example.playlistmaker.new.search.domain.use_case.TracksInteractor
 import com.example.playlistmaker.new.sharing.domain.SharingUseCase
 import com.example.playlistmaker.new.sharing.domain.impl.SharingUseCaseImpl
 

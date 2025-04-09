@@ -1,8 +1,8 @@
 package com.example.playlistmaker.data
 
 import android.content.Intent
-import com.example.playlistmaker.domain.api.TrackRepository
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.new.search.domain.api.TrackRepository
+import com.example.playlistmaker.new.search.domain.models.Track
 import com.example.playlistmaker.stringToObject
 
 class TrackRepositoryImpl(private val intent: Intent) : TrackRepository {

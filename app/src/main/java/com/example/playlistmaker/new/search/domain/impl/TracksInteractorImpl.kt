@@ -1,7 +1,7 @@
-package com.example.playlistmaker.domain.impl
+package com.example.playlistmaker.new.search.domain.impl
 
-import com.example.playlistmaker.domain.api.TracksRepository
-import com.example.playlistmaker.domain.use_case.TracksInteractor
+import com.example.playlistmaker.new.search.domain.use_case.TracksInteractor
+import com.example.playlistmaker.new.search.domain.api.TracksRepository
 import java.util.concurrent.Executors
 
 class TracksInteractorImpl(private val repository: TracksRepository) : TracksInteractor {

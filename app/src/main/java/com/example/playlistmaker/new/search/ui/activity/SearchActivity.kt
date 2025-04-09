@@ -18,12 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySearchBinding
-import com.example.playlistmaker.domain.api.TracksData
-import com.example.playlistmaker.domain.models.Track
-import com.example.playlistmaker.domain.models.TrackConsumerImpl
-import com.example.playlistmaker.domain.use_case.TracksHistoryInteractor
+import com.example.playlistmaker.new.search.domain.api.TracksData
+import com.example.playlistmaker.new.search.domain.models.Track
+import com.example.playlistmaker.new.search.domain.impl.TrackConsumerImpl
+import com.example.playlistmaker.new.search.domain.use_case.TracksHistoryInteractor
 import com.example.playlistmaker.presentation.ui.audioplayer.AudioPlayerActivity
-import com.example.playlistmaker.new.search.ui.activity.TrackAdapter
 import com.google.gson.Gson
 
 class SearchActivity : AppCompatActivity() {

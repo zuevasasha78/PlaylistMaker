@@ -1,6 +1,6 @@
 package com.example.playlistmaker
 
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.new.search.domain.models.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat

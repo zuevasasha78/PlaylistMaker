@@ -8,7 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.TrackViewBinding
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.new.search.domain.models.Track
 
 class TrackViewHolder(private val viewBinding: TrackViewBinding) : RecyclerView.ViewHolder(viewBinding.root) {
 

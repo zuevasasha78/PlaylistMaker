@@ -1,7 +1,7 @@
 package com.example.playlistmaker.domain.use_case
 
-import com.example.playlistmaker.domain.api.TrackRepository
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.new.search.domain.api.TrackRepository
+import com.example.playlistmaker.new.search.domain.models.Track
 
 class TrackInteractor(private val repository: TrackRepository) {
 
