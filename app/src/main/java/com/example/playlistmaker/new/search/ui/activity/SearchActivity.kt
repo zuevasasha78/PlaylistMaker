@@ -14,23 +14,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.new.search.domain.api.TracksData
-import com.example.playlistmaker.new.search.domain.models.Track
 import com.example.playlistmaker.new.search.domain.impl.TrackConsumerImpl
-import com.example.playlistmaker.new.search.domain.use_case.TracksHistoryInteractor
+import com.example.playlistmaker.new.search.domain.models.Track
+import com.example.playlistmaker.new.search.ui.view_model.SearchViewModel
 import com.example.playlistmaker.presentation.ui.audioplayer.AudioPlayerActivity
 import com.google.gson.Gson
 
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivitySearchBinding
-
-    private lateinit var tracksHistoryInteractor: TracksHistoryInteractor
-    private val tracksInteractor = Creator.provideTracksInteractor()
+    private lateinit var viewModel: SearchViewModel
 
     private lateinit var trackAdapter: TrackAdapter
     private val trackList = mutableListOf<Track>()
@@ -46,6 +45,13 @@ class SearchActivity : AppCompatActivity() {
         enableEdgeToEdge()
         viewBinding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        viewModel = ViewModelProvider(
+            this,
+            SearchViewModel.getViewModelFactory()
+        )[SearchViewModel::class.java]
+
+
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.search) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -107,12 +113,6 @@ class SearchActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         savedText?.let { outState.putString(SEARCH_TEXT, savedText) }
-    }
-
-    private fun createTrackHistoryInteractor() {
-        val provideSharedPreferences = Creator.provideSharedPreferences(applicationContext)
-        val provideTracksInteractor = Creator.provideTracksHistoryRepository(provideSharedPreferences)
-        tracksHistoryInteractor = Creator.provideTracksHistoryInteractor(provideTracksInteractor)
     }
 
     private fun showLoading() {
@@ -212,7 +212,8 @@ class SearchActivity : AppCompatActivity() {
         val drawable = GradientDrawable()
         drawable.shape = GradientDrawable.RECTANGLE
 
-        val cornerRadiusInPx = resources.getDimensionPixelSize(R.dimen.radius_update_button).toFloat()
+        val cornerRadiusInPx =
+            resources.getDimensionPixelSize(R.dimen.radius_update_button).toFloat()
         drawable.cornerRadius = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, cornerRadiusInPx, resources.displayMetrics
         )

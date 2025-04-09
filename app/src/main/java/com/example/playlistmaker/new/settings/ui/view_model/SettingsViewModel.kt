@@ -30,7 +30,7 @@ class SettingsViewModel(
                 val settingsRepository = app.providerSettingsRepository()
 
                 SettingsViewModel(
-                    (this[APPLICATION_KEY] as MyApplication),
+                    app,
                     sharingInteractor,
                     settingsRepository,
                 )
