@@ -140,6 +140,7 @@ class SearchActivity : AppCompatActivity() {
 
         viewBinding.clearIcon.setOnClickListener { v ->
             viewBinding.inputEditText.text.clear()
+            viewBinding.trackList.isVisible = false
             v.isVisible = false
             hideKeyboard()
             hideError()
