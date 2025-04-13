@@ -56,7 +56,7 @@ class SearchViewModel(
         handler.postDelayed(searchRunnable!!, SEARCH_DEBOUNCE_DELAY)
     }
 
-    fun performSearch(query: String) {
+    private fun performSearch(query: String) {
         val collection = TrackConsumerImpl { dataTracks ->
             _searchResultsLiveData.postValue(dataTracks)
         }

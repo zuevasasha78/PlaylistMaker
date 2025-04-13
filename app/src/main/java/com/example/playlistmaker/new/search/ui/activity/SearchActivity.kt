@@ -28,6 +28,8 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var viewModel: SearchViewModel
 
     private lateinit var trackAdapter: TrackAdapter
+    private lateinit var trackHistoryAdapter: TrackAdapter
+
     private var savedText: String? = null
     private var isClickAllowed = true
 
@@ -85,10 +87,13 @@ class SearchActivity : AppCompatActivity() {
             viewModel.updateTrackListHistory(track)
             startAudioPlayer(track)
         }
+        trackHistoryAdapter = TrackAdapter { track ->
+            startAudioPlayer(track)
+        }
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         viewBinding.trackList.layoutManager = layoutManager
         viewBinding.trackList.adapter = trackAdapter
-        viewBinding.trackListHistory.adapter = trackAdapter
+        viewBinding.trackListHistory.adapter = trackHistoryAdapter
     }
 
     private fun observeViewModel() {
@@ -142,7 +147,6 @@ class SearchActivity : AppCompatActivity() {
         viewBinding.updateButton.setOnClickListener {
             showLoading()
             savedText?.let { viewModel.onSearchTextChanged(it) }
-
         }
         viewBinding.clearHistory.setOnClickListener {
             viewModel.clearHistory()
@@ -159,7 +163,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showTrackHistory(trackHistory: List<Track>) {
-        trackAdapter.setItems(trackHistory)
+        trackHistoryAdapter.setItems(trackHistory)
         viewBinding.searchHistory.isVisible = true
     }
 
