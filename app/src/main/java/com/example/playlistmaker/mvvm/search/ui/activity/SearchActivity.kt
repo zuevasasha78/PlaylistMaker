@@ -60,11 +60,6 @@ class SearchActivity : AppCompatActivity() {
         savedText?.let { outState.putString(SEARCH_TEXT, savedText) }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.saveTrackHistory()
-    }
-
     private fun showLoading() {
         viewBinding.progressBar.isVisible = true
         viewBinding.trackList.isVisible = false

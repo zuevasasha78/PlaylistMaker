@@ -49,6 +49,11 @@ class SearchViewModel(
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        saveTrackHistory()
+    }
+
     fun onSearchTextChanged(query: String) {
         searchRunnable?.let { handler.removeCallbacks(it) }
 
