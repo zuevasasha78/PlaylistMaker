@@ -3,6 +3,7 @@ package com.example.playlistmaker.mvvm.audioplayer.ui.view_model
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,8 +29,16 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var mediaPlayer: MediaPlayer
     private var duration = 0
+    private val updateRunnable = object : Runnable {
+        override fun run() {
+            duration = mediaPlayer.currentPosition
+            _currentTime.postValue(durationFormat(duration))
+            handler.postDelayed(this, TIMER_UPDATE_RATE)
+        }
+    }
 
     companion object {
+        private const val STATE_DEFAULT = 0
         private const val STATE_PREPARED = 1
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
@@ -50,15 +59,8 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
         mediaPlayer.release()
     }
 
-    private val updateRunnable = object : Runnable {
-        override fun run() {
-            duration = mediaPlayer.currentPosition
-            _currentTime.postValue(durationFormat(duration))
-            handler.postDelayed(this, TIMER_UPDATE_RATE)
-        }
-    }
-
     fun initPlayer() {
+        _playerState.value = STATE_DEFAULT
         val trackData = trackInteractor.getTrack()
         _track.value = trackData
         mediaPlayer = MediaPlayer()
@@ -67,6 +69,7 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
         mediaPlayer.setOnPreparedListener {
             _playerState.postValue(STATE_PREPARED)
         }
+
         mediaPlayer.setOnCompletionListener {
             handler.removeCallbacks(updateRunnable)
             _playerState.postValue(STATE_PREPARED)
@@ -76,29 +79,30 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
     }
 
     fun playbackControl() {
+        Log.e("!!!", "playbackControl")
         when (_playerState.value) {
-            STATE_PLAYING -> pause()
-            STATE_PREPARED, STATE_PAUSED -> play()
+            STATE_PLAYING -> pausePlayer()
+            STATE_PREPARED, STATE_PAUSED -> startPlayer()
         }
     }
 
     fun pauseOnLifecycle() {
         if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
-            pause()
+            pausePlayer()
         }
     }
 
-    private fun play() {
+    private fun startPlayer() {
         mediaPlayer.start()
         _playerState.postValue(STATE_PLAYING)
         handler.post(updateRunnable)
     }
 
-    private fun pause() {
-        mediaPlayer.pause()
-        _playerState.postValue(STATE_PAUSED)
+    private fun pausePlayer() {
         handler.removeCallbacks(updateRunnable)
         duration = mediaPlayer.currentPosition
+        mediaPlayer.pause()
+        _playerState.postValue(STATE_PAUSED)
         _currentTime.postValue(durationFormat(duration))
     }
 }

@@ -57,7 +57,9 @@ class AudioPlayerActivity : AppCompatActivity() {
             finish()
         }
         viewBinding.playButton.setOnClickListener {
-            viewModel.playbackControl()
+            if (it.isEnabled) {
+                viewModel.playbackControl()
+            }
         }
     }
 
@@ -85,7 +87,7 @@ class AudioPlayerActivity : AppCompatActivity() {
             viewBinding.playButton.setImageResource(
                 if (state == 2) R.drawable.pause_button else R.drawable.play_button
             )
-            viewBinding.playButton.isEnabled = (state == 1 || state == 3)
+            viewBinding.playButton.isEnabled = (state != 0)
         }
 
         viewModel.currentTime.observe(this) { time ->
