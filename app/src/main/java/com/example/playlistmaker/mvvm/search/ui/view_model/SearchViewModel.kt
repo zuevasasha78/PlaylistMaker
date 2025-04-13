@@ -23,8 +23,6 @@ class SearchViewModel(
     private val handler = Handler(Looper.getMainLooper())
     private val _searchResultsLiveData = MutableLiveData<SearchState>()
     val searchResultsLiveData: LiveData<SearchState> = _searchResultsLiveData
-    private val _trackHistoryLiveData = MutableLiveData<List<Track>>()
-    val trackHistoryLiveData: LiveData<List<Track>> = _trackHistoryLiveData
 
     private var searchRunnable: Runnable? = null
 
@@ -32,7 +30,7 @@ class SearchViewModel(
 
     init {
         trackListHistory.addAll(tracksHistoryInteractor.getTrackHistory())
-        _trackHistoryLiveData.value = trackListHistory
+        _searchResultsLiveData.value = SearchState.History(trackListHistory)
     }
 
     companion object {
@@ -71,7 +69,7 @@ class SearchViewModel(
     fun clearHistory() {
         trackListHistory.clear()
         tracksHistoryInteractor.clearTrackHistory()
-        _trackHistoryLiveData.value = trackListHistory
+        _searchResultsLiveData.value = SearchState.History(trackListHistory)
     }
 
     fun updateTrackListHistory(track: Track) {
@@ -83,7 +81,7 @@ class SearchViewModel(
         if (trackListHistory.size > 10) {
             trackListHistory.removeAt(trackListHistory.size - 1)
         }
-        _trackHistoryLiveData.postValue(trackListHistory)
+        _searchResultsLiveData.postValue(SearchState.History(trackListHistory))
     }
 
     fun saveTrackHistory() {

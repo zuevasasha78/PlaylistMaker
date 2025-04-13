@@ -107,11 +107,12 @@ class SearchActivity : AppCompatActivity() {
                 is SearchState.NetworkError -> {
                     showError(result.message)
                 }
-            }
-        }
-        viewModel.trackHistoryLiveData.observe(this) {
-            if (it.isNotEmpty()) {
-                showTrackHistory(it)
+
+                is SearchState.History -> {
+                    if (result.history.isNotEmpty()) {
+                        showTrackHistory(result.history)
+                    }
+                }
             }
         }
     }
