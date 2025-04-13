@@ -7,9 +7,9 @@ import com.example.playlistmaker.new.search.domain.models.Track
 class TrackAdapter(private val clickListener: TrackClickListener) :
     RecyclerView.Adapter<TrackViewHolder>() {
 
-    private var trackItems: MutableList<Track> = mutableListOf()
+    private var trackItems: List<Track> = mutableListOf()
 
-    fun setItems(tracks: MutableList<Track>) {
+    fun setItems(tracks: List<Track>) {
         trackItems = tracks
         notifyDataSetChanged()
     }
