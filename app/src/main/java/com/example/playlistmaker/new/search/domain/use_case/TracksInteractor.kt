@@ -1,13 +1,12 @@
 package com.example.playlistmaker.new.search.domain.use_case
 
-import com.example.playlistmaker.new.search.domain.api.TracksData
-import com.example.playlistmaker.new.search.domain.models.Track
+import com.example.playlistmaker.new.search.domain.api.SearchState
 
 interface TracksInteractor {
 
     fun searchTracks(expression: String, consumer: TrackConsumer)
 
     interface TrackConsumer {
-        fun consume(data: TracksData<List<Track>>)
+        fun consume(data: SearchState)
     }
 }
