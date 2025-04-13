@@ -3,8 +3,8 @@ package com.example.playlistmaker
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import com.example.playlistmaker.data.TrackRepositoryImpl
-import com.example.playlistmaker.domain.use_case.TrackInteractor
+import com.example.playlistmaker.new.audioplayer.data.TrackRepositoryImpl
+import com.example.playlistmaker.new.audioplayer.domain.use_case.TrackInteractor
 import com.example.playlistmaker.new.search.data.impl.TracksHistoryRepositoryImpl
 import com.example.playlistmaker.new.search.data.impl.TracksRepositoryImpl
 import com.example.playlistmaker.new.search.data.network.RetrofitNetworkClient

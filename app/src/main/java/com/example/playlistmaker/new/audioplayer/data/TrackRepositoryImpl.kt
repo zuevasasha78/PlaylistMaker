@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data
+package com.example.playlistmaker.new.audioplayer.data
 
 import android.content.Intent
 import com.example.playlistmaker.new.search.domain.api.TrackRepository

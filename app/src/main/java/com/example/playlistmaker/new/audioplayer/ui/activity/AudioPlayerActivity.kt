@@ -1,4 +1,4 @@
-package com.example.playlistmaker.presentation.ui.audioplayer
+package com.example.playlistmaker.new.audioplayer.ui.activity
 
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -15,9 +15,9 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivityAudioplayerBinding
-import com.example.playlistmaker.new.search.domain.models.Track
-import com.example.playlistmaker.domain.use_case.TrackInteractor
 import com.example.playlistmaker.durationFormat
+import com.example.playlistmaker.new.audioplayer.domain.use_case.TrackInteractor
+import com.example.playlistmaker.new.search.domain.models.Track
 
 class AudioPlayerActivity : AppCompatActivity() {
 

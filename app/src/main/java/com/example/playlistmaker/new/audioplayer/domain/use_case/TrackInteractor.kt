@@ -1,4 +1,4 @@
-package com.example.playlistmaker.domain.use_case
+package com.example.playlistmaker.new.audioplayer.domain.use_case
 
 import com.example.playlistmaker.new.search.domain.api.TrackRepository
 import com.example.playlistmaker.new.search.domain.models.Track

@@ -16,10 +16,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySearchBinding
+import com.example.playlistmaker.new.audioplayer.ui.activity.AudioPlayerActivity
 import com.example.playlistmaker.new.search.domain.api.SearchState
 import com.example.playlistmaker.new.search.domain.models.Track
 import com.example.playlistmaker.new.search.ui.view_model.SearchViewModel
-import com.example.playlistmaker.presentation.ui.audioplayer.AudioPlayerActivity
 import com.google.gson.Gson
 
 class SearchActivity : AppCompatActivity() {

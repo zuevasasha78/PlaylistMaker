@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data.dto
+package com.example.playlistmaker.new.audioplayer.data.dto
 
 data class TrackDto(
     val trackId: Int,
@@ -12,4 +12,3 @@ data class TrackDto(
     val country: String,
     val previewUrl: String,
 )
-
