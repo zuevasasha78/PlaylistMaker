@@ -3,8 +3,6 @@ package com.example.playlistmaker.new.search.ui.activity
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
@@ -16,11 +14,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySearchBinding
-import com.example.playlistmaker.new.search.domain.api.TracksData
-import com.example.playlistmaker.new.search.domain.impl.TrackConsumerImpl
+import com.example.playlistmaker.new.search.domain.api.SearchState
 import com.example.playlistmaker.new.search.domain.models.Track
 import com.example.playlistmaker.new.search.ui.view_model.SearchViewModel
 import com.example.playlistmaker.presentation.ui.audioplayer.AudioPlayerActivity
@@ -32,13 +28,8 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var viewModel: SearchViewModel
 
     private lateinit var trackAdapter: TrackAdapter
-    private val trackList = mutableListOf<Track>()
-    private var trackListHistory = mutableListOf<Track>()
     private var savedText: String? = null
     private var isClickAllowed = true
-
-    private val handler = Handler(Looper.getMainLooper())
-    private lateinit var searchRunnable: Runnable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,68 +42,25 @@ class SearchActivity : AppCompatActivity() {
             SearchViewModel.getViewModelFactory()
         )[SearchViewModel::class.java]
 
-
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.search) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        createTrackHistoryInteractor()
 
         initTrackListView()
-
-        viewBinding.inputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrEmpty()) {
-                    viewBinding.clearIcon.isVisible = true
-                    showLoading()
-                    searchRunnable = Runnable { searchRequest(s.toString()) }
-
-                    handler.removeCallbacks(searchRunnable)
-                    handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                savedText = s.toString()
-            }
-        })
-
-        viewBinding.updateButton.setOnClickListener { view ->
-            showLoading()
-            handler.removeCallbacks(searchRunnable)
-            handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
-        }
-        viewBinding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
-
-        viewBinding.clearHistory.setOnClickListener {
-            trackListHistory = mutableListOf()
-            tracksHistoryInteractor.clearTrackHistory()
-            viewBinding.searchHistory.isVisible = false
-        }
-
-        viewBinding.clearIcon.setOnClickListener { v ->
-            viewBinding.inputEditText.setText("")
-            v.isVisible = false
-            hideKeyboard()
-            trackAdapter.setItems(trackListHistory)
-            hideError()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        tracksHistoryInteractor.saveTrackHistory(trackListHistory)
+        observeViewModel()
+        setupListeners()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         savedText?.let { outState.putString(SEARCH_TEXT, savedText) }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.saveTrackHistory()
     }
 
     private fun showLoading() {
@@ -132,67 +80,86 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun searchRequest(searchText: String) {
-        val collection = TrackConsumerImpl { dataTracks ->
-            handler.post {
-                trackList.clear()
-
-                when (dataTracks) {
-                    is TracksData.Success -> {
-                        trackList.addAll(dataTracks.data)
-                        trackAdapter.setItems(trackList)
-
-                        viewBinding.trackList.isVisible = true
-                        viewBinding.progressBar.isVisible = false
-                        viewBinding.searchHistory.isVisible = false
-
-                        trackAdapter.notifyDataSetChanged()
-                    }
-
-                    is TracksData.DataError -> {
-                        showPlaceholder(R.drawable.empty_list_tracks, dataTracks.message)
-                    }
-
-                    is TracksData.NetworkError -> {
-                        showError(dataTracks.message)
-                    }
-                }
-            }
-        }
-        tracksInteractor.searchTracks(searchText, collection)
-    }
-
     private fun initTrackListView() {
-        trackListHistory = tracksHistoryInteractor.getTrackHistory()
-
         trackAdapter = TrackAdapter { track ->
-            updateTrackListHistory(track)
+            viewModel.updateTrackListHistory(track)
             startAudioPlayer(track)
         }
-        if (trackListHistory.isNotEmpty()) {
-            showTrackHistory()
-        }
-
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         viewBinding.trackList.layoutManager = layoutManager
         viewBinding.trackList.adapter = trackAdapter
         viewBinding.trackListHistory.adapter = trackAdapter
     }
 
-    private fun updateTrackListHistory(track: Track) {
-        val existingTrackIndex = trackListHistory.indexOfFirst { it.trackId == track.trackId }
-        if (existingTrackIndex != -1) {
-            trackListHistory.removeAt(existingTrackIndex)
+    private fun observeViewModel() {
+        viewModel.searchResultsLiveData.observe(this) { result ->
+            when (result) {
+                is SearchState.Success -> {
+                    hideLoading()
+                    trackAdapter.setItems(result.data)
+                    viewBinding.trackList.isVisible = true
+                }
+
+                is SearchState.DataError -> {
+                    showPlaceholder(R.drawable.empty_list_tracks, result.message)
+                }
+
+                is SearchState.NetworkError -> {
+                    showError(result.message)
+                }
+            }
         }
-        trackListHistory.add(0, track)
-        if (trackListHistory.size > 10) {
-            trackListHistory.removeAt(trackListHistory.size - 1)
+        viewModel.trackHistoryLiveData.observe(this) {
+            if (it.isNotEmpty()) {
+                showTrackHistory(it)
+            }
         }
     }
 
-    private fun showTrackHistory() {
-        trackAdapter.setItems(trackListHistory)
-        viewBinding.trackList.isVisible = false
+    private fun setupListeners() {
+        viewBinding.inputEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!s.isNullOrEmpty()) {
+                    val text = s.toString()
+                    viewBinding.clearIcon.isVisible = true
+                    showLoading()
+                    viewModel.onSearchTextChanged(text)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                savedText = s.toString()
+            }
+        })
+
+        viewBinding.clearIcon.setOnClickListener { v ->
+            viewBinding.inputEditText.text.clear()
+            v.isVisible = false
+            hideKeyboard()
+            hideError()
+        }
+        viewBinding.updateButton.setOnClickListener {
+            showLoading()
+            savedText?.let { viewModel.onSearchTextChanged(it) }
+
+        }
+        viewBinding.clearHistory.setOnClickListener {
+            viewModel.clearHistory()
+            viewBinding.searchHistory.isVisible = false
+        }
+        viewBinding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
+    }
+
+    private fun hideLoading() {
+        viewBinding.progressBar.isVisible = false
+        viewBinding.searchHistory.isVisible = false
+    }
+
+    private fun showTrackHistory(trackHistory: List<Track>) {
+        trackAdapter.setItems(trackHistory)
         viewBinding.searchHistory.isVisible = true
     }
 
@@ -224,7 +191,7 @@ class SearchActivity : AppCompatActivity() {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+            viewBinding.root.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
         }
         return current
     }
@@ -248,7 +215,6 @@ class SearchActivity : AppCompatActivity() {
         const val SEARCH_TEXT = "SEARCH_TEXT"
         const val TRACK_DATA = "TRACK_DATA"
 
-        private const val SEARCH_DEBOUNCE_DELAY = 2_000L
         private const val CLICK_DEBOUNCE_DELAY = 1_000L
     }
 }

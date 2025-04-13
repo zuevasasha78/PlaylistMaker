@@ -49,11 +49,6 @@ class SearchViewModel(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        tracksHistoryInteractor.saveTrackHistory(trackListHistory)
-    }
-
     fun onSearchTextChanged(query: String) {
         searchRunnable?.let { handler.removeCallbacks(it) }
 
@@ -84,5 +79,9 @@ class SearchViewModel(
             trackListHistory.removeAt(trackListHistory.size - 1)
         }
         _trackHistoryLiveData.postValue(trackListHistory)
+    }
+
+    fun saveTrackHistory() {
+        tracksHistoryInteractor.saveTrackHistory(trackListHistory)
     }
 }
