@@ -1,13 +1,12 @@
 package com.example.playlistmaker.new.search.domain.impl
 
 import com.example.playlistmaker.new.search.domain.use_case.TracksInteractor
-import com.example.playlistmaker.new.search.domain.api.TracksData
-import com.example.playlistmaker.new.search.domain.models.Track
+import com.example.playlistmaker.new.search.domain.api.SearchState
 
-class TrackConsumerImpl(private val onTracksReceived: (TracksData<List<Track>>) -> Unit) :
+class TrackConsumerImpl(private val onTracksReceived: (SearchState) -> Unit) :
     TracksInteractor.TrackConsumer {
 
-    override fun consume(data: TracksData<List<Track>>) {
+    override fun consume(data: SearchState) {
         onTracksReceived(data)
     }
 }
