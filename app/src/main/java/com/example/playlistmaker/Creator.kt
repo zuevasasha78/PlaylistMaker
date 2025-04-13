@@ -3,21 +3,21 @@ package com.example.playlistmaker
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import com.example.playlistmaker.new.audioplayer.data.TrackRepositoryImpl
-import com.example.playlistmaker.new.audioplayer.domain.use_case.TrackInteractor
-import com.example.playlistmaker.new.search.data.impl.TracksHistoryRepositoryImpl
-import com.example.playlistmaker.new.search.data.impl.TracksRepositoryImpl
-import com.example.playlistmaker.new.search.data.network.RetrofitNetworkClient
-import com.example.playlistmaker.new.search.domain.api.TrackRepository
-import com.example.playlistmaker.new.search.domain.api.TracksHistoryRepository
-import com.example.playlistmaker.new.search.domain.api.TracksRepository
-import com.example.playlistmaker.new.search.domain.impl.TracksInteractorImpl
-import com.example.playlistmaker.new.search.domain.use_case.TracksHistoryInteractor
-import com.example.playlistmaker.new.search.domain.use_case.TracksInteractor
-import com.example.playlistmaker.new.settings.data.impl.SettingsRepositoryImpl
-import com.example.playlistmaker.new.settings.domain.SettingsRepository
-import com.example.playlistmaker.new.sharing.domain.SharingUseCase
-import com.example.playlistmaker.new.sharing.domain.impl.SharingUseCaseImpl
+import com.example.playlistmaker.mvvm.audioplayer.data.TrackRepositoryImpl
+import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.TrackInteractor
+import com.example.playlistmaker.mvvm.search.data.impl.TracksHistoryRepositoryImpl
+import com.example.playlistmaker.mvvm.search.data.impl.TracksRepositoryImpl
+import com.example.playlistmaker.mvvm.search.data.network.RetrofitNetworkClient
+import com.example.playlistmaker.mvvm.search.domain.api.TrackRepository
+import com.example.playlistmaker.mvvm.search.domain.api.TracksHistoryRepository
+import com.example.playlistmaker.mvvm.search.domain.api.TracksRepository
+import com.example.playlistmaker.mvvm.search.domain.impl.TracksInteractorImpl
+import com.example.playlistmaker.mvvm.search.domain.use_case.TracksHistoryInteractor
+import com.example.playlistmaker.mvvm.search.domain.use_case.TracksInteractor
+import com.example.playlistmaker.mvvm.settings.data.impl.SettingsRepositoryImpl
+import com.example.playlistmaker.mvvm.settings.domain.SettingsRepository
+import com.example.playlistmaker.mvvm.sharing.domain.SharingUseCase
+import com.example.playlistmaker.mvvm.sharing.domain.impl.SharingUseCaseImpl
 
 object Creator {
 

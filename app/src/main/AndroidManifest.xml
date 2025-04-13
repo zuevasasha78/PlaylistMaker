@@ -17,19 +17,19 @@
         android:theme="@style/Theme.DefaultBackground"
         tools:targetApi="31">
         <activity
-            android:name=".new.library.ui.LibraryActivity"
+            android:name=".mvvm.library.ui.LibraryActivity"
             android:exported="false" />
         <activity
-            android:name=".new.search.ui.activity.SearchActivity"
+            android:name=".mvvm.search.ui.activity.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".new.settings.ui.activity.SettingsActivity"
+            android:name=".mvvm.settings.ui.activity.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".new.audioplayer.ui.activity.AudioPlayerActivity"
+            android:name=".mvvm.audioplayer.ui.activity.AudioPlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".new.main.ui.MainActivity"
+            android:name=".mvvm.main.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
