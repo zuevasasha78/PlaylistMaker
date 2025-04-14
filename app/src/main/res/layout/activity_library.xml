@@ -5,6 +5,6 @@
     android:id="@+id/library"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.library.LibraryActivity">
+    tools:context=".mvvm.library.ui.LibraryActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
