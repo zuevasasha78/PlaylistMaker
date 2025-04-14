@@ -1,7 +1,7 @@
 package com.example.playlistmaker.mvvm.settings.data.impl
 
-import android.app.Application.MODE_PRIVATE
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
@@ -9,12 +9,11 @@ import com.example.playlistmaker.mvvm.settings.domain.SettingsRepository
 import com.example.playlistmaker.mvvm.settings.domain.model.ThemeSettings
 
 class SettingsRepositoryImpl(
-    val context: Context
+    val context: Context,
+    val sharedPrefs: SharedPreferences
 ) : SettingsRepository {
 
     private var isDarkTheme = false
-    private val sharedPrefs =
-        context.getSharedPreferences(PLAYLIST_MAKER_PREFERENCES, MODE_PRIVATE)
 
     override fun getThemeSettings(): ThemeSettings {
         isDarkTheme = sharedPrefs.getBoolean(DARK_THEME_KEY, isSystemInDarkMode())
@@ -44,6 +43,5 @@ class SettingsRepositoryImpl(
 
     companion object {
         const val DARK_THEME_KEY = "dark_theme_key"
-        const val PLAYLIST_MAKER_PREFERENCES = "playlist_maker_preferences"
     }
 }

@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySearchBinding
@@ -21,11 +20,12 @@ import com.example.playlistmaker.mvvm.search.domain.api.SearchState
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.example.playlistmaker.mvvm.search.ui.view_model.SearchViewModel
 import com.google.gson.Gson
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
 
+    private val viewModel: SearchViewModel by viewModel()
     private lateinit var viewBinding: ActivitySearchBinding
-    private lateinit var viewModel: SearchViewModel
 
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var trackHistoryAdapter: TrackAdapter
@@ -38,11 +38,6 @@ class SearchActivity : AppCompatActivity() {
         enableEdgeToEdge()
         viewBinding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
-        viewModel = ViewModelProvider(
-            this,
-            SearchViewModel.getViewModelFactory()
-        )[SearchViewModel::class.java]
 
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.search) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
