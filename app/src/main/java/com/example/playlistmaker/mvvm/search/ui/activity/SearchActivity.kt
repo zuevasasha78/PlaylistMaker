@@ -20,6 +20,7 @@ import com.example.playlistmaker.mvvm.search.domain.api.SearchState
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.example.playlistmaker.mvvm.search.ui.view_model.SearchViewModel
 import com.google.gson.Gson
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
@@ -32,6 +33,8 @@ class SearchActivity : AppCompatActivity() {
 
     private var savedText: String? = null
     private var isClickAllowed = true
+
+    private val gson: Gson by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +69,7 @@ class SearchActivity : AppCompatActivity() {
     private fun startAudioPlayer(track: Track) {
         if (clickDebounce()) {
             val audioPlayerIntent = Intent(this, AudioPlayerActivity::class.java).apply {
-                putExtra(TRACK_DATA, Gson().toJson(track))
+                putExtra(TRACK_DATA, gson.toJson(track))
             }
             startActivity(audioPlayerIntent)
         }

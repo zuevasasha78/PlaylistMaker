@@ -7,7 +7,7 @@ import com.example.playlistmaker.mvvm.audioplayer.ui.di.audioplayerVMModule
 import com.example.playlistmaker.mvvm.di.appModule
 import com.example.playlistmaker.mvvm.search.data.di.searchDataModule
 import com.example.playlistmaker.mvvm.search.domain.di.searchDomainModule
-import com.example.playlistmaker.mvvm.search.ui.di.searchVMModule
+import com.example.playlistmaker.mvvm.search.ui.di.searchUIModule
 import com.example.playlistmaker.mvvm.settings.data.di.settingsRepositoryModule
 import com.example.playlistmaker.mvvm.settings.domain.SettingsRepository
 import com.example.playlistmaker.mvvm.settings.ui.di.settingsVMModule
@@ -31,7 +31,7 @@ class App : Application() {
                 settingsVMModule,
                 searchDataModule,
                 searchDomainModule,
-                searchVMModule,
+                searchUIModule,
                 audioplayerDataModule,
                 audioplayerDomainModule,
                 audioplayerVMModule
