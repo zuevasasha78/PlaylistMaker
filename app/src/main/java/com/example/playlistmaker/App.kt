@@ -2,6 +2,7 @@ package com.example.playlistmaker
 
 import android.app.Application
 import com.example.playlistmaker.mvvm.audioplayer.data.di.audioplayerDataModule
+import com.example.playlistmaker.mvvm.audioplayer.domain.di.audioplayerDomainModule
 import com.example.playlistmaker.mvvm.audioplayer.ui.di.audioplayerVMModule
 import com.example.playlistmaker.mvvm.di.appModule
 import com.example.playlistmaker.mvvm.search.data.di.searchDataModule
@@ -32,6 +33,7 @@ class App : Application() {
                 searchDomainModule,
                 searchVMModule,
                 audioplayerDataModule,
+                audioplayerDomainModule,
                 audioplayerVMModule
             )
         }

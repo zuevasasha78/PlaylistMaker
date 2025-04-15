@@ -7,10 +7,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.playlistmaker.Creator
 import com.example.playlistmaker.durationFormat
 import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.TrackInteractor
 import com.example.playlistmaker.mvvm.search.domain.models.Track
@@ -43,14 +39,6 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
         private const val TIMER_UPDATE_RATE = 300L
-
-        fun getViewModelFactory(track: Track): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val providerTrackInteractor = Creator.provideTrackRepository(track)
-                val trackInteractor = Creator.providerTrackInteractor(providerTrackInteractor)
-                AudioPlayerViewModel(trackInteractor)
-            }
-        }
     }
 
     override fun onCleared() {
