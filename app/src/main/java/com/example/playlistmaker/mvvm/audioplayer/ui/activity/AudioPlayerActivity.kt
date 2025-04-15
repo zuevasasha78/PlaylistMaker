@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
@@ -14,17 +14,18 @@ import com.example.playlistmaker.databinding.ActivityAudioplayerBinding
 import com.example.playlistmaker.mvvm.audioplayer.ui.view_model.AudioPlayerViewModel
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.example.playlistmaker.stringToObject
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class AudioPlayerActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityAudioplayerBinding
-
     private val track: Track by lazy {
         stringToObject(intent.getStringExtra(TRACK_DATA), Track::class.java)
     }
     private val viewModel: AudioPlayerViewModel by viewModel { parametersOf(track) }
+    private val glide: RequestManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,8 +95,7 @@ class AudioPlayerActivity : AppCompatActivity() {
     private fun uploadImage(artworkUrl100: String) {
         val roundValue = 8
         val url = artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
-        Glide.with(this)
-            .load(url)
+        glide.load(url)
             .placeholder(R.drawable.placeholder)
             .transform(
                 FitCenter(),

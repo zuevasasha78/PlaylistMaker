@@ -2,8 +2,6 @@ package com.example.playlistmaker.mvvm.audioplayer.ui.view_model
 
 import android.media.MediaPlayer
 import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +11,8 @@ import com.example.playlistmaker.mvvm.search.domain.models.Track
 
 class AudioPlayerViewModel(
     private val trackInteractor: TrackInteractor,
-    private val mediaPlayer: MediaPlayer
+    private val mediaPlayer: MediaPlayer,
+    private val handler: Handler
 ) : ViewModel() {
 
     private val _track = MutableLiveData<Track>()
@@ -25,7 +24,6 @@ class AudioPlayerViewModel(
     private val _currentTime = MutableLiveData<String>()
     val currentTime: LiveData<String> get() = _currentTime
 
-    private val handler = Handler(Looper.getMainLooper())
     private var duration = 0
     private val updateRunnable = object : Runnable {
         override fun run() {
@@ -68,7 +66,6 @@ class AudioPlayerViewModel(
     }
 
     fun playbackControl() {
-        Log.e("!!!", "playbackControl")
         when (_playerState.value) {
             STATE_PLAYING -> pausePlayer()
             STATE_PREPARED, STATE_PAUSED -> startPlayer()
