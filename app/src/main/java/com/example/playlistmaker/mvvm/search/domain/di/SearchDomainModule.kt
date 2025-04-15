@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.search.di
+package com.example.playlistmaker.mvvm.search.domain.di
 
 import com.example.playlistmaker.mvvm.search.domain.impl.TracksInteractorImpl
 import com.example.playlistmaker.mvvm.search.domain.use_case.TracksHistoryInteractor
@@ -14,8 +14,4 @@ val searchDomainModule = module {
     single {
         TracksHistoryInteractor(get())
     }
-
-//    single<TrackRepository>{(track: Track) ->
-//        TrackRepositoryImpl(track)
-//    }
 }

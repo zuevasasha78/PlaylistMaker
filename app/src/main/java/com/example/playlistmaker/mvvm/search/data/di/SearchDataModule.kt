@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.search.di
+package com.example.playlistmaker.mvvm.search.data.di
 
 import com.example.playlistmaker.mvvm.search.data.impl.TracksHistoryRepositoryImpl
 import com.example.playlistmaker.mvvm.search.data.impl.TracksRepositoryImpl
