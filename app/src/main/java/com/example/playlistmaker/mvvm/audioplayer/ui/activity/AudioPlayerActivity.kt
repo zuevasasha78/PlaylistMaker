@@ -1,6 +1,5 @@
 package com.example.playlistmaker.mvvm.audioplayer.ui.activity
 
-import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,6 @@ import org.koin.core.parameter.parametersOf
 class AudioPlayerActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityAudioplayerBinding
-    private lateinit var mediaPlayer: MediaPlayer
 
     private val track: Track by lazy {
         stringToObject(intent.getStringExtra(TRACK_DATA), Track::class.java)
@@ -33,8 +31,6 @@ class AudioPlayerActivity : AppCompatActivity() {
         enableEdgeToEdge()
         viewBinding = ActivityAudioplayerBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
-        mediaPlayer = MediaPlayer()
 
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.audioplayer) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
