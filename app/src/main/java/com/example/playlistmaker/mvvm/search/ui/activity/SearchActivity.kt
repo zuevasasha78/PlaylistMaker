@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivitySearchBinding
@@ -21,11 +20,13 @@ import com.example.playlistmaker.mvvm.search.domain.api.SearchState
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.example.playlistmaker.mvvm.search.ui.view_model.SearchViewModel
 import com.google.gson.Gson
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
 
+    private val viewModel: SearchViewModel by viewModel()
     private lateinit var viewBinding: ActivitySearchBinding
-    private lateinit var viewModel: SearchViewModel
 
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var trackHistoryAdapter: TrackAdapter
@@ -33,16 +34,13 @@ class SearchActivity : AppCompatActivity() {
     private var savedText: String? = null
     private var isClickAllowed = true
 
+    private val gson: Gson by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         viewBinding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
-        viewModel = ViewModelProvider(
-            this,
-            SearchViewModel.getViewModelFactory()
-        )[SearchViewModel::class.java]
 
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.search) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -71,7 +69,7 @@ class SearchActivity : AppCompatActivity() {
     private fun startAudioPlayer(track: Track) {
         if (clickDebounce()) {
             val audioPlayerIntent = Intent(this, AudioPlayerActivity::class.java).apply {
-                putExtra(TRACK_DATA, Gson().toJson(track))
+                putExtra(TRACK_DATA, gson.toJson(track))
             }
             startActivity(audioPlayerIntent)
         }

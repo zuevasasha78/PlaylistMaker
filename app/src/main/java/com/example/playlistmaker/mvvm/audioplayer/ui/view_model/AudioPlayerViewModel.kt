@@ -2,20 +2,18 @@ package com.example.playlistmaker.mvvm.audioplayer.ui.view_model
 
 import android.media.MediaPlayer
 import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.playlistmaker.Creator
 import com.example.playlistmaker.durationFormat
 import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.TrackInteractor
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 
-class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewModel() {
+class AudioPlayerViewModel(
+    private val trackInteractor: TrackInteractor,
+    private val mediaPlayer: MediaPlayer,
+    private val handler: Handler
+) : ViewModel() {
 
     private val _track = MutableLiveData<Track>()
     val track: LiveData<Track> get() = _track
@@ -26,8 +24,6 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
     private val _currentTime = MutableLiveData<String>()
     val currentTime: LiveData<String> get() = _currentTime
 
-    private val handler = Handler(Looper.getMainLooper())
-    private lateinit var mediaPlayer: MediaPlayer
     private var duration = 0
     private val updateRunnable = object : Runnable {
         override fun run() {
@@ -43,14 +39,6 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
         private const val TIMER_UPDATE_RATE = 300L
-
-        fun getViewModelFactory(track: Track): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val providerTrackInteractor = Creator.provideTrackRepository(track)
-                val trackInteractor = Creator.providerTrackInteractor(providerTrackInteractor)
-                AudioPlayerViewModel(trackInteractor)
-            }
-        }
     }
 
     override fun onCleared() {
@@ -63,7 +51,6 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
         _playerState.value = STATE_DEFAULT
         val trackData = trackInteractor.getTrack()
         _track.value = trackData
-        mediaPlayer = MediaPlayer()
         mediaPlayer.setDataSource(trackData.previewUrl)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
@@ -79,7 +66,6 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
     }
 
     fun playbackControl() {
-        Log.e("!!!", "playbackControl")
         when (_playerState.value) {
             STATE_PLAYING -> pausePlayer()
             STATE_PREPARED, STATE_PAUSED -> startPlayer()
@@ -87,7 +73,7 @@ class AudioPlayerViewModel(private val trackInteractor: TrackInteractor) : ViewM
     }
 
     fun pauseOnLifecycle() {
-        if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
+        if (mediaPlayer.isPlaying) {
             pausePlayer()
         }
     }
