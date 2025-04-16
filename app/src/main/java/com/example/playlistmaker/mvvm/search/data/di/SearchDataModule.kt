@@ -38,7 +38,7 @@ val searchDataModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl("https://itunes.apple.com/")
+            .baseUrl(ITUNES_BASE_URL)
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -46,3 +46,5 @@ val searchDataModule = module {
 
     single { get<Retrofit>().create(ITunesService::class.java) }
 }
+
+private const val ITUNES_BASE_URL = "https://itunes.apple.com/"
