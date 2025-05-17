@@ -19,4 +19,11 @@ class PlaylistFragment : Fragment() {
 
         return viewBinding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //todo выровнять toolbar
+        viewBinding.toolbar.setNavigationOnClickListener {
+            activity?.finish()
+        }
+    }
 }
