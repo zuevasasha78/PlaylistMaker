@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.playlistmaker.databinding.ActivityMainBinding
-import com.example.playlistmaker.mvvm.library.ui.LibraryActivity
+import com.example.playlistmaker.mvvm.library.ui.activity.LibraryActivity
 import com.example.playlistmaker.mvvm.search.ui.activity.SearchActivity
 import com.example.playlistmaker.mvvm.settings.ui.activity.SettingsActivity
 
