@@ -21,4 +21,6 @@
     <string name="year">Год</string>
     <string name="genre">Жанр</string>
     <string name="country">Страна</string>
+    <string name="saved_tracks">Избранные треки</string>"
+    <string name="playlists">Плейлисты</string>"
 </resources>

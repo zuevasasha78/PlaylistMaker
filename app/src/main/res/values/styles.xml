@@ -108,4 +108,13 @@
         <item name="iconGravity">textStart</item>
         <item name="backgroundTint">@color/black_white_by_theme</item>
     </style>
+
+    <style name="TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabIndicatorColor">@color/black_library_text_theme</item>
+        <item name="tabSelectedTextColor">@color/black_library_text_theme</item>
+        <item name="tabTextColor">@color/black_library_text_theme</item>
+        <item name="android:background">@color/with_library_text_theme</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+    </style>
+
 </resources>
