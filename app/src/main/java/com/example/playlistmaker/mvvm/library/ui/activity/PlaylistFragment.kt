@@ -12,29 +12,35 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class PlaylistFragment : Fragment() {
 
     private val viewModel: PlaylistViewModel by viewModel()
-    private lateinit var viewBinding: PlaylistFragmentBinding
+    private var viewBinding: PlaylistFragmentBinding? = null
 
     companion object {
 
-        fun newInstance() = PlaylistFragment().apply {
-        }
+        fun newInstance() = PlaylistFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         viewBinding = PlaylistFragmentBinding.inflate(inflater, container, false)
-        return viewBinding.root
+        return viewBinding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
             if (playlist.isEmpty()) {
-                viewBinding.emptyImageView.visibility = View.VISIBLE
-                viewBinding.emptyListText.visibility = View.VISIBLE
+                viewBinding?.let {
+                    it.emptyImageView.visibility = View.VISIBLE
+                    it.emptyListText.visibility = View.VISIBLE
+                }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewBinding = null
     }
 
 }
