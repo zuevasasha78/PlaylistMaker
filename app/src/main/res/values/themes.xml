@@ -1,7 +1,8 @@
 <resources>
 
     <style name="Theme.DefaultBackground" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:background">@color/background_color</item>
+        <item name="android:windowBackground">@color/background_color</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <style name="Theme.MainScreen" parent="Theme.DefaultBackground">

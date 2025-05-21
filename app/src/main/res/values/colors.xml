@@ -21,7 +21,7 @@
     <color name="settings_text_row">@color/black</color>
     <color name="settings_icon_background">@color/gray</color>
 
-    <!-- Search search colors -->
+    <!-- Search screen colors -->
     <color name="search_background">#E6E8EB</color>
     <color name="search_input">@color/gray</color>
     <color name="cursor">@color/blue</color>
@@ -37,5 +37,9 @@
 
     <!-- Track screen colors -->
     <color name="action_button">@color/black_gray</color>
+
+    <!-- Library search colors -->
+    <color name="black_library_text_theme">@color/black</color>
+    <color name="with_library_text_theme">@color/white</color>
 
 </resources>

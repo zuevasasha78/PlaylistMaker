@@ -113,7 +113,7 @@
 
     <Button
         android:id="@+id/updateButton"
-        style="@style/UpdateButton"
+        style="@style/BlackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="134dp"
@@ -161,7 +161,7 @@
 
             <Button
                 android:id="@+id/clearHistory"
-                style="@style/UpdateButton"
+                style="@style/BlackButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

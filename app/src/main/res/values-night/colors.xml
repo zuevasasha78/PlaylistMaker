@@ -36,4 +36,8 @@
 
     <!-- Track screen colors -->
     <color name="action_button">@color/white</color>
+
+    <!-- Library search colors -->
+    <color name="black_library_text_theme">@color/white</color>
+    <color name="with_library_text_theme">@color/black_gray</color>
 </resources>
