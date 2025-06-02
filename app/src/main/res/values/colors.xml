@@ -42,4 +42,7 @@
     <color name="black_library_text_theme">@color/black</color>
     <color name="with_library_text_theme">@color/white</color>
 
+    <!-- Bottom menu -->
+    <color name="icon_bottom_menu">@color/black_gray</color>
+
 </resources>

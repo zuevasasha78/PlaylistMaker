@@ -40,4 +40,8 @@
     <!-- Library search colors -->
     <color name="black_library_text_theme">@color/white</color>
     <color name="with_library_text_theme">@color/black_gray</color>
+
+    <!-- Bottom menu -->
+    <color name="icon_bottom_menu">@color/white</color>
+
 </resources>
