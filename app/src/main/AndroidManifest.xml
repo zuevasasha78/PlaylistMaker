@@ -20,9 +20,6 @@
             android:name=".mvvm.library.ui.activity.LibraryActivity"
             android:exported="false" />
         <activity
-            android:name=".mvvm.search.ui.activity.SearchActivity"
-            android:exported="false" />
-        <activity
             android:name=".mvvm.settings.ui.activity.SettingsActivity"
             android:exported="false" />
         <activity
