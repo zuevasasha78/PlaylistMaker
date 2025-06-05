@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.example.playlistmaker.LibraryFragment"
+        android:name="com.example.playlistmaker.mvvm.library.ui.activity.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" />
     <fragment

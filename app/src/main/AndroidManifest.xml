@@ -16,9 +16,6 @@
         android:theme="@style/Theme.DefaultBackground"
         tools:targetApi="31">
         <activity
-            android:name=".mvvm.library.ui.activity.LibraryActivity"
-            android:exported="false" />
-        <activity
             android:name=".mvvm.main.ui.MainActivity"
             android:exported="true">
             <intent-filter>
