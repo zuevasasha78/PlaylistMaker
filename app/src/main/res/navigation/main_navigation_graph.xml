@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_graph"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/libraryFragment">
 
     <fragment
         android:id="@+id/libraryFragment"
@@ -12,12 +12,25 @@
         tools:layout="@layout/fragment_library" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.playlistmaker.SettingsFragment"
+        android:name="com.example.playlistmaker.mvvm.settings.ui.activity.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.playlistmaker.mvvm.search.ui.activity.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_audioPlayerFragment"
+            app:destination="@id/audioPlayerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/audioPlayerFragment"
+        android:name="com.example.playlistmaker.mvvm.audioplayer.ui.activity.AudioPlayerFragment"
+        android:label="fragment_audio_player"
+        tools:layout="@layout/fragment_audio_player">
+        <argument
+            android:name="trackData"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -8,12 +8,12 @@
 
     <item
         android:id="@+id/libraryFragment"
-        android:icon="@drawable/libray_bottom_menu"
+        android:icon="@drawable/library_bottom_menu"
         android:title="@string/library" />
 
     <item
         android:id="@+id/settingsFragment"
-        android:icon="@drawable/search_bottom_menu"
+        android:icon="@drawable/settings_bottom_menu"
         android:title="@string/settings" />
 
 </menu>

@@ -19,9 +19,6 @@
             android:name=".mvvm.library.ui.activity.LibraryActivity"
             android:exported="false" />
         <activity
-            android:name=".mvvm.settings.ui.activity.SettingsActivity"
-            android:exported="false" />
-        <activity
             android:name=".mvvm.main.ui.MainActivity"
             android:exported="true">
             <intent-filter>
