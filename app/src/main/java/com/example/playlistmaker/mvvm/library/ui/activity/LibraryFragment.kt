@@ -11,7 +11,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class LibraryFragment : Fragment() {
 
-    private var viewBinding: FragmentLibraryBinding? = null
+    private val viewBinding: FragmentLibraryBinding get() = _viewBinding!!
+    private var _viewBinding: FragmentLibraryBinding? = null
     private lateinit var tabMediator: TabLayoutMediator
 
     override fun onCreateView(
@@ -19,28 +20,26 @@ class LibraryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding = FragmentLibraryBinding.inflate(inflater, container, false)
-        return viewBinding?.root
+        _viewBinding = FragmentLibraryBinding.inflate(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewBinding?.let {
-            it.viewPager.adapter = PagerAdapter(childFragmentManager, lifecycle)
+        viewBinding.viewPager.adapter = PagerAdapter(childFragmentManager, lifecycle)
 
-            tabMediator =
-                TabLayoutMediator(it.tabLayout, it.viewPager) { tab, position ->
-                    when (position) {
-                        0 -> tab.text = requireContext().getString(R.string.saved_tracks)
-                        1 -> tab.text = requireContext().getString(R.string.playlists)
-                    }
+        tabMediator =
+            TabLayoutMediator(viewBinding.tabLayout, viewBinding.viewPager) { tab, position ->
+                when (position) {
+                    0 -> tab.text = requireContext().getString(R.string.saved_tracks)
+                    1 -> tab.text = requireContext().getString(R.string.playlists)
                 }
-            tabMediator.attach()
-        }
+            }
+        tabMediator.attach()
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         tabMediator.detach()
-        viewBinding = null
+        _viewBinding = null
+        super.onDestroyView()
     }
 }

@@ -15,50 +15,49 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SettingsFragment : Fragment() {
 
     private val viewModel: SettingsViewModel by viewModel()
-    private var viewBinding: FragmentSettingsBinding? = null
+    private val viewBinding: FragmentSettingsBinding get() = _viewBinding!!
+    private var _viewBinding: FragmentSettingsBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding = FragmentSettingsBinding.inflate(inflater, container, false)
-        return viewBinding?.root
+        _viewBinding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initializeScreenButtons()
         viewModel.getThemeSettings().observe(viewLifecycleOwner) { isDarkTheme ->
-            viewBinding?.let { it.darkTheme.isChecked = isDarkTheme }
+            viewBinding.darkTheme.isChecked = isDarkTheme
         }
-        viewBinding?.let {
-            it.darkTheme.setOnCheckedChangeListener { _, isChecked ->
-                viewModel.updateThemeSetting(isChecked)
-            }
+        viewBinding.darkTheme.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateThemeSetting(isChecked)
         }
     }
 
     override fun onDestroyView() {
+        _viewBinding = null
         super.onDestroyView()
-        viewBinding = null
     }
 
     private fun initializeScreenButtons() {
-        viewBinding?.let {
-            it.shareApp.setOnClickListener {
+        viewBinding.apply {
+            shareApp.setOnClickListener {
                 val shareIntent = Intent(Intent.ACTION_SEND).apply {
                     type = "text/plain"
                     putExtra(Intent.EXTRA_TEXT, viewModel.getShareApp())
                 }
                 startIntent(Intent.createChooser(shareIntent, getString(R.string.share_app)))
             }
-            it.legalAgreement.setOnClickListener {
+            legalAgreement.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW).apply {
                     data = viewModel.getLegalAgreement().toUri()
                 }
                 startIntent(intent)
             }
-            it.callSupport.setOnClickListener {
+            callSupport.setOnClickListener {
                 val supportData = viewModel.getSupportData()
                 val intent = Intent(Intent.ACTION_SENDTO).apply {
                     data = "mailto:".toUri()
