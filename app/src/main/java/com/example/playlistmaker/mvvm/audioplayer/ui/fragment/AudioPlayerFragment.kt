@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.audioplayer.ui.activity
+package com.example.playlistmaker.mvvm.audioplayer.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -47,12 +47,20 @@ class AudioPlayerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initView()
         setupListeners()
-        viewModel.initPlayer()
+        setObservePlayerState()
+    }
+
+    private fun setObservePlayerState() {
+        viewModel.observePlayerState().observe(viewLifecycleOwner) {
+            viewBinding.playButton.isEnabled = it.isPlayButtonEnabled
+            viewBinding.stopOnTime.text = it.progress
+            viewBinding.playButton.setImageResource(it.buttonImage)
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.pauseOnLifecycle()
+        viewModel.onPausePlayer()
     }
 
     override fun onDestroyView() {
@@ -66,7 +74,7 @@ class AudioPlayerFragment : Fragment() {
         }
         viewBinding.playButton.setOnClickListener {
             if (it.isEnabled) {
-                viewModel.playbackControl()
+                viewModel.onPlayButtonClicked()
             }
         }
     }
@@ -89,17 +97,6 @@ class AudioPlayerFragment : Fragment() {
 
                 uploadImage(track.artworkUrl100)
             }
-        }
-
-        viewModel.playerState.observe(viewLifecycleOwner) { state ->
-            viewBinding.playButton.setImageResource(
-                if (state == 2) R.drawable.pause_button else R.drawable.play_button
-            )
-            viewBinding.playButton.isEnabled = (state != 0)
-        }
-
-        viewModel.currentTime.observe(viewLifecycleOwner) { time ->
-            viewBinding.stopOnTime.text = time
         }
     }
 
