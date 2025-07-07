@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.utils
 
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.google.gson.Gson
@@ -17,11 +17,6 @@ fun stringToTrackList(jsonString: String?): MutableList<Track> {
     } else {
         gson.fromJson(jsonString, listType)
     }
-}
-
-fun <T> stringToObject(jsonString: String?, clazz: Class<T>): T {
-    val gson = Gson()
-    return gson.fromJson(jsonString, clazz)
 }
 
 fun convertMsToData(trackTimeMillis: Int, format: String): String {

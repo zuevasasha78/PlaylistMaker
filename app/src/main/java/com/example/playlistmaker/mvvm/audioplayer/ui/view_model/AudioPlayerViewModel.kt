@@ -5,9 +5,9 @@ import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmaker.durationFormat
 import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.TrackInteractor
 import com.example.playlistmaker.mvvm.search.domain.models.Track
+import com.example.playlistmaker.utils.durationFormat
 
 class AudioPlayerViewModel(
     private val trackInteractor: TrackInteractor,

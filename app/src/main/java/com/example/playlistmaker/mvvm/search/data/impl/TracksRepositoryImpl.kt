@@ -1,13 +1,13 @@
 package com.example.playlistmaker.mvvm.search.data.impl
 
-import com.example.playlistmaker.convertMsToData
-import com.example.playlistmaker.convertStringToData
 import com.example.playlistmaker.mvvm.search.data.dto.TrackListResponse
 import com.example.playlistmaker.mvvm.search.data.dto.TracksSearchRequest
 import com.example.playlistmaker.mvvm.search.data.network.NetworkClient
 import com.example.playlistmaker.mvvm.search.domain.api.SearchState
 import com.example.playlistmaker.mvvm.search.domain.api.TracksRepository
 import com.example.playlistmaker.mvvm.search.domain.models.Track
+import com.example.playlistmaker.utils.convertMsToData
+import com.example.playlistmaker.utils.convertStringToData
 
 class TracksRepositoryImpl(val networkClient: NetworkClient) : TracksRepository {
     override fun searchTracks(expression: String): SearchState {

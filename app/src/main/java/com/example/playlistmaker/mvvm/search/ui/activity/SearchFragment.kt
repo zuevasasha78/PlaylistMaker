@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.R
@@ -19,6 +20,7 @@ import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.mvvm.search.domain.api.SearchState
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.example.playlistmaker.mvvm.search.ui.view_model.SearchViewModel
+import com.example.playlistmaker.utils.debounce
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,9 +35,10 @@ class SearchFragment : Fragment() {
     private lateinit var trackHistoryAdapter: TrackAdapter
 
     private var savedText: String? = null
-    private var isClickAllowed = true
 
     private val gson: Gson by inject()
+
+    private lateinit var onTrackClickDebounce: (Track) -> Unit
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
@@ -54,6 +57,13 @@ class SearchFragment : Fragment() {
         initTrackListView()
         observeViewModel()
         setupListeners()
+        onTrackClickDebounce = debounce<Track>(
+            CLICK_DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            false
+        ) { track ->
+            startAudioPlayer(track)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -77,12 +87,11 @@ class SearchFragment : Fragment() {
     }
 
     private fun startAudioPlayer(track: Track) {
-        if (clickDebounce()) {
-            val trackJson = gson.toJson(track)
-            val action =
-                SearchFragmentDirections.actionSearchFragmentToAudioPlayerFragment(trackJson)
-            findNavController().navigate(action)
-        }
+        onTrackClickDebounce(track)
+        val trackJson = gson.toJson(track)
+        val action =
+            SearchFragmentDirections.actionSearchFragmentToAudioPlayerFragment(trackJson)
+        findNavController().navigate(action)
     }
 
     private fun initTrackListView() {
@@ -207,18 +216,6 @@ class SearchFragment : Fragment() {
             TypedValue.COMPLEX_UNIT_DIP, cornerRadiusInPx, resources.displayMetrics
         )
         viewBinding.updateButton.background = drawable
-    }
-
-    private fun clickDebounce(): Boolean {
-        val current = isClickAllowed
-        if (isClickAllowed) {
-            isClickAllowed = false
-            viewBinding.root.postDelayed(
-                { isClickAllowed = true },
-                CLICK_DEBOUNCE_DELAY
-            )
-        }
-        return current
     }
 
     private fun showPlaceholder(imageRes: Int, errorText: String) {
