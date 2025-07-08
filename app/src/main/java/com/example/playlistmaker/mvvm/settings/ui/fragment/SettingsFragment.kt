@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.settings.ui.activity
+package com.example.playlistmaker.mvvm.settings.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle

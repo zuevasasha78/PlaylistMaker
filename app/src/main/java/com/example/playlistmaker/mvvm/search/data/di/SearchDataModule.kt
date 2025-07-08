@@ -24,7 +24,7 @@ val searchDataModule = module {
     }
 
     single<NetworkClient> {
-        RetrofitNetworkClient(get())
+        RetrofitNetworkClient(get(), get())
     }
 
     single {

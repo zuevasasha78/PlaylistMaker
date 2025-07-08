@@ -8,11 +8,13 @@ import com.example.playlistmaker.mvvm.search.domain.api.TracksRepository
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.example.playlistmaker.utils.convertMsToData
 import com.example.playlistmaker.utils.convertStringToData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class TracksRepositoryImpl(val networkClient: NetworkClient) : TracksRepository {
-    override fun searchTracks(expression: String): SearchState {
-        val response = networkClient.doRequest(TracksSearchRequest(expression))
 
+    override fun searchTracks(expression: String): Flow<SearchState> = flow {
+        val response = networkClient.doRequest(TracksSearchRequest(expression))
         if (response.resultCode == 200 && response is TrackListResponse) {
             val trackList = response.results
 
@@ -31,15 +33,17 @@ class TracksRepositoryImpl(val networkClient: NetworkClient) : TracksRepository 
                         previewUrl = dto.previewUrl,
                     )
                 }
-                return SearchState.Success(trackData)
+                emit(SearchState.Success(trackData))
             } else {
-                return SearchState.DataError("Ничего не нашлось")
+                emit(SearchState.DataError("Ничего не нашлось"))
             }
         } else {
-            return SearchState.NetworkError(
-                "Проблемы со связью\n" +
-                    "\n" +
-                    "Загрузка не удалась. Проверьте подключение к интернету"
+            emit(
+                SearchState.NetworkError(
+                    "Проблемы со связью\n" +
+                            "\n" +
+                            "Загрузка не удалась. Проверьте подключение к интернету"
+                )
             )
         }
     }

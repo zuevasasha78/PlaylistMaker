@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.search.ui.activity
+package com.example.playlistmaker.mvvm.search.ui.fragment
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.drawable.GradientDrawable

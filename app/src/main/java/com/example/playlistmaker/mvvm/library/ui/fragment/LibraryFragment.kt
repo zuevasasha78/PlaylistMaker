@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.library.ui.activity
+package com.example.playlistmaker.mvvm.library.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

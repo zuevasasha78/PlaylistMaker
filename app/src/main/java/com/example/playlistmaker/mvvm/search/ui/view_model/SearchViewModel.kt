@@ -48,8 +48,12 @@ class SearchViewModel(
     }
 
     private fun performSearch(query: String) {
-        val collection = TrackConsumerImpl { dataTracks ->
-            _searchResultsLiveData.postValue(dataTracks)
+        val collection = TrackConsumerImpl { dataTracksFlow ->
+            viewModelScope.launch {
+                dataTracksFlow.collect { searchState ->
+                    _searchResultsLiveData.postValue(searchState)
+                }
+            }
         }
         tracksInteractor.searchTracks(query, collection)
     }
