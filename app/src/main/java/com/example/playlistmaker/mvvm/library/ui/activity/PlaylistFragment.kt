@@ -42,5 +42,4 @@ class PlaylistFragment : Fragment() {
         super.onDestroyView()
         viewBinding = null
     }
-
 }

@@ -1,16 +1,15 @@
 package com.example.playlistmaker.mvvm.main.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivityMainBinding
-import com.example.playlistmaker.mvvm.library.ui.activity.LibraryActivity
-import com.example.playlistmaker.mvvm.search.ui.activity.SearchActivity
-import com.example.playlistmaker.mvvm.settings.ui.activity.SettingsActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,34 +17,31 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        viewBinding.searchButton.setOnClickListener {
-            val searchIntent = Intent(this, SearchActivity::class.java)
-            startActivity(searchIntent)
-        }
-
-        val libraryButton = viewBinding.libraryButton
-        libraryButton.setOnClickListener {
-            val libraryIntent = Intent(this, LibraryActivity::class.java)
-            startActivity(libraryIntent)
-        }
-
-        val settingsButton = viewBinding.settingsButton
-        val settingsListener: View.OnClickListener = object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val settingsIntent = Intent(this@MainActivity, SettingsActivity::class.java)
-                startActivity(settingsIntent)
-            }
-        }
-        settingsButton.setOnClickListener(settingsListener)
-
-        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.main) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+                as NavHostFragment
+        val navController = navHostFragment.navController
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.audioPlayerFragment -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
+
+                else -> {
+                    bottomNavigationView.visibility = View.VISIBLE
+                }
+            }
+        }
+        bottomNavigationView.setupWithNavController(navController)
     }
 }

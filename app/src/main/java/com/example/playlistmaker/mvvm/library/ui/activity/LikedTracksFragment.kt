@@ -15,11 +15,7 @@ class LikedTracksFragment : Fragment() {
     private var viewBinding: LikedTracksFragmentBinding? = null
 
     companion object {
-        fun newInstance() = LikedTracksFragment().apply {
-//            arguments = Bundle().apply {
-//                putInt(NUMBER, number)
-//            }
-        }
+        fun newInstance() = LikedTracksFragment()
     }
 
     override fun onCreateView(
