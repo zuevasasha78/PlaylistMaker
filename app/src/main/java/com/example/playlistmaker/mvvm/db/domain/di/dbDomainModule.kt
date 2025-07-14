@@ -1,18 +1,18 @@
 package com.example.playlistmaker.mvvm.db.domain.di
 
-import com.example.playlistmaker.mvvm.db.data.HistoryRepositoryImpl
-import com.example.playlistmaker.mvvm.db.domain.HistoryInteractor
-import com.example.playlistmaker.mvvm.db.domain.HistoryInteractorImpl
-import com.example.playlistmaker.mvvm.db.domain.HistoryRepository
+import com.example.playlistmaker.mvvm.db.data.SavedTracksRepositoryImpl
+import com.example.playlistmaker.mvvm.db.domain.SavedTracksInteractor
+import com.example.playlistmaker.mvvm.db.domain.SavedTracksInteractorImpl
+import com.example.playlistmaker.mvvm.db.domain.SavedTracksRepository
 import org.koin.dsl.module
 
 val dbDomainModule = module {
 
-    single<HistoryRepository> {
-        HistoryRepositoryImpl(get(), get())
+    single<SavedTracksRepository> {
+        SavedTracksRepositoryImpl(get(), get())
     }
 
-    single<HistoryInteractor> {
-        HistoryInteractorImpl(get())
+    single<SavedTracksInteractor> {
+        SavedTracksInteractorImpl(get())
     }
 }

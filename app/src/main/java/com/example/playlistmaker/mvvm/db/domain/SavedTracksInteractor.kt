@@ -3,7 +3,7 @@ package com.example.playlistmaker.mvvm.db.domain
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import kotlinx.coroutines.flow.Flow
 
-interface HistoryRepository {
+interface SavedTracksInteractor {
 
-    fun historyTracks(): Flow<List<Track>>
+    fun savedTracksTracks(): Flow<List<Track>>
 }
