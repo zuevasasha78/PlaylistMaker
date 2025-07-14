@@ -3,7 +3,7 @@ package com.example.playlistmaker.mvvm.search.data.impl
 import android.content.SharedPreferences
 import com.example.playlistmaker.mvvm.search.domain.api.TracksHistoryRepository
 import com.example.playlistmaker.mvvm.search.domain.models.Track
-import com.example.playlistmaker.stringToTrackList
+import com.example.playlistmaker.utils.stringToTrackList
 import com.google.gson.Gson
 
 class TracksHistoryRepositoryImpl(

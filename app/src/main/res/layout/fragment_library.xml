@@ -5,7 +5,7 @@
     android:id="@+id/library"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvvm.library.ui.activity.LikedTracksFragment">
+    tools:context=".mvvm.library.ui.fragment.LikedTracksFragment">
 
     <TextView
         android:id="@+id/title"

@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.audioplayer.ui.activity
+package com.example.playlistmaker.mvvm.audioplayer.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,7 +25,10 @@ class AudioPlayerFragment : Fragment() {
     private val args: AudioPlayerFragmentArgs by navArgs()
     private val gson: Gson by inject()
 
-    private var viewBinding: FragmentAudioPlayerBinding? = null
+    private var _viewBinding: FragmentAudioPlayerBinding? = null
+    private val viewBinding: FragmentAudioPlayerBinding
+        get() = _viewBinding!!
+
     private val track: Track by lazy {
         val trackJson = args.trackData
         gson.fromJson(trackJson, Track::class.java)
@@ -37,71 +40,62 @@ class AudioPlayerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding = FragmentAudioPlayerBinding.inflate(inflater, container, false)
-        return viewBinding?.root
+        _viewBinding = FragmentAudioPlayerBinding.inflate(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initView()
         setupListeners()
-        viewModel.initPlayer()
+        setObservePlayerState()
+    }
+
+    private fun setObservePlayerState() {
+        viewModel.observePlayerState().observe(viewLifecycleOwner) {
+            viewBinding.playButton.isEnabled = it.isPlayButtonEnabled
+            viewBinding.stopOnTime.text = it.progress
+            viewBinding.playButton.setImageResource(it.buttonImage)
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.pauseOnLifecycle()
+        viewModel.onPausePlayer()
     }
 
     override fun onDestroyView() {
+        _viewBinding = null
         super.onDestroyView()
-        viewBinding = null
     }
 
     private fun setupListeners() {
-        viewBinding?.let {
-            it.toolbar.setNavigationOnClickListener {
-                findNavController().navigateUp()
-            }
-            it.playButton.setOnClickListener {
-                if (it.isEnabled) {
-                    viewModel.playbackControl()
-                }
+        viewBinding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+        viewBinding.playButton.setOnClickListener {
+            if (it.isEnabled) {
+                viewModel.onPlayButtonClicked()
             }
         }
     }
 
     private fun initView() {
         viewModel.track.observe(viewLifecycleOwner) { track ->
-            viewBinding?.let {
-                it.trackName.text = track.trackName
-                it.artistName.text = track.artistName
-                it.durationValue.text = track.trackTimeMillis
-                it.yearValue.text = track.releaseDate
-                it.genreName.text = track.primaryGenreName
-                it.countryName.text = track.country
+            viewBinding.apply {
+                trackName.text = track.trackName
+                artistName.text = track.artistName
+                durationValue.text = track.trackTimeMillis
+                yearValue.text = track.releaseDate
+                genreName.text = track.primaryGenreName
+                countryName.text = track.country
 
                 if (!track.collectionName.isNullOrEmpty()) {
-                    it.albumText.text = track.collectionName
+                    albumText.text = track.collectionName
                 } else {
-                    it.albumLine.isVisible = false
+                    albumLine.isVisible = false
                 }
 
                 uploadImage(track.artworkUrl100)
-            }
-        }
-
-        viewModel.playerState.observe(viewLifecycleOwner) { state ->
-            viewBinding?.let {
-                it.playButton.setImageResource(
-                    if (state == 2) R.drawable.pause_button else R.drawable.play_button
-                )
-                it.playButton.isEnabled = (state != 0)
-            }
-        }
-
-        viewModel.currentTime.observe(viewLifecycleOwner) { time ->
-            viewBinding?.let {
-                it.stopOnTime.text = time
             }
         }
     }
@@ -109,16 +103,14 @@ class AudioPlayerFragment : Fragment() {
     private fun uploadImage(artworkUrl100: String) {
         val roundValue = 8
         val url = artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
-        viewBinding?.let {
-            glide.load(url)
-                .placeholder(R.drawable.placeholder)
-                .transform(
-                    FitCenter(),
-                    RoundedCorners(
-                        roundValue * (resources.displayMetrics.density).toInt()
-                    )
+        glide.load(url)
+            .placeholder(R.drawable.placeholder)
+            .transform(
+                FitCenter(),
+                RoundedCorners(
+                    roundValue * (resources.displayMetrics.density).toInt()
                 )
-                .into(it.trackImage)
-        }
+            )
+            .into(viewBinding.trackImage)
     }
 }

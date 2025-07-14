@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.library.ui.activity
+package com.example.playlistmaker.mvvm.library.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class PlaylistFragment : Fragment() {
 
     private val viewModel: PlaylistViewModel by viewModel()
-    private var viewBinding: PlaylistFragmentBinding? = null
+    private val viewBinding: PlaylistFragmentBinding get() = _viewBinding!!
+    private var _viewBinding: PlaylistFragmentBinding? = null
 
     companion object {
 
@@ -23,23 +24,21 @@ class PlaylistFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding = PlaylistFragmentBinding.inflate(inflater, container, false)
-        return viewBinding?.root
+        _viewBinding = PlaylistFragmentBinding.inflate(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
             if (playlist.isEmpty()) {
-                viewBinding?.let {
-                    it.emptyImageView.visibility = View.VISIBLE
-                    it.emptyListText.visibility = View.VISIBLE
-                }
+                viewBinding.emptyImageView.visibility = View.VISIBLE
+                viewBinding.emptyListText.visibility = View.VISIBLE
             }
         }
     }
 
     override fun onDestroyView() {
+        _viewBinding = null
         super.onDestroyView()
-        viewBinding = null
     }
 }

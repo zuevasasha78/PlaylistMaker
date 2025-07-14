@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.library.ui.activity
+package com.example.playlistmaker.mvvm.library.ui.fragment
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
