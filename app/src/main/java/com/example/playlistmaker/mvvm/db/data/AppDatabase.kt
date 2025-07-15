@@ -9,7 +9,8 @@ import com.example.playlistmaker.mvvm.db.data.entity.TrackEntity
     version = 1,
     entities = [
         TrackEntity::class
-    ]
+    ],
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
