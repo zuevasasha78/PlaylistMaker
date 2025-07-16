@@ -15,4 +15,8 @@ class FavoriteTracksInteractorImpl(
     override suspend fun setFavoriteTrack(track: Track) {
         favoriteTracksRepository.setFavoriteTracks(track)
     }
+
+    override suspend fun deleteFavoriteTrack(track: Track) {
+        favoriteTracksRepository.setFavoriteTracks(track)
+    }
 }

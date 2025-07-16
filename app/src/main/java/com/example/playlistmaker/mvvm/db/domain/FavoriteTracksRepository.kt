@@ -8,4 +8,6 @@ interface FavoriteTracksRepository {
     fun getFavoriteTracks(): Flow<List<Track>>
 
     suspend fun setFavoriteTracks(track: Track)
+
+    suspend fun deleteFavoriteTracks(track: Track)
 }

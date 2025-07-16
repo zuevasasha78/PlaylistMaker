@@ -18,7 +18,13 @@ class FavoriteTracksRepositoryImpl(
     }
 
     override suspend fun setFavoriteTracks(track: Track) {
-        appDatabase.getTrackDao().insertTrack(trackDbConvertor.map(track))
+        if (appDatabase.getTrackDao().getTrackById(track.trackId) == null) {
+            appDatabase.getTrackDao().insertTrack(trackDbConvertor.map(track))
+        }
+    }
+
+    override suspend fun deleteFavoriteTracks(track: Track) {
+        appDatabase.getTrackDao().deleteTrack(trackDbConvertor.map(track))
     }
 
     private fun convertFromTrackEntity(track: List<TrackEntity>): List<Track> {
