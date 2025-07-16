@@ -63,9 +63,13 @@ class AudioPlayerViewModel(
         pausePlayer()
     }
 
-    fun onFavoriteClicked() {
+    fun onFavoriteClicked(isFavorite: Boolean) {
         viewModelScope.launch {
-            favoriteTracksInteractor.setFavoriteTrack(track.value)
+            if (isFavorite) {
+                favoriteTracksInteractor.setFavoriteTrack(track.value)
+            } else {
+                favoriteTracksInteractor.deleteFavoriteTrack(track.value)
+            }
         }
     }
 

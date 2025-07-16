@@ -80,7 +80,7 @@ class AudioPlayerFragment : Fragment() {
         viewBinding.likeButton.setOnClickListener {
             setLikeButtonColor(!track.isFavorite)
             viewModel.track.value.isFavorite = !track.isFavorite
-            viewModel.onFavoriteClicked()
+            viewModel.onFavoriteClicked(track.isFavorite)
         }
     }
 
