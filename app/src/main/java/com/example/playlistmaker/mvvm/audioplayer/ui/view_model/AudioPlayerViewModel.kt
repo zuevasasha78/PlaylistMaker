@@ -11,6 +11,7 @@ import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Default
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Paused
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Playing
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Prepared
+import com.example.playlistmaker.mvvm.db.domain.use_case.FavoriteTracksInteractor
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.example.playlistmaker.utils.durationFormat
 import kotlinx.coroutines.Job
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 class AudioPlayerViewModel(
     private val trackInteractor: TrackInteractor,
     private val mediaPlayer: MediaPlayer,
+    private val favoriteTracksInteractor: FavoriteTracksInteractor
 ) : ViewModel() {
 
     private val _track = MutableLiveData<Track>()
@@ -59,6 +61,12 @@ class AudioPlayerViewModel(
 
     fun onPausePlayer() {
         pausePlayer()
+    }
+
+    fun onFavoriteClicked() {
+        viewModelScope.launch {
+            favoriteTracksInteractor.setFavoriteTrack(track.value)
+        }
     }
 
     private fun initPlayer() {

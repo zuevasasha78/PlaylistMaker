@@ -77,6 +77,11 @@ class AudioPlayerFragment : Fragment() {
                 viewModel.onPlayButtonClicked()
             }
         }
+        viewBinding.likeButton.setOnClickListener {
+            setLikeButtonColor(!track.isFavorite)
+            viewModel.track.value.isFavorite = !track.isFavorite
+            viewModel.onFavoriteClicked()
+        }
     }
 
     private fun initView() {
@@ -95,9 +100,19 @@ class AudioPlayerFragment : Fragment() {
                     albumLine.isVisible = false
                 }
 
+                setLikeButtonColor(track.isFavorite)
                 uploadImage(track.artworkUrl100)
             }
         }
+    }
+
+    private fun setLikeButtonColor(isFavorite: Boolean) {
+        if (isFavorite) {
+            viewBinding.likeButton.setImageResource(R.drawable.like_button_selected)
+        } else {
+            viewBinding.likeButton.setImageResource(R.drawable.like_button)
+        }
+
     }
 
     private fun uploadImage(artworkUrl100: String) {
