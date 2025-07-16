@@ -11,7 +11,7 @@ import com.example.playlistmaker.mvvm.db.data.entity.TrackEntity
 interface TrackDao {
 
     @Insert(entity = TrackEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrack(track: List<TrackEntity>)
+    suspend fun insertTrack(track: TrackEntity)
 
     @Query("SELECT * FROM track_table")
     suspend fun getTracks(): List<TrackEntity>

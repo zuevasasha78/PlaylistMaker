@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.playlistmaker.mvvm.audioplayer.data.di.audioplayerDataModule
 import com.example.playlistmaker.mvvm.audioplayer.domain.di.audioplayerDomainModule
 import com.example.playlistmaker.mvvm.audioplayer.ui.di.audioplayerVMModule
-import com.example.playlistmaker.mvvm.db.di.dbDataModule
+import com.example.playlistmaker.mvvm.db.data.di.dbDataModule
 import com.example.playlistmaker.mvvm.db.domain.di.dbDomainModule
 import com.example.playlistmaker.mvvm.di.appModule
 import com.example.playlistmaker.mvvm.library.ui.di.likedTracksVmModule

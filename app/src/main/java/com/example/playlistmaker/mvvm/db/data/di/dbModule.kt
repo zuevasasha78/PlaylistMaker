@@ -1,4 +1,4 @@
-package com.example.playlistmaker.mvvm.db.di
+package com.example.playlistmaker.mvvm.db.data.di
 
 import androidx.room.Room
 import com.example.playlistmaker.mvvm.db.data.AppDatabase
