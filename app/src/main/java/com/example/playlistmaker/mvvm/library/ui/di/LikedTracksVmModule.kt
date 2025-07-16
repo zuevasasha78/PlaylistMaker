@@ -7,6 +7,6 @@ import org.koin.dsl.module
 val likedTracksVmModule = module {
 
     viewModel {
-        LikedTracksViewModel()
+        LikedTracksViewModel(get())
     }
 }
