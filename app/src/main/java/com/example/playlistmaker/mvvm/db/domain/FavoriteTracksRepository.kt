@@ -9,5 +9,7 @@ interface FavoriteTracksRepository {
 
     suspend fun setFavoriteTracks(track: Track)
 
-    suspend fun deleteFavoriteTracks(track: Track)
+    suspend fun deleteFavoriteTracks(trackId: Long)
+
+    suspend fun getFavoriteTrackById(trackId: Long): Track?
 }

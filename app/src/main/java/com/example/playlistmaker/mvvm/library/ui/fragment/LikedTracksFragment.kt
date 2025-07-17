@@ -44,6 +44,7 @@ class LikedTracksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setTrackDebouncer()
 
+        viewModel.updateFavoriteTrackList()
         viewModel.favoriteTrackListLiveData.observe(viewLifecycleOwner) { favoriteTracks ->
             if (favoriteTracks.isEmpty()) {
                 showEmptyList(true)

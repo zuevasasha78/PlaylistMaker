@@ -68,21 +68,27 @@ class AudioPlayerViewModel(
             if (isFavorite) {
                 favoriteTracksInteractor.setFavoriteTrack(track.value)
             } else {
-                favoriteTracksInteractor.deleteFavoriteTrack(track.value)
+                favoriteTracksInteractor.deleteFavoriteTrack(track.value.trackId)
             }
         }
     }
 
     private fun initPlayer() {
-        val trackData = trackInteractor.getTrack()
-        _track.value = trackData
-        mediaPlayer.setDataSource(trackData.previewUrl)
-        mediaPlayer.prepareAsync()
-        mediaPlayer.setOnPreparedListener {
-            playerState.postValue(Prepared())
-        }
-        mediaPlayer.setOnCompletionListener {
-            playerState.postValue(Prepared())
+        viewModelScope.launch {
+            val trackData = trackInteractor.getTrack()
+            if (favoriteTracksInteractor.getFavoriteTrackById(trackData.trackId) != null) {
+                trackData.isFavorite = true
+            }
+            _track.value = trackData
+            mediaPlayer.setDataSource(trackData.previewUrl)
+
+            mediaPlayer.prepareAsync()
+            mediaPlayer.setOnPreparedListener {
+                playerState.postValue(Prepared())
+            }
+            mediaPlayer.setOnCompletionListener {
+                playerState.postValue(Prepared())
+            }
         }
     }
 

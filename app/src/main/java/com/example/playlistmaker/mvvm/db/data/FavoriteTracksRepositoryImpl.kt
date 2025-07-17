@@ -23,11 +23,20 @@ class FavoriteTracksRepositoryImpl(
         }
     }
 
-    override suspend fun deleteFavoriteTracks(track: Track) {
-        appDatabase.getTrackDao().deleteTrack(trackDbConvertor.map(track))
+    override suspend fun deleteFavoriteTracks(trackId: Long) {
+        appDatabase.getTrackDao().deleteTrack(trackId)
+    }
+
+    override suspend fun getFavoriteTrackById(trackId: Long): Track? {
+        val trackEntity = appDatabase.getTrackDao().getTrackById(trackId)
+        return if (trackEntity != null) {
+            trackDbConvertor.map(trackEntity)
+        } else {
+            null
+        }
     }
 
     private fun convertFromTrackEntity(track: List<TrackEntity>): List<Track> {
-        return track.map { movie -> trackDbConvertor.map(movie) }
+        return track.map { track -> trackDbConvertor.map(track) }
     }
 }

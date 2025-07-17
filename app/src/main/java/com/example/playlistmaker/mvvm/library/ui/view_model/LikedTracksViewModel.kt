@@ -15,7 +15,7 @@ class LikedTracksViewModel(
     private val _favoriteTrackListLiveData = MutableLiveData<List<Track>>()
     val favoriteTrackListLiveData: LiveData<List<Track>> = _favoriteTrackListLiveData
 
-    init {
+    fun updateFavoriteTrackList() {
         viewModelScope.launch {
             favoriteTracksInteractor.getFavoriteTracks().collect { tracks ->
                 _favoriteTrackListLiveData.postValue(tracks)
