@@ -30,13 +30,13 @@ class FavoriteTracksRepositoryImpl(
     override suspend fun getFavoriteTrackById(trackId: Long): Track? {
         val trackEntity = appDatabase.getTrackDao().getTrackById(trackId)
         return if (trackEntity != null) {
-            trackDbConvertor.map(trackEntity)
+            trackDbConvertor.map(trackEntity, isFavorite = true)
         } else {
             null
         }
     }
 
     private fun convertFromTrackEntity(track: List<TrackEntity>): List<Track> {
-        return track.map { track -> trackDbConvertor.map(track) }
+        return track.map { track -> trackDbConvertor.map(track, true) }
     }
 }
