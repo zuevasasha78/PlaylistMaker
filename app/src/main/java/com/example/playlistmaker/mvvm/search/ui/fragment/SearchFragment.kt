@@ -97,6 +97,7 @@ class SearchFragment : Fragment() {
     private fun initTrackListView() {
         trackAdapter = TrackAdapter { track ->
             viewModel.updateTrackListHistory(track)
+            clearInputEditText()
             startAudioPlayer(track)
         }
         trackHistoryAdapter = TrackAdapter { track ->
@@ -164,7 +165,7 @@ class SearchFragment : Fragment() {
         })
 
         viewBinding.clearIcon.setOnClickListener { v ->
-            viewBinding.inputEditText.text.clear()
+            clearInputEditText()
             viewBinding.trackList.isVisible = false
             v.isVisible = false
             hideKeyboard()
@@ -178,6 +179,10 @@ class SearchFragment : Fragment() {
             viewModel.clearHistory()
             viewBinding.searchHistory.isVisible = false
         }
+    }
+
+    private fun clearInputEditText() {
+        viewBinding.inputEditText.text.clear()
     }
 
     private fun hideLoading() {
