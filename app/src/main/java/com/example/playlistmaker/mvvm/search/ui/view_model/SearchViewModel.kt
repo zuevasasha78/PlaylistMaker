@@ -19,7 +19,10 @@ class SearchViewModel(
 ) : ViewModel() {
 
     private val _searchResultsLiveData = MutableLiveData<SearchState>()
+    private val _searchText = MutableLiveData<String>()
+
     val searchResultsLiveData: LiveData<SearchState> = _searchResultsLiveData
+    val searchText = _searchText
 
     private val trackListHistory = mutableListOf<Track>()
     private var searchJob: Job? = null
@@ -36,6 +39,10 @@ class SearchViewModel(
     override fun onCleared() {
         super.onCleared()
         saveTrackHistory()
+    }
+
+    fun saveSearchText(savedText: String) {
+        searchText.postValue(savedText)
     }
 
     fun onSearchTextChanged(query: String) {
@@ -73,6 +80,9 @@ class SearchViewModel(
         if (trackListHistory.size > 10) {
             trackListHistory.removeAt(trackListHistory.size - 1)
         }
+    }
+
+    fun onShowTrackListHistory() {
         _searchResultsLiveData.postValue(SearchState.History(trackListHistory))
     }
 
