@@ -11,6 +11,7 @@ import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Default
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Paused
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Playing
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Prepared
+import com.example.playlistmaker.mvvm.db.domain.use_case.FavoriteTracksInteractor
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.example.playlistmaker.utils.durationFormat
 import kotlinx.coroutines.Job
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 class AudioPlayerViewModel(
     private val trackInteractor: TrackInteractor,
     private val mediaPlayer: MediaPlayer,
+    private val favoriteTracksInteractor: FavoriteTracksInteractor
 ) : ViewModel() {
 
     private val _track = MutableLiveData<Track>()
@@ -61,16 +63,32 @@ class AudioPlayerViewModel(
         pausePlayer()
     }
 
-    private fun initPlayer() {
-        val trackData = trackInteractor.getTrack()
-        _track.value = trackData
-        mediaPlayer.setDataSource(trackData.previewUrl)
-        mediaPlayer.prepareAsync()
-        mediaPlayer.setOnPreparedListener {
-            playerState.postValue(Prepared())
+    fun onFavoriteClicked(isFavorite: Boolean) {
+        viewModelScope.launch {
+            if (isFavorite) {
+                favoriteTracksInteractor.setFavoriteTrack(track.value)
+            } else {
+                favoriteTracksInteractor.deleteFavoriteTrack(track.value.trackId)
+            }
         }
-        mediaPlayer.setOnCompletionListener {
-            playerState.postValue(Prepared())
+    }
+
+    private fun initPlayer() {
+        viewModelScope.launch {
+            val trackData = trackInteractor.getTrack()
+            if (favoriteTracksInteractor.getFavoriteTrackById(trackData.trackId) != null) {
+                trackData.isFavorite = true
+            }
+            _track.value = trackData
+            mediaPlayer.setDataSource(trackData.previewUrl)
+
+            mediaPlayer.prepareAsync()
+            mediaPlayer.setOnPreparedListener {
+                playerState.postValue(Prepared())
+            }
+            mediaPlayer.setOnCompletionListener {
+                playerState.postValue(Prepared())
+            }
         }
     }
 

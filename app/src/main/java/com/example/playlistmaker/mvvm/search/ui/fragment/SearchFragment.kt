@@ -34,14 +34,11 @@ class SearchFragment : Fragment() {
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var trackHistoryAdapter: TrackAdapter
 
-    private var savedText: String? = null
-
     private val gson: Gson by inject()
 
     private lateinit var onTrackClickDebounce: (Track) -> Unit
 
     companion object {
-        const val SEARCH_TEXT = "SEARCH_TEXT"
         private const val CLICK_DEBOUNCE_DELAY = 1_000L
     }
 
@@ -64,11 +61,6 @@ class SearchFragment : Fragment() {
         ) { track ->
             startAudioPlayer(track)
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        savedText?.let { outState.putString(SEARCH_TEXT, savedText) }
     }
 
     override fun onDestroyView() {
@@ -150,16 +142,22 @@ class SearchFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrEmpty()) {
-                    val text = s.toString()
-                    viewBinding.clearIcon.isVisible = true
-                    showLoading()
-                    viewModel.onSearchTextChanged(text)
+                viewModel.searchText.observe(viewLifecycleOwner) { savedText ->
+                    if (!s.isNullOrEmpty()) {
+                        viewBinding.clearIcon.isVisible = true
+                        if (s.toString() != savedText) {
+                            showLoading()
+                            viewModel.onSearchTextChanged(s.toString())
+                        }
+                    } else {
+                        viewBinding.trackList.isVisible = false
+                        viewModel.onShowTrackListHistory()
+                    }
                 }
             }
 
             override fun afterTextChanged(s: Editable?) {
-                savedText = s.toString()
+                viewModel.saveSearchText(s.toString())
             }
         })
 
@@ -172,7 +170,9 @@ class SearchFragment : Fragment() {
         }
         viewBinding.updateButton.setOnClickListener {
             showLoading()
-            savedText?.let { viewModel.onSearchTextChanged(it) }
+            viewModel.searchText.observe(viewLifecycleOwner) {
+                viewModel.onSearchTextChanged(it)
+            }
         }
         viewBinding.clearHistory.setOnClickListener {
             viewModel.clearHistory()
