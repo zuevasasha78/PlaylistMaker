@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.playlistmaker.databinding.PlaylistFragmentBinding
 import com.example.playlistmaker.mvvm.library.ui.view_model.PlaylistViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,6 +35,11 @@ class PlaylistFragment : Fragment() {
                 viewBinding.emptyImageView.visibility = View.VISIBLE
                 viewBinding.emptyListText.visibility = View.VISIBLE
             }
+        }
+        viewBinding.newPlaylistButton.setOnClickListener {
+            val action =
+                LibraryFragmentDirections.actionLibraryFragmentToCreatePlaylistFragment()
+            findNavController().navigate(action)
         }
     }
 
