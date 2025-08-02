@@ -47,4 +47,8 @@
     <color name="icon_text_bottom_menu">@color/black_gray</color>
     <color name="select_icon_text_bottom_menu">@color/blue</color>
 
+    <!-- Playlist create fragment -->
+    <color name="playlist_create_text">@color/black_gray</color>
+    <color name="playlist_create_text_border">@color/gray</color>
+
 </resources>

@@ -1,14 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".mvvm.library.ui.fragment.createrplaylist.CreatePlaylistFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/Toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="4dp"
+            app:contentInsetStart="12dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/arrow"
+            app:title="@string/new_playlist_title"
+            app:titleTextAppearance="@style/Toolbar" />
+
+
+        <LinearLayout
+            android:id="@+id/placeholder_cover"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/dashed_border"
+            android:gravity="center"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/placeholder_playlist_cover" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/nameLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/round_rect_transparent"
+            app:layout_constraintTop_toBottomOf="@id/placeholder_cover">
+
+            <EditText
+                android:id="@+id/inputEditTextName"
+                style="@style/InputTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_playlist_name"
+                android:inputType="text"
+                android:maxLength="30"
+                android:paddingVertical="18dp"
+                android:paddingStart="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/descriptionLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/round_rect_transparent"
+            app:layout_constraintTop_toBottomOf="@id/nameLinearLayout">
+
+            <EditText
+                android:id="@+id/inputEditTextNameDescription"
+                style="@style/InputTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_playlist_description"
+                android:inputType="text"
+                android:maxLength="30"
+                android:paddingVertical="18dp"
+                android:paddingStart="16dp" />
+        </LinearLayout>
+
+        <Button
+            style="@style/CreateButton"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginHorizontal="17dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/new_playlist_create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

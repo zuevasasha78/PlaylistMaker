@@ -11,5 +11,5 @@
     <dimen name="update_track_text">14sp</dimen>
     <dimen name="description_track_text">13sp</dimen>
     <dimen name="radius_update_button">54px</dimen>
-
+    <dimen name="text_create_playlist">16sp</dimen>
 </resources>

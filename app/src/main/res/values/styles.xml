@@ -45,11 +45,10 @@
         <item name="iconTint">@color/big_button_text</item>
     </style>
 
-    <style name="Toolbar">
-        <item name="titleMarginStart">0dp</item>
-        <item name="contentInsetStartWithNavigation">0dp</item>
-        <item name="contentInsetStart">12dp</item>
-        <item name="navigationIcon">@drawable/arrow</item>
+    <style name="Toolbar" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textSize">@dimen/text_size_main</item>
+        <item name="titleTextColor">@color/back_title</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
     </style>
 
     <style name="TitleText" parent="TextAppearance.MaterialComponents.Headline5">
@@ -122,6 +121,31 @@
         <item name="android:background">@color/background_color</item>
         <item name="itemIconTint">@color/bottom_nav_colors</item>
         <item name="itemTextColor">@color/bottom_nav_colors</item>
+    </style>
+
+    <style name="InputTextField">
+        <item name="android:textSize">@dimen/text_create_playlist</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textColor">@color/playlist_create_text</item>
+        <item name="android:textColorHint">@color/playlist_create_text</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:lines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="CreateButton" parent="Widget.Material3.Button">
+        <item name="android:textSize">@dimen/text_create_playlist</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="backgroundTint">@color/gray</item>
+        <item name="shapeAppearance">@style/CustomButtonShape</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerSize">>8dp</item>
+    </style>
+
+    <style name="CustomButtonShape" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">8dp</item>
     </style>
 
 </resources>
