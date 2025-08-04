@@ -27,25 +27,36 @@
             app:title="@string/new_playlist_title"
             app:titleTextAppearance="@style/Toolbar" />
 
-
-        <LinearLayout
-            android:id="@+id/placeholder_cover"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:id="@+id/cover"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="24dp"
-            android:background="@drawable/dashed_border"
-            android:gravity="center"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
+            <LinearLayout
+                android:id="@+id/placeholderCover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/dashed_border"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/placeholder_playlist_cover" />
+            </LinearLayout>
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/placeholder_playlist_cover" />
-        </LinearLayout>
+                android:id="@+id/coverImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+        </FrameLayout>
 
 
         <LinearLayout
@@ -55,7 +66,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/round_rect_transparent"
-            app:layout_constraintTop_toBottomOf="@id/placeholder_cover">
+            app:layout_constraintTop_toBottomOf="@id/cover">
 
             <EditText
                 android:id="@+id/inputEditTextName"
