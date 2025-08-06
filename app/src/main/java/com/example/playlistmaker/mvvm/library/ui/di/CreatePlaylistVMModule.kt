@@ -7,6 +7,6 @@ import org.koin.dsl.module
 val createPlaylistVMModule = module {
 
     viewModel {
-        CreatePlaylistViewModel()
+        CreatePlaylistViewModel(get())
     }
 }

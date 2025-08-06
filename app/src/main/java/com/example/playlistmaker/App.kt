@@ -45,6 +45,7 @@ class App : Application() {
                 playlistVMModule,
                 likedTracksVmModule,
                 createPlaylistVMModule,
+                createPlaylistVMModule,
             )
         }
 
