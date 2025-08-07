@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.playlistmaker.databinding.PlaylistFragmentBinding
 import com.example.playlistmaker.mvvm.library.ui.view_model.PlaylistViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,17 +31,46 @@ class PlaylistFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
-            if (playlist.isEmpty()) {
-                viewBinding.emptyImageView.visibility = View.VISIBLE
-                viewBinding.emptyListText.visibility = View.VISIBLE
-            }
-        }
+        setPlaylistList()
+        setNewPlaylistButtonListener()
+    }
+
+    private fun setNewPlaylistButtonListener() {
         viewBinding.newPlaylistButton.setOnClickListener {
             val action =
                 LibraryFragmentDirections.actionLibraryFragmentToCreatePlaylistFragment()
             findNavController().navigate(action)
         }
+    }
+
+    private fun setPlaylistList() {
+        viewModel.updatePlaylistList()
+        viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
+            if (playlist.isEmpty()) {
+                setVisibleEmptyList()
+            } else {
+                setVisiblePlaylist()
+                val adapter = PlaylistAdapter {}
+                val gridLayout = GridLayoutManager(requireContext(), 2)
+                adapter.setItems(playlist)
+                viewBinding.apply {
+                    playlistList.layoutManager = gridLayout
+                    playlistList.adapter = adapter
+                }
+            }
+        }
+    }
+
+    private fun setVisibleEmptyList() {
+        viewBinding.emptyImageView.visibility = View.VISIBLE
+        viewBinding.emptyListText.visibility = View.VISIBLE
+        viewBinding.playlistList.visibility = View.GONE
+    }
+
+    private fun setVisiblePlaylist() {
+        viewBinding.emptyImageView.visibility = View.GONE
+        viewBinding.emptyListText.visibility = View.GONE
+        viewBinding.playlistList.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
