@@ -23,7 +23,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentCreatePlaylistBinding
-import com.example.playlistmaker.mvvm.library.ui.models.Playlist
+import com.example.playlistmaker.mvvm.library.domain.models.Playlist
+import com.example.playlistmaker.mvvm.library.ui.view_model.createrplaylist.CreatePlaylistViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -104,6 +105,8 @@ class CreatePlaylistFragment : Fragment() {
                         name = nameText!!,
                         description = descriptionText,
                         coverImageUrl = imageUrl,
+                        tracksList = null,
+                        tracksAmount = 0,
                     )
                 )
                 val message = getString(R.string.new_playlist_toast, nameText)
