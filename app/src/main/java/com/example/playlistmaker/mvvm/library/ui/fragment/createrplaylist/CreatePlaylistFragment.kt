@@ -105,7 +105,7 @@ class CreatePlaylistFragment : Fragment() {
                         name = nameText!!,
                         description = descriptionText,
                         coverImageUrl = imageUrl,
-                        tracksList = null,
+                        tracksList = emptyList(),
                         tracksAmount = 0,
                     )
                 )
