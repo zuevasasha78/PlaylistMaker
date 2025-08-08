@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.SaveTrackToPlaylistUseCase
 import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.TrackInteractor
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Default
@@ -12,6 +13,8 @@ import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Paused
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Playing
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Prepared
 import com.example.playlistmaker.mvvm.db.domain.use_case.FavoriteTracksInteractor
+import com.example.playlistmaker.mvvm.db.domain.use_case.GetPlaylistListUseCase
+import com.example.playlistmaker.mvvm.library.domain.models.Playlist
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import com.example.playlistmaker.utils.durationFormat
 import kotlinx.coroutines.Job
@@ -21,11 +24,15 @@ import kotlinx.coroutines.launch
 class AudioPlayerViewModel(
     private val trackInteractor: TrackInteractor,
     private val mediaPlayer: MediaPlayer,
-    private val favoriteTracksInteractor: FavoriteTracksInteractor
+    private val favoriteTracksInteractor: FavoriteTracksInteractor,
+    private val getPlaylistListUseCase: GetPlaylistListUseCase,
+    private val saveTrackToPlaylistUseCase: SaveTrackToPlaylistUseCase,
 ) : ViewModel() {
 
     private val _track = MutableLiveData<Track>()
     val track: LiveData<Track> get() = _track
+    private val _playlistLiveData = MutableLiveData<List<Playlist>>()
+    val playlistLiveData: LiveData<List<Playlist>> = _playlistLiveData
 
     private val playerState = MutableLiveData<PlayerState>(Default())
     private var timerJob: Job? = null
@@ -70,6 +77,24 @@ class AudioPlayerViewModel(
             } else {
                 favoriteTracksInteractor.deleteFavoriteTrack(track.value.trackId)
             }
+        }
+    }
+
+    fun updatePlaylistList() {
+        viewModelScope.launch {
+            getPlaylistListUseCase.execute().collect { playlist ->
+                _playlistLiveData.postValue(playlist)
+            }
+        }
+    }
+
+    fun addTrackToPlaylist(playlist: Playlist, trackId: Long) {
+        viewModelScope.launch {
+            val updatedPlaylist = playlist.copy(
+                tracksList = playlist.tracksList + trackId,
+                tracksAmount = playlist.tracksList.size + 1
+            )
+            saveTrackToPlaylistUseCase.execute(updatedPlaylist)
         }
     }
 

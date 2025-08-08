@@ -14,7 +14,7 @@ val audioplayerVMModule = module {
     viewModel { (track: Track) ->
         AudioPlayerViewModel(
             get { parametersOf(track) },
-            get(), get()
+            get(), get(), get(), get()
         )
     }
 
