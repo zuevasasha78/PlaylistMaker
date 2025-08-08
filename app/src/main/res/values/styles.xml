@@ -94,10 +94,10 @@
         <item name="android:textColor">@color/artist_name</item>
     </style>
 
-    <style name="YsDisplayMedium19">
+    <style name="YsDisplayMedium19Gray">
         <item name="android:textSize">@dimen/sp_19</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textColor">@color/black_white_by_theme</item>
+        <item name="android:textColor">@color/bottomsheet_text</item>
     </style>
 
     <style name="BlackButton" parent="Widget.Material3.Button">
@@ -147,6 +147,12 @@
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textColor">@color/playlist_create_text</item>
+    </style>
+
+    <style name="YsDisplayMedium19">
+        <item name="android:textSize">@dimen/sp_19</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textColor">@color/black_white_by_theme</item>
     </style>
 
 </resources>
