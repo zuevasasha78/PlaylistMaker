@@ -9,7 +9,9 @@ class PlaylistDbConvertor {
 
     val gson = Gson()
     fun map(playlist: Playlist): PlaylistEntity {
+        val id = if (playlist.id != 0L) playlist.id else 0
         return PlaylistEntity(
+            id = id,
             name = playlist.name,
             description = playlist.description,
             coverImageUrl = playlist.coverImageUrl,
@@ -29,7 +31,7 @@ class PlaylistDbConvertor {
         )
     }
 
-    private fun tracksToListLong(value: String?): List<Long>? {
+    private fun tracksToListLong(value: String?): List<Long> {
         if (value.isNullOrEmpty()) return emptyList()
         val listType = object : TypeToken<List<Long>>() {}.type
         return gson.fromJson(value, listType)

@@ -21,4 +21,9 @@ class PlaylistsRepositoryImpl(
         val playlistList = playlistEntityList.map { playlist -> playlistDbConvertor.map(playlist) }
         emit(playlistList)
     }
+
+    override suspend fun update(playlist: Playlist) {
+        val playlistEntity = playlistDbConvertor.map(playlist)
+        playlistDto.updatePlaylist(playlistEntity)
+    }
 }
