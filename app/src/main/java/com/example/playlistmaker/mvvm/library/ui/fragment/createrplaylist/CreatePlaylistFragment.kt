@@ -90,10 +90,10 @@ class CreatePlaylistFragment : Fragment() {
             .setTitle(R.string.new_playlist_dialog_title)
             .setMessage(R.string.new_playlist_dialog_message)
             .setNegativeButton(R.string.new_playlist_dialog_cancel) { dialog, which ->
-                findNavController().navigateUp()
+                dialog.dismiss()
             }
             .setPositiveButton(R.string.new_playlist_dialog_finish) { dialog, which ->
-                dialog.dismiss()
+                findNavController().navigateUp()
             }
             .show()
     }
@@ -153,7 +153,7 @@ class CreatePlaylistFragment : Fragment() {
     }
 
     private fun setDescriptionInputListener() {
-        viewBinding.nameInput.addTextChangedListener(
+        viewBinding.descriptionInput.addTextChangedListener(
             afterTextChanged = { editable ->
                 val trimmedText = editable.toString().trimEnd()
                 descriptionText = trimmedText
