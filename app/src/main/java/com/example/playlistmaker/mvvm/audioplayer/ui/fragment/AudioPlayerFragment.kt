@@ -58,12 +58,14 @@ class AudioPlayerFragment : Fragment() {
         setupListeners()
         setObservePlayerState()
         viewModel.updatePlaylistList()
-        setBottomSheet()
+        initBottomSheet()
         setPlaylistList()
     }
 
-    private fun setBottomSheet(): BottomSheetBehavior<LinearLayout> {
+    private fun initBottomSheet(): BottomSheetBehavior<LinearLayout> {
         bottomSheetBehavior = BottomSheetBehavior.from(viewBinding.playlistsBottomSheet)
+        bottomSheetBehavior.state = STATE_HIDDEN
+
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
