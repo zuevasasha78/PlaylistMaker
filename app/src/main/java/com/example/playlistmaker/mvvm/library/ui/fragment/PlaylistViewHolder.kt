@@ -9,14 +9,17 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.PlaylistItemViewBinding
 import com.example.playlistmaker.mvvm.library.domain.models.Playlist
-import com.example.playlistmaker.utils.getTrackWordForm
 
 class PlaylistViewHolder(private val viewBinding: PlaylistItemViewBinding) :
     RecyclerView.ViewHolder(viewBinding.root) {
 
     fun bind(playlist: Playlist) {
         viewBinding.playlistName.text = playlist.name
-        viewBinding.trackAmount.text = getTrackWordForm(playlist.tracksAmount)
+        viewBinding.trackAmount.text = itemView.context.resources.getQuantityString(
+            R.plurals.track_amount,
+            playlist.tracksAmount,
+            playlist.tracksAmount
+        )
         val roundValue = 8
         Glide.with(itemView.context)
             .load(playlist.coverImageUrl)
