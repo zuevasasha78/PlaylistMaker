@@ -5,8 +5,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +14,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
@@ -39,6 +39,7 @@ class CreatePlaylistFragment : Fragment() {
     private val glide: RequestManager by inject()
 
     private val colorBlue = R.color.blue
+    private val colorGray = R.color.gray
     private var nameText: String? = null
     private var descriptionText: String? = null
     private var imageUrl: String? = null
@@ -134,22 +135,16 @@ class CreatePlaylistFragment : Fragment() {
     }
 
     private fun setNameInputListener() {
-        viewBinding.nameInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (!s.isNullOrEmpty()) {
-                    setCreateButtonColor(colorBlue)
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (!s.isNullOrEmpty()) {
-                    nameText = s.toString()
-                }
-            }
-        })
+        viewBinding.nameInput.addTextChangedListener(
+            onTextChanged = { text, start, before, count ->
+                val shouldEnable = text?.toString()?.trimEnd()?.isNotEmpty() ?: false
+                val color = if (shouldEnable) colorBlue else colorGray
+                setCreateButtonColor(color)
+            },
+            afterTextChanged = { editable ->
+                val trimmedText = editable.toString().trimEnd()
+                nameText = trimmedText
+            })
     }
 
     private fun setCreateButtonColor(color: Int) {
@@ -158,19 +153,11 @@ class CreatePlaylistFragment : Fragment() {
     }
 
     private fun setDescriptionInputListener() {
-        viewBinding.nameInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (!s.isNullOrEmpty()) {
-                    descriptionText = s.toString()
-                }
-            }
-        })
+        viewBinding.nameInput.addTextChangedListener(
+            afterTextChanged = { editable ->
+                val trimmedText = editable.toString().trimEnd()
+                descriptionText = trimmedText
+            })
     }
 
     private fun saveImageToPrivateStorage(uri: Uri) {
@@ -193,8 +180,8 @@ class CreatePlaylistFragment : Fragment() {
     }
 
     private fun setImage(uri: Uri) {
-        viewBinding.placeholderCover.visibility = View.GONE
-        viewBinding.coverImage.visibility = View.VISIBLE
+        viewBinding.placeholderCover.isVisible = false
+        viewBinding.coverImage.isVisible = true
 
         val roundValue = 8
         val cornerRadius = roundValue * (resources.displayMetrics.density).toInt()
