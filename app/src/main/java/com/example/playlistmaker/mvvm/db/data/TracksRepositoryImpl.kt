@@ -8,27 +8,27 @@ import com.example.playlistmaker.mvvm.search.domain.models.Track
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FavoriteTracksRepositoryImpl(
+class TracksRepositoryImpl(
     private val trackDao: TrackDao,
     private val trackDbConvertor: TrackDbConvertor,
 ) : FavoriteTracksRepository {
 
-    override fun getFavoriteTracks(): Flow<List<Track>> = flow {
+    override fun getTracks(): Flow<List<Track>> = flow {
         val trackEntity = trackDao.getTracks()
         emit(convertFromTrackEntity(trackEntity))
     }
 
-    override suspend fun setFavoriteTracks(track: Track) {
+    override suspend fun setTracks(track: Track) {
         if (trackDao.getTrackById(track.trackId) == null) {
             trackDao.insertTrack(trackDbConvertor.map(track))
         }
     }
 
-    override suspend fun deleteFavoriteTracks(trackId: Long) {
+    override suspend fun deleteTracks(trackId: Long) {
         trackDao.deleteTrack(trackId)
     }
 
-    override suspend fun getFavoriteTrackById(trackId: Long): Track? {
+    override suspend fun getTrackById(trackId: Long): Track? {
         val trackEntity = trackDao.getTrackById(trackId)
         return if (trackEntity != null) {
             trackDbConvertor.map(trackEntity, isFavorite = true)

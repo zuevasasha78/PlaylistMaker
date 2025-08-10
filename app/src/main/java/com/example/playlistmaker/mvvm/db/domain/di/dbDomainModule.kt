@@ -1,7 +1,7 @@
 package com.example.playlistmaker.mvvm.db.domain.di
 
-import com.example.playlistmaker.mvvm.db.data.FavoriteTracksRepositoryImpl
 import com.example.playlistmaker.mvvm.db.data.PlaylistsRepositoryImpl
+import com.example.playlistmaker.mvvm.db.data.TracksRepositoryImpl
 import com.example.playlistmaker.mvvm.db.domain.FavoriteTracksRepository
 import com.example.playlistmaker.mvvm.db.domain.PlaylistsRepository
 import com.example.playlistmaker.mvvm.db.domain.use_case.CreatePlaylistUseCase
@@ -15,7 +15,7 @@ import org.koin.dsl.module
 val dbDomainModule = module {
 
     single<FavoriteTracksRepository> {
-        FavoriteTracksRepositoryImpl(get(), get())
+        TracksRepositoryImpl(get(), get())
     }
 
     single<FavoriteTracksInteractor> {

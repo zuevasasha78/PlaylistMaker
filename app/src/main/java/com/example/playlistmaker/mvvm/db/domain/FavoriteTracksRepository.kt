@@ -5,11 +5,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface FavoriteTracksRepository {
 
-    fun getFavoriteTracks(): Flow<List<Track>>
+    fun getTracks(): Flow<List<Track>>
 
-    suspend fun setFavoriteTracks(track: Track)
+    suspend fun setTracks(track: Track)
 
-    suspend fun deleteFavoriteTracks(trackId: Long)
+    suspend fun deleteTracks(trackId: Long)
 
-    suspend fun getFavoriteTrackById(trackId: Long): Track?
+    suspend fun getTrackById(trackId: Long): Track?
 }
