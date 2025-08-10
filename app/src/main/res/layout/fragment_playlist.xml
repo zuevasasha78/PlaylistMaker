@@ -125,7 +125,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/tracklist_bottom_sheet"
+        android:id="@+id/tracklistBottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bottomsheet_shape"
