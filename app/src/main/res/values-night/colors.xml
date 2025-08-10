@@ -46,4 +46,13 @@
     <color name="icon_text_bottom_menu">@color/white</color>
     <color name="select_icon_text_bottom_menu">@color/blue</color>
 
+    <!-- Playlist create fragment -->
+    <color name="playlist_create_text">@color/white</color>
+    <color name="playlist_create_text_border">@color/white</color>
+
+    <!-- Audio player fragment -->
+    <color name="bottomsheet_background">@color/black_gray</color>
+    <color name="bottomsheet_small_rect">@color/white</color>
+    <color name="bottomsheet_text">@color/white</color>
+
 </resources>
