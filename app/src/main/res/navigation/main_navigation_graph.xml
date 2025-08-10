@@ -58,7 +58,7 @@
         android:label="fragment_playlist"
         tools:layout="@layout/fragment_playlist">
         <argument
-            android:name="playlistData"
-            app:argType="string" />
+            android:name="playlistId"
+            app:argType="long" />
     </fragment>
 </navigation>
