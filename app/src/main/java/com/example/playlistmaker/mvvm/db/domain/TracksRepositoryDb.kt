@@ -5,12 +5,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface TracksRepositoryDb {
 
-    fun getTracks(): Flow<List<Track>>
+    fun getFavoriteTracks(): Flow<List<Track>>
 
     suspend fun setTracks(track: Track)
 
     suspend fun deleteTracks(trackId: Long)
 
     suspend fun getTrackById(trackId: Long): Track?
-    fun getTracksByIds(): Flow<List<Track>>
+    fun getTracksByIds(trackIds: List<Long>): Flow<List<Track>>
 }

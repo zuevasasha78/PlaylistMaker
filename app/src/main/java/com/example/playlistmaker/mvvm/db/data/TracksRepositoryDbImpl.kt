@@ -13,13 +13,13 @@ class TracksRepositoryDbImpl(
     private val trackDbConvertor: TrackDbConvertor,
 ) : TracksRepositoryDb {
 
-    override fun getTracks(): Flow<List<Track>> = flow {
-        val trackEntity = trackDao.getTracks()
+    override fun getFavoriteTracks(): Flow<List<Track>> = flow {
+        val trackEntity = trackDao.getTracksFavorite()
         emit(convertFromTrackEntity(trackEntity))
     }
 
-    override fun getTracksByIds(): Flow<List<Track>> = flow {
-        val trackEntity = trackDao.getTracks()
+    override fun getTracksByIds(trackIds: List<Long>): Flow<List<Track>> = flow {
+        val trackEntity = trackDao.getTracksByIds(trackIds)
         emit(convertFromTrackEntity(trackEntity))
     }
 

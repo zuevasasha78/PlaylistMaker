@@ -9,11 +9,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentPlaylistBinding
 import com.example.playlistmaker.mvvm.playlist.ui.view_modal.PlaylistViewModel
+import com.example.playlistmaker.mvvm.search.ui.fragment.TrackAdapter
 import com.example.playlistmaker.utils.durationFormat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
@@ -66,8 +68,25 @@ class PlaylistFragment : Fragment() {
 
             if (playlist.tracksAmount != 0) {
                 initBottomSheet()
+                setTracksListData()
             } else {
                 viewBinding.tracklistBottomSheet.isVisible = false
+            }
+        }
+    }
+
+    private fun setTracksListData() {
+        viewModel.tracksListLiveData.observe(viewLifecycleOwner) { tracksList ->
+            val trackAdapter = TrackAdapter { track ->
+            }
+            trackAdapter.setItems(tracksList)
+            val layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL, false
+            )
+            viewBinding.apply {
+                tracklist.layoutManager = layoutManager
+                tracklist.adapter = trackAdapter
             }
         }
     }

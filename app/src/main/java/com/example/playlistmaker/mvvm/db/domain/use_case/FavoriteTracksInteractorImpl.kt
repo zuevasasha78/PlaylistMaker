@@ -9,7 +9,7 @@ class FavoriteTracksInteractorImpl(
 ) : FavoriteTracksInteractor {
 
     override fun getFavoriteTracks(): Flow<List<Track>> {
-        return tracksRepositoryDb.getTracks()
+        return tracksRepositoryDb.getFavoriteTracks()
     }
 
     override suspend fun setFavoriteTrack(track: Track) {

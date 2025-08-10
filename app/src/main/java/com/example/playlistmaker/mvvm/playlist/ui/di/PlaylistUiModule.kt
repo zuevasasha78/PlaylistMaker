@@ -8,6 +8,10 @@ import org.koin.dsl.module
 val playlistUiModule = module {
 
     viewModel { (playlistId: Long) ->
-        PlaylistViewModel(get { parametersOf(playlistId) }, get())
+        PlaylistViewModel(
+            get { parametersOf(playlistId) },
+            get(),
+            get()
+        )
     }
 }

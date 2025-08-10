@@ -12,8 +12,11 @@ interface TrackDao {
     @Insert(entity = TrackEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrack(track: TrackEntity)
 
-    @Query("SELECT * FROM track_table ORDER BY id DESC")
-    suspend fun getTracks(): List<TrackEntity>
+    @Query("SELECT * FROM track_table WHERE isFavorite = 1 ORDER BY id DESC")
+    suspend fun getTracksFavorite(): List<TrackEntity>
+
+    @Query("SELECT * FROM track_table WHERE trackId IN (:trackIds) ORDER BY id DESC")
+    suspend fun getTracksByIds(trackIds: List<Long>): List<TrackEntity>
 
     @Query("SELECT * FROM track_table WHERE trackId = :trackId")
     suspend fun getTrackById(trackId: Long): TrackEntity?

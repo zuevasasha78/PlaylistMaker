@@ -17,6 +17,7 @@ class TrackDbConvertor {
             country = track.country,
             trackDuration = track.trackTimeMillis,
             previewUrl = track.previewUrl,
+            isFavorite = if (track.isFavorite) 1 else 0,
         )
     }
 
