@@ -3,7 +3,7 @@ package com.example.playlistmaker.mvvm.db.data
 import com.example.playlistmaker.mvvm.db.data.converters.TrackDbConvertor
 import com.example.playlistmaker.mvvm.db.data.dao.TrackDao
 import com.example.playlistmaker.mvvm.db.data.entity.TrackEntity
-import com.example.playlistmaker.mvvm.db.domain.FavoriteTracksRepository
+import com.example.playlistmaker.mvvm.db.domain.TracksRepository
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,9 +11,14 @@ import kotlinx.coroutines.flow.flow
 class TracksRepositoryImpl(
     private val trackDao: TrackDao,
     private val trackDbConvertor: TrackDbConvertor,
-) : FavoriteTracksRepository {
+) : TracksRepository {
 
     override fun getTracks(): Flow<List<Track>> = flow {
+        val trackEntity = trackDao.getTracks()
+        emit(convertFromTrackEntity(trackEntity))
+    }
+
+    override fun getTracksByIds(): Flow<List<Track>> = flow {
         val trackEntity = trackDao.getTracks()
         emit(convertFromTrackEntity(trackEntity))
     }

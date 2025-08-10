@@ -3,7 +3,7 @@ package com.example.playlistmaker.mvvm.db.domain
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import kotlinx.coroutines.flow.Flow
 
-interface FavoriteTracksRepository {
+interface TracksRepository {
 
     fun getTracks(): Flow<List<Track>>
 
@@ -12,4 +12,5 @@ interface FavoriteTracksRepository {
     suspend fun deleteTracks(trackId: Long)
 
     suspend fun getTrackById(trackId: Long): Track?
+    fun getTracksByIds(): Flow<List<Track>>
 }
