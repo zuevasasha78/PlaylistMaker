@@ -88,13 +88,13 @@ class AudioPlayerViewModel(
         }
     }
 
-    fun addTrackToPlaylist(playlist: Playlist, trackId: Long) {
+    fun addTrackToPlaylist(playlist: Playlist, track: Track) {
         viewModelScope.launch {
             val updatedPlaylist = playlist.copy(
-                tracksList = playlist.tracksList + trackId,
+                tracksList = playlist.tracksList + track.trackId,
                 tracksAmount = playlist.tracksList.size + 1
             )
-            saveTrackToPlaylistUseCase.execute(updatedPlaylist)
+            saveTrackToPlaylistUseCase.execute(updatedPlaylist, track)
         }
     }
 

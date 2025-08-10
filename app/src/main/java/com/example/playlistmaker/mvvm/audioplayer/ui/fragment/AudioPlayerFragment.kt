@@ -111,7 +111,7 @@ class AudioPlayerFragment : Fragment() {
             message = getString(R.string.track_already_added, playlist.name)
         } else {
             message = getString(R.string.added_to_playlist, playlist.name)
-            viewModel.addTrackToPlaylist(playlist, track.trackId)
+            viewModel.addTrackToPlaylist(playlist, track)
         }
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         bottomSheetBehavior.state = STATE_HIDDEN

@@ -14,6 +14,6 @@ val audioplayerDomainModule = module {
     }
 
     single<SaveTrackToPlaylistUseCase> {
-        SaveTrackToPlaylistUseCaseImpl(get())
+        SaveTrackToPlaylistUseCaseImpl(get(), get())
     }
 }

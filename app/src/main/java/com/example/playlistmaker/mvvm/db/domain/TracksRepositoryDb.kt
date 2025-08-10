@@ -3,7 +3,7 @@ package com.example.playlistmaker.mvvm.db.domain
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import kotlinx.coroutines.flow.Flow
 
-interface TracksRepository {
+interface TracksRepositoryDb {
 
     fun getTracks(): Flow<List<Track>>
 
