@@ -11,7 +11,7 @@ class PagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> LikedTracksFragment.newInstance()
-            1 -> PlaylistFragment.newInstance()
+            1 -> PlaylistListFragment.newInstance()
             else -> LikedTracksFragment.newInstance()
         }
     }
