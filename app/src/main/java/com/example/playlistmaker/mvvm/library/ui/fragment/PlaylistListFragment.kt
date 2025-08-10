@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.playlistmaker.databinding.PlaylistListFragmentBinding
+import com.example.playlistmaker.mvvm.library.domain.models.Playlist
 import com.example.playlistmaker.mvvm.library.ui.view_model.PlaylistViewModel
+import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlaylistListFragment : Fragment() {
@@ -51,7 +53,7 @@ class PlaylistListFragment : Fragment() {
             } else {
                 setVisiblePlaylist()
                 val adapter = PlaylistAdapter {
-                    openPlaylist(it.id)
+                    openPlaylist(it)
                 }
                 val gridLayout = GridLayoutManager(requireContext(), 2)
                 adapter.setItems(playlist)
@@ -63,9 +65,10 @@ class PlaylistListFragment : Fragment() {
         }
     }
 
-    private fun openPlaylist(playlistId: Long) {
+    private fun openPlaylist(playlist: Playlist) {
+        val playlistJson = Gson().toJson(playlist)
         val action =
-            LibraryFragmentDirections.actionLibraryFragmentToPlaylistFragment(playlistId)
+            LibraryFragmentDirections.actionLibraryFragmentToPlaylistFragment(playlistJson)
         findNavController().navigate(action)
     }
 
