@@ -38,7 +38,7 @@ open class CreatePlaylistFragment : Fragment() {
     protected val viewBinding: FragmentCreatePlaylistBinding get() = _viewBinding!!
     private val glide: RequestManager by inject()
 
-    private val colorBlue = R.color.blue
+    protected val colorBlue = R.color.blue
     private val colorGray = R.color.gray
     protected var nameText: String? = null
     protected var descriptionText: String? = null
@@ -152,7 +152,7 @@ open class CreatePlaylistFragment : Fragment() {
             })
     }
 
-    private fun setCreateButtonColor(color: Int) {
+    protected fun setCreateButtonColor(color: Int) {
         viewBinding.createButton.backgroundTintList = ContextCompat
             .getColorStateList(requireContext(), color)
     }

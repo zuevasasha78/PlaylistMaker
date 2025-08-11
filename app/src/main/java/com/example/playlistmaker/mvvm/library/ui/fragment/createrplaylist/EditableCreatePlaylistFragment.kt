@@ -36,9 +36,8 @@ class EditableCreatePlaylistFragment : CreatePlaylistFragment() {
         viewBinding.createButton.text = getString(R.string.save)
         viewBinding.nameInput.setText(playlist.name)
         viewBinding.descriptionInput.setText(playlist.description)
-
         setImage(playlist.coverImageUrl)
-
+        setCreateButtonColor(colorBlue)
 
         nameText = playlist.name
         descriptionText = playlist.description
