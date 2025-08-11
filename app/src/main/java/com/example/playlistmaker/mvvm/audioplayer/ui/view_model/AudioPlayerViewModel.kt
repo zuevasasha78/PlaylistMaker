@@ -70,12 +70,14 @@ class AudioPlayerViewModel(
         pausePlayer()
     }
 
-    fun onFavoriteClicked(isFavorite: Boolean) {
+    fun onFavoriteClicked() {
         viewModelScope.launch {
-            if (isFavorite) {
-                favoriteTracksInteractor.setFavoriteTrack(track.value)
-            } else {
-                favoriteTracksInteractor.deleteFavoriteTrack(track.value.trackId)
+            _track.value?.let {
+                if (it.isFavorite) {
+                    favoriteTracksInteractor.setFavoriteTrack(it)
+                } else {
+                    favoriteTracksInteractor.deleteFavoriteTrack(it.trackId)
+                }
             }
         }
     }

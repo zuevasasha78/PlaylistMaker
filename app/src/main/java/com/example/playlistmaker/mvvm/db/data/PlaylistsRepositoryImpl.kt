@@ -31,4 +31,8 @@ class PlaylistsRepositoryImpl(
         val playlistEntity = playlistDto.getPlaylistById(playlistId)
         return playlistDbConvertor.map(playlistEntity)
     }
+
+    override suspend fun deletePlaylist(id: Long) {
+        playlistDto.deletePlaylist(id)
+    }
 }

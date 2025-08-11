@@ -50,10 +50,11 @@
         <item quantity="other">%d минут</item>
     </plurals>
     <string name="dialog_remove_track_title">Хотите удалить трек?</string>
-    <string name="dialog_remove_track_yes">да</string>
-    <string name="dialog_remove_track_no">нет</string>
+    <string name="dialog_remove_yes">да</string>
+    <string name="dialog_remove_no">нет</string>
     <string name="toast_share_empty_playlist">В этом плейлисте нет списка треков, которым можно поделиться</string>
     <string name="share">Поделиться</string>
     <string name="edit_information">Редактировать информацию</string>
     <string name="remove_playlist">Удалить плейлист</string>
+    <string name="dialog_remove_playlist_title">Хотите удалить плейлист «%s»?</string>
 </resources>

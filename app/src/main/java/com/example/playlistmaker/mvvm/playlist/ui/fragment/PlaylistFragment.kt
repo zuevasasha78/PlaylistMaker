@@ -60,7 +60,7 @@ class PlaylistFragment : Fragment() {
     private fun setOnPlaylistInfoListener() {
         setOnShareButtonListener(viewBinding.infoShare)
         viewBinding.deletePlaylist.setOnClickListener {
-            viewModel.deletePlaylist()
+            showDialogRemovePlaylist()
         }
     }
 
@@ -188,7 +188,7 @@ class PlaylistFragment : Fragment() {
                     openAudioPlayer(track)
                 },
                 longClickListener = { track ->
-                    showDialog(track)
+                    showDialogRemoveTrack(track)
                 }
             )
             trackAdapter.setItems(tracksList)
@@ -203,17 +203,33 @@ class PlaylistFragment : Fragment() {
         }
     }
 
-    private fun showDialog(track: Track) {
+    private fun showDialogRemoveTrack(track: Track) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.dialog_remove_track_title)
             .setMessage("")
-            .setNegativeButton(R.string.dialog_remove_track_no) { dialog, which ->
+            .setNegativeButton(R.string.dialog_remove_no) { dialog, which ->
                 dialog.dismiss()
             }
-            .setPositiveButton(R.string.dialog_remove_track_yes) { dialog, which ->
+            .setPositiveButton(R.string.dialog_remove_yes) { dialog, which ->
                 viewModel.removeTrackFromPlaylist(track)
             }
             .show()
+    }
+
+    private fun showDialogRemovePlaylist() {
+        viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.dialog_remove_playlist_title, playlist.name))
+                .setMessage("")
+                .setNegativeButton(R.string.dialog_remove_no) { dialog, which ->
+                    dialog.dismiss()
+                }
+                .setPositiveButton(R.string.dialog_remove_yes) { dialog, which ->
+                    viewModel.deletePlaylist()
+                    findNavController().navigateUp()
+                }
+                .show()
+        }
     }
 
     private fun setPlaylistDuration(duration: Int) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.mvvm.library.domain.models.Playlist
+import com.example.playlistmaker.mvvm.playlist.domain.DeletePlaylistUseCase
 import com.example.playlistmaker.mvvm.playlist.domain.GetPlaylistDataUseCase
 import com.example.playlistmaker.mvvm.playlist.domain.GetTracksByIdsDataUseCase
 import com.example.playlistmaker.mvvm.playlist.domain.RemoveTrackFromPlaylistUseCase
@@ -17,6 +18,7 @@ class PlaylistViewModel(
     private val getPlaylistDataUseCase: GetPlaylistDataUseCase,
     private val getTracksByIdsDataUseCase: GetTracksByIdsDataUseCase,
     private val removeTrackFromPlaylistUseCase: RemoveTrackFromPlaylistUseCase,
+    private val deletePlaylistUseCase: DeletePlaylistUseCase,
 ) : ViewModel() {
 
     private val _playlistLiveData = MutableLiveData<Playlist>()
@@ -62,6 +64,10 @@ class PlaylistViewModel(
     }
 
     fun deletePlaylist() {
-        TODO("Not yet implemented")
+        viewModelScope.launch(Dispatchers.IO) {
+            val playlist = _playlistLiveData.value
+            val tracksList = _tracksListLiveData.value
+            deletePlaylistUseCase.execute(playlist.id, tracksList)
+        }
     }
 }

@@ -12,6 +12,7 @@ val playlistUiModule = module {
             get { parametersOf(playlistId) },
             get(),
             get(),
+            get(),
             get()
         )
     }
