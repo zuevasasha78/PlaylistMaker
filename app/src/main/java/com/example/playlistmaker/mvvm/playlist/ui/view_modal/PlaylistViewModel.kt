@@ -60,4 +60,8 @@ class PlaylistViewModel(
         val playlistInfo = listOf(playlistName, trackAmount, tracksList)
         return playlistInfo.joinToString("\n")
     }
+
+    fun deletePlaylist() {
+        TODO("Not yet implemented")
+    }
 }

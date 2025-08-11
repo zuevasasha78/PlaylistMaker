@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentPlaylistBinding
 import com.example.playlistmaker.mvvm.library.domain.models.Playlist
@@ -23,6 +23,7 @@ import com.example.playlistmaker.mvvm.search.ui.fragment.TrackAdapter
 import com.example.playlistmaker.utils.convertMinAndSecToLong
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,7 +39,6 @@ class PlaylistFragment : Fragment() {
         args.playlistId
     }
     private val viewModel: PlaylistViewModel by viewModel { parametersOf(playlistId) }
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,14 +50,70 @@ class PlaylistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setOnBackButtonListener()
-        setOnShareButtonListener()
-        setData()
+        setOnShareButtonListener(viewBinding.sharePlaylist)
+        setPlaylistData()
+        setPlaylistInfoAction()
+        initPlaylistInfoActionBottomSheet()
+        setOnPlaylistInfoListener()
     }
 
-    private fun setOnShareButtonListener() {
+    private fun setOnPlaylistInfoListener() {
+        setOnShareButtonListener(viewBinding.infoShare)
+        viewBinding.deletePlaylist.setOnClickListener {
+            viewModel.deletePlaylist()
+        }
+    }
+
+    private fun setPlaylistInfoAction() {
+        viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
+            viewBinding.playlistInfo.playlistName.text = playlist.name
+            viewBinding.playlistInfo.trackAmount.text = requireContext().resources.getQuantityString(
+                R.plurals.track_amount,
+                playlist.tracksAmount,
+                playlist.tracksAmount
+            )
+            val roundValue = 2
+            Glide.with(requireContext())
+                .load(playlist.coverImageUrl)
+                .placeholder(R.drawable.placeholder)
+                .transform(
+                    CenterCrop(),
+                    RoundedCorners(
+                        roundValue * (requireContext().resources.displayMetrics.density).toInt()
+                    )
+                )
+                .into(viewBinding.playlistInfo.playlistImage)
+        }
+    }
+
+    private fun initPlaylistInfoActionBottomSheet() {
+        val playlistActionBottomSheet = BottomSheetBehavior.from(viewBinding.playlistActionBottomSheet)
+        playlistActionBottomSheet.state = STATE_HIDDEN
+        playlistActionBottomSheet.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    STATE_HIDDEN -> {
+                        viewBinding.overlay.visibility = View.GONE
+                    }
+                    else -> {
+                        viewBinding.overlay.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+        viewBinding.threeDots.setOnClickListener {
+            playlistActionBottomSheet.state = STATE_COLLAPSED
+        }
+
+    }
+
+    private fun setOnShareButtonListener(view: View) {
         viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
             if (playlist.tracksAmount != 0) {
-                viewBinding.sharePlaylist.setOnClickListener {
+                view.setOnClickListener {
                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
                         type = "text/plain"
                         putExtra(
@@ -83,11 +139,11 @@ class PlaylistFragment : Fragment() {
     }
 
     private fun initBottomSheet() {
-        bottomSheetBehavior = BottomSheetBehavior.from(viewBinding.tracklistBottomSheet)
+        val bottomSheetBehavior = BottomSheetBehavior.from(viewBinding.tracklistBottomSheet)
         bottomSheetBehavior.state = STATE_COLLAPSED
     }
 
-    private fun setData() {
+    private fun setPlaylistData() {
         viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
             setPlaylistData(playlist)
 

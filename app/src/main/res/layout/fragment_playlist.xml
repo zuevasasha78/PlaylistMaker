@@ -148,4 +148,72 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@color/bottomsheet_background"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/playlistActionBottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottomsheet_shape"
+        android:orientation="vertical"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="310dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/bottom_sheet_smell_rect" />
+
+        <include
+            android:layout_marginTop="12dp"
+            android:id="@+id/playlistInfo"
+            layout="@layout/playlist_list_item_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp" />
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/infoShare"
+                style="@style/YsDisplayRegularBG16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:paddingVertical="21dp"
+                android:text="@string/share" />
+
+            <TextView
+                android:id="@+id/editPlaylist"
+                style="@style/YsDisplayRegularBG16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="21dp"
+                android:text="@string/edit_information" />
+
+            <TextView
+                android:id="@+id/deletePlaylist"
+                style="@style/YsDisplayRegularBG16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="21dp"
+                android:text="@string/remove_playlist" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
