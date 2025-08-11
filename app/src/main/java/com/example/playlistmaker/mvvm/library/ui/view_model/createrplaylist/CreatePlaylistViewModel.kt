@@ -6,7 +6,7 @@ import com.example.playlistmaker.mvvm.db.domain.use_case.CreatePlaylistUseCase
 import com.example.playlistmaker.mvvm.library.domain.models.Playlist
 import kotlinx.coroutines.launch
 
-class CreatePlaylistViewModel(
+open class CreatePlaylistViewModel(
     private val createPlaylistUseCase: CreatePlaylistUseCase,
 ) : ViewModel() {
 

@@ -31,18 +31,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
 
-class CreatePlaylistFragment : Fragment() {
+open class CreatePlaylistFragment : Fragment() {
 
-    private val viewModel: CreatePlaylistViewModel by viewModel()
+    protected open val viewModel: CreatePlaylistViewModel by viewModel()
     private var _viewBinding: FragmentCreatePlaylistBinding? = null
-    private val viewBinding: FragmentCreatePlaylistBinding get() = _viewBinding!!
+    protected val viewBinding: FragmentCreatePlaylistBinding get() = _viewBinding!!
     private val glide: RequestManager by inject()
 
     private val colorBlue = R.color.blue
     private val colorGray = R.color.gray
-    private var nameText: String? = null
-    private var descriptionText: String? = null
-    private var imageUrl: String? = null
+    protected var nameText: String? = null
+    protected var descriptionText: String? = null
+    protected var imageUrl: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +60,12 @@ class CreatePlaylistFragment : Fragment() {
         setCreateButtonListener()
     }
 
-    private fun setBackListener() {
+    override fun onDestroyView() {
+        _viewBinding = null
+        super.onDestroyView()
+    }
+
+    protected open fun setBackListener() {
         viewBinding.toolbar.setNavigationOnClickListener {
             showDialogCondition()
         }
@@ -98,7 +103,7 @@ class CreatePlaylistFragment : Fragment() {
             .show()
     }
 
-    private fun setCreateButtonListener() {
+    protected open fun setCreateButtonListener() {
         viewBinding.createButton.setOnClickListener {
             if (!nameText.isNullOrEmpty()) {
                 viewModel.createPlaylist(
@@ -117,11 +122,11 @@ class CreatePlaylistFragment : Fragment() {
         }
     }
 
-    private fun setPickMedia() {
+    protected fun setPickMedia() {
         val pickMedia =
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
                 if (uri != null) {
-                    setImage(uri)
+                    setImage(uri.path!!)
                     saveImageToPrivateStorage(uri)
                 } else {
                     Log.d("PhotoPicker", "No media selected")
@@ -134,7 +139,7 @@ class CreatePlaylistFragment : Fragment() {
         }
     }
 
-    private fun setNameInputListener() {
+    protected fun setNameInputListener() {
         viewBinding.nameInput.addTextChangedListener(
             onTextChanged = { text, start, before, count ->
                 val shouldEnable = text?.toString()?.trimEnd()?.isNotEmpty() ?: false
@@ -152,7 +157,7 @@ class CreatePlaylistFragment : Fragment() {
             .getColorStateList(requireContext(), color)
     }
 
-    private fun setDescriptionInputListener() {
+    protected fun setDescriptionInputListener() {
         viewBinding.descriptionInput.addTextChangedListener(
             afterTextChanged = { editable ->
                 val trimmedText = editable.toString().trimEnd()
@@ -179,14 +184,14 @@ class CreatePlaylistFragment : Fragment() {
         imageUrl = file.path
     }
 
-    private fun setImage(uri: Uri) {
+    protected fun setImage(path: String?) {
         viewBinding.placeholderCover.isVisible = false
         viewBinding.coverImage.isVisible = true
 
         val roundValue = 8
         val cornerRadius = roundValue * (resources.displayMetrics.density).toInt()
 
-        glide.load(uri)
+        glide.load(path)
             .placeholder(R.drawable.placeholder)
             .transform(CenterCrop(), RoundedCorners(cornerRadius))
             .into(viewBinding.coverImage)

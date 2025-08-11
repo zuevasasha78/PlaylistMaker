@@ -62,6 +62,15 @@ class PlaylistFragment : Fragment() {
         viewBinding.deletePlaylist.setOnClickListener {
             showDialogRemovePlaylist()
         }
+        viewBinding.editPlaylist.setOnClickListener {
+            viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
+                val playlistJson = Gson().toJson(playlist)
+                val action =
+                    PlaylistFragmentDirections
+                        .actionPlaylistFragmentToEditableCreatePlaylistFragment(playlistJson)
+                findNavController().navigate(action)
+            }
+        }
     }
 
     private fun setPlaylistInfoAction() {

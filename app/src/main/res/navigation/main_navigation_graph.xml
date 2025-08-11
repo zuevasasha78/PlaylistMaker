@@ -63,5 +63,16 @@
         <action
             android:id="@+id/action_playlistFragment_to_audioPlayerFragment"
             app:destination="@id/audioPlayerFragment" />
+        <action
+            android:id="@+id/action_playlistFragment_to_editableCreatePlaylistFragment"
+            app:destination="@id/editableCreatePlaylistFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editableCreatePlaylistFragment"
+        android:name="com.example.playlistmaker.mvvm.library.ui.fragment.createrplaylist.EditableCreatePlaylistFragment"
+        android:label="EditableCreatePlaylistFragment">
+        <argument
+            android:name="playlistData"
+            app:argType="string" />
     </fragment>
 </navigation>

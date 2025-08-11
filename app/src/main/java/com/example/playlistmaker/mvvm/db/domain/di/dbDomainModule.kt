@@ -10,6 +10,8 @@ import com.example.playlistmaker.mvvm.db.domain.use_case.FavoriteTracksInteracto
 import com.example.playlistmaker.mvvm.db.domain.use_case.FavoriteTracksInteractorImpl
 import com.example.playlistmaker.mvvm.db.domain.use_case.GetPlaylistListUseCase
 import com.example.playlistmaker.mvvm.db.domain.use_case.GetPlaylistListUseCaseImpl
+import com.example.playlistmaker.mvvm.db.domain.use_case.UpdatePlaylistUseCase
+import com.example.playlistmaker.mvvm.db.domain.use_case.UpdatePlaylistUseCaseImpl
 import org.koin.dsl.module
 
 val dbDomainModule = module {
@@ -34,4 +36,7 @@ val dbDomainModule = module {
         GetPlaylistListUseCaseImpl(get())
     }
 
+    single<UpdatePlaylistUseCase> {
+        UpdatePlaylistUseCaseImpl(get())
+    }
 }
