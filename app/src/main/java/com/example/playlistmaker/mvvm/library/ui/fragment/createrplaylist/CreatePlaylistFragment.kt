@@ -79,30 +79,6 @@ open class CreatePlaylistFragment : Fragment() {
         )
     }
 
-    private fun showDialogCondition() {
-        if (!imageUrl.isNullOrEmpty()
-            || !nameText.isNullOrEmpty()
-            || !descriptionText.isNullOrEmpty()
-        ) {
-            showDialog()
-        } else {
-            findNavController().navigateUp()
-        }
-    }
-
-    private fun showDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.new_playlist_dialog_title)
-            .setMessage(R.string.new_playlist_dialog_message)
-            .setNegativeButton(R.string.new_playlist_dialog_cancel) { dialog, which ->
-                dialog.dismiss()
-            }
-            .setPositiveButton(R.string.new_playlist_dialog_finish) { dialog, which ->
-                findNavController().navigateUp()
-            }
-            .show()
-    }
-
     protected open fun setCreateButtonListener() {
         viewBinding.createButton.setOnClickListener {
             if (!nameText.isNullOrEmpty()) {
@@ -122,17 +98,22 @@ open class CreatePlaylistFragment : Fragment() {
         }
     }
 
-    protected fun setPickMedia() {
+    protected open fun setPickMedia() {
         val pickMedia =
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
                 if (uri != null) {
-                    setImage(uri.path!!)
+                    setImage(uri)
                     saveImageToPrivateStorage(uri)
                 } else {
                     Log.d("PhotoPicker", "No media selected")
                 }
             }
         viewBinding.placeholderCover.setOnClickListener {
+            pickMedia.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        }
+        viewBinding.coverImage.setOnClickListener {
             pickMedia.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
@@ -165,6 +146,18 @@ open class CreatePlaylistFragment : Fragment() {
             })
     }
 
+    protected fun loadImage(source: Any) {
+        viewBinding.placeholderCover.isVisible = false
+        viewBinding.coverImage.isVisible = true
+
+        val cornerRadius = (8 * resources.displayMetrics.density).toInt()
+
+        glide.load(source)
+            .placeholder(R.drawable.placeholder)
+            .transform(CenterCrop(), RoundedCorners(cornerRadius))
+            .into(viewBinding.coverImage)
+    }
+
     private fun saveImageToPrivateStorage(uri: Uri) {
         val filePath = File(
             requireContext()
@@ -184,16 +177,31 @@ open class CreatePlaylistFragment : Fragment() {
         imageUrl = file.path
     }
 
-    protected fun setImage(path: String?) {
-        viewBinding.placeholderCover.isVisible = false
-        viewBinding.coverImage.isVisible = true
+    private fun setImage(uri: Uri) {
+        loadImage(uri)
+    }
 
-        val roundValue = 8
-        val cornerRadius = roundValue * (resources.displayMetrics.density).toInt()
+    private fun showDialogCondition() {
+        if (!imageUrl.isNullOrEmpty()
+            || !nameText.isNullOrEmpty()
+            || !descriptionText.isNullOrEmpty()
+        ) {
+            showDialog()
+        } else {
+            findNavController().navigateUp()
+        }
+    }
 
-        glide.load(path)
-            .placeholder(R.drawable.placeholder)
-            .transform(CenterCrop(), RoundedCorners(cornerRadius))
-            .into(viewBinding.coverImage)
+    private fun showDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.new_playlist_dialog_title)
+            .setMessage(R.string.new_playlist_dialog_message)
+            .setNegativeButton(R.string.new_playlist_dialog_cancel) { dialog, which ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(R.string.new_playlist_dialog_finish) { dialog, which ->
+                findNavController().navigateUp()
+            }
+            .show()
     }
 }

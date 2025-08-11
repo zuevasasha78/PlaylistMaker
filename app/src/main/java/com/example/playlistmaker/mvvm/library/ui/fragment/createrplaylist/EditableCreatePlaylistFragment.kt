@@ -64,4 +64,7 @@ class EditableCreatePlaylistFragment : CreatePlaylistFragment() {
         }
     }
 
+    private fun setImage(url: String?) {
+        url?.let { loadImage(it) }
+    }
 }
