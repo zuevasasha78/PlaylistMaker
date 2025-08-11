@@ -111,9 +111,9 @@ class PlaylistFragment : Fragment() {
     }
 
     private fun setOnShareButtonListener(view: View) {
-        viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
-            if (playlist.tracksAmount != 0) {
-                view.setOnClickListener {
+        view.setOnClickListener {
+            viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
+                if (playlist.tracksAmount != 0) {
                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
                         type = "text/plain"
                         putExtra(
@@ -125,10 +125,10 @@ class PlaylistFragment : Fragment() {
                         )
                     }
                     startActivity(Intent.createChooser(shareIntent, getString(R.string.share_app)))
+                } else {
+                    val message = getString(R.string.toast_share_empty_playlist)
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                val message = getString(R.string.toast_share_empty_playlist)
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
         }
     }
