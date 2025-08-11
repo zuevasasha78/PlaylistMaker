@@ -24,8 +24,11 @@ class TracksRepositoryDbImpl(
     }
 
     override suspend fun setTracks(track: Track) {
+        val track = trackDbConvertor.map(track)
         if (trackDao.getTrackById(track.trackId) == null) {
-            trackDao.insertTrack(trackDbConvertor.map(track))
+            trackDao.insertTrack(track)
+        } else {
+            trackDao.updateTrack(track)
         }
     }
 
@@ -36,13 +39,13 @@ class TracksRepositoryDbImpl(
     override suspend fun getTrackById(trackId: Long): Track? {
         val trackEntity = trackDao.getTrackById(trackId)
         return if (trackEntity != null) {
-            trackDbConvertor.map(trackEntity, isFavorite = true)
+            trackDbConvertor.map(trackEntity)
         } else {
             null
         }
     }
 
     private fun convertFromTrackEntity(track: List<TrackEntity>): List<Track> {
-        return track.map { track -> trackDbConvertor.map(track, true) }
+        return track.map { track -> trackDbConvertor.map(track) }
     }
 }

@@ -17,11 +17,11 @@ class TrackDbConvertor {
             country = track.country,
             trackDuration = track.trackTimeMillis,
             previewUrl = track.previewUrl,
-            isFavorite = if (track.isFavorite) 1 else 0,
+            isFavorite = isFavorite(track.isFavorite),
         )
     }
 
-    fun map(track: TrackEntity, isFavorite: Boolean): Track {
+    fun map(track: TrackEntity): Track {
         return Track(
             trackId = track.trackId,
             trackName = track.trackName,
@@ -33,7 +33,15 @@ class TrackDbConvertor {
             primaryGenreName = track.primaryGenreName,
             country = track.country,
             previewUrl = track.previewUrl,
-            isFavorite = isFavorite,
+            isFavorite = isFavorite(track.isFavorite),
         )
+    }
+
+    private fun isFavorite(value: Boolean): Int {
+        return if (value) 1 else 0
+    }
+
+    private fun isFavorite(value: Int): Boolean {
+        return if (value == 1) true else false
     }
 }
