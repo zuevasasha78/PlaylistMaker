@@ -52,4 +52,5 @@
     <string name="dialog_remove_track_title">Хотите удалить трек?</string>
     <string name="dialog_remove_track_yes">да</string>
     <string name="dialog_remove_track_no">нет</string>
+    <string name="toast_share_empty_playlist">В этом плейлисте нет списка треков, которым можно поделиться</string>
 </resources>

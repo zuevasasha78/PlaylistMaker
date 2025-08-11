@@ -1,10 +1,12 @@
 package com.example.playlistmaker.mvvm.playlist.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -48,7 +50,31 @@ class PlaylistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setOnBackButtonListener()
+        setOnShareButtonListener()
         setData()
+    }
+
+    private fun setOnShareButtonListener() {
+        viewModel.playlistLiveData.observe(viewLifecycleOwner) { playlist ->
+            if (playlist.tracksAmount != 0) {
+                viewBinding.sharePlaylist.setOnClickListener {
+                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            viewModel.getSharePlaylistData(
+                                playlist.name,
+                                getTrackAmount(playlist.tracksAmount)
+                            )
+                        )
+                    }
+                    startActivity(Intent.createChooser(shareIntent, getString(R.string.share_app)))
+                }
+            } else {
+                val message = getString(R.string.toast_share_empty_playlist)
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -85,12 +111,14 @@ class PlaylistFragment : Fragment() {
         viewBinding.playlistName.text = playlist.name
         viewBinding.playlistDescription.text = playlist.description
         setPlaylistDuration(0)
-        viewBinding.trackAmount.text = requireContext().resources.getQuantityString(
-            R.plurals.track_amount,
-            playlist.tracksAmount,
-            playlist.tracksAmount
-        )
+        viewBinding.trackAmount.text = getTrackAmount(playlist.tracksAmount)
     }
+
+    private fun getTrackAmount(tracksAmount: Int): String = requireContext().resources.getQuantityString(
+        R.plurals.track_amount,
+        tracksAmount,
+        tracksAmount
+    )
 
     private fun setTracksListData() {
         viewModel.tracksListLiveData.observe(viewLifecycleOwner) { tracksList ->

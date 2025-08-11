@@ -51,4 +51,13 @@ class PlaylistViewModel(
             }
         }
     }
+
+    fun getSharePlaylistData(playlistName: String, trackAmount: String): String {
+        val trackAmount = trackAmount
+        val tracksList = _tracksListLiveData.value?.mapIndexed { index, it ->
+            "${index + 1}. ${it.artistName} - ${it.trackName} (${it.trackTimeMillis})"
+        }?.joinToString("\n")
+        val playlistInfo = listOf(playlistName, trackAmount, tracksList)
+        return playlistInfo.joinToString("\n")
+    }
 }
