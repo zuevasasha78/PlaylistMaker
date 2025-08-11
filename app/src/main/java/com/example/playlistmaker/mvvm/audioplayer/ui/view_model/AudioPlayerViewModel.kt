@@ -101,9 +101,6 @@ class AudioPlayerViewModel(
     private fun initPlayer() {
         viewModelScope.launch {
             val trackData = trackInteractor.getTrack()
-            if (favoriteTracksInteractor.getFavoriteTrackById(trackData.trackId) != null) {
-                trackData.isFavorite = true
-            }
             _track.value = trackData
             mediaPlayer.setDataSource(trackData.previewUrl)
 

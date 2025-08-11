@@ -49,4 +49,7 @@
         <item quantity="many">%d минут</item>
         <item quantity="other">%d минут</item>
     </plurals>
+    <string name="dialog_remove_track_title">Хотите удалить трек?</string>
+    <string name="dialog_remove_track_yes">да</string>
+    <string name="dialog_remove_track_no">нет</string>
 </resources>

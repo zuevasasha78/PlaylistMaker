@@ -11,6 +11,7 @@ val playlistUiModule = module {
         PlaylistViewModel(
             get { parametersOf(playlistId) },
             get(),
+            get(),
             get()
         )
     }

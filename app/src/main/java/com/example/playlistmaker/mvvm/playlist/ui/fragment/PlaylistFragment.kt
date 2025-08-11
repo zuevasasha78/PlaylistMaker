@@ -21,6 +21,7 @@ import com.example.playlistmaker.mvvm.search.ui.fragment.TrackAdapter
 import com.example.playlistmaker.utils.convertMinAndSecToLong
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -98,9 +99,14 @@ class PlaylistFragment : Fragment() {
             } / 1000 / 60).toInt()
             setPlaylistDuration(playlistDuration)
 
-            val trackAdapter = TrackAdapter { track ->
-                openAudioPlayer(track)
-            }
+            val trackAdapter = TrackAdapter(
+                clickListener = { track ->
+                    openAudioPlayer(track)
+                },
+                longClickListener = { track ->
+                    showDialog(track)
+                }
+            )
             trackAdapter.setItems(tracksList)
             val layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -111,6 +117,19 @@ class PlaylistFragment : Fragment() {
                 tracklist.adapter = trackAdapter
             }
         }
+    }
+
+    private fun showDialog(track: Track) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.dialog_remove_track_title)
+            .setMessage("")
+            .setNegativeButton(R.string.dialog_remove_track_no) { dialog, which ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(R.string.dialog_remove_track_yes) { dialog, which ->
+                viewModel.removeTrackFromPlaylist(track)
+            }
+            .show()
     }
 
     private fun setPlaylistDuration(duration: Int) {
