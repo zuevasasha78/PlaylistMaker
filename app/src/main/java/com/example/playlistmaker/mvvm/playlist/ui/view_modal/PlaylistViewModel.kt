@@ -26,7 +26,7 @@ class PlaylistViewModel(
     private val _tracksListLiveData = MutableLiveData<List<Track>>()
     val tracksListLiveData: LiveData<List<Track>> = _tracksListLiveData
 
-    init {
+    fun loadPlaylistData() {
         viewModelScope.launch(Dispatchers.IO) {
             val playlist = getPlaylistDataUseCase.execute(playlistId)
             _playlistLiveData.postValue(playlist)
