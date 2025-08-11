@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.GetTrackUseCase
 import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.SaveTrackToPlaylistUseCase
-import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.TrackInteractor
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Default
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Paused
@@ -22,7 +22,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AudioPlayerViewModel(
-    private val trackInteractor: TrackInteractor,
+    private val getTrackUseCase: GetTrackUseCase,
     private val mediaPlayer: MediaPlayer,
     private val favoriteTracksInteractor: FavoriteTracksInteractor,
     private val getPlaylistListUseCase: GetPlaylistListUseCase,
@@ -70,13 +70,15 @@ class AudioPlayerViewModel(
         pausePlayer()
     }
 
-    fun onFavoriteClicked() {
-        viewModelScope.launch {
-            _track.value?.let {
-                if (it.isFavorite) {
-                    favoriteTracksInteractor.setFavoriteTrack(it)
+    fun onFavoriteClicked(isFavorite: Boolean) {
+        _track.value?.let { track ->
+            val track = track.copy(isFavorite = isFavorite)
+            _track.postValue(track)
+            viewModelScope.launch {
+                if (track.isFavorite) {
+                    favoriteTracksInteractor.setFavoriteTrack(track)
                 } else {
-                    favoriteTracksInteractor.deleteFavoriteTrack(it.trackId)
+                    favoriteTracksInteractor.deleteFavoriteTrack(track.trackId)
                 }
             }
         }
@@ -102,7 +104,7 @@ class AudioPlayerViewModel(
 
     private fun initPlayer() {
         viewModelScope.launch {
-            val trackData = trackInteractor.getTrack()
+            val trackData = getTrackUseCase.execute()
             _track.value = trackData
             mediaPlayer.setDataSource(trackData.previewUrl)
 
