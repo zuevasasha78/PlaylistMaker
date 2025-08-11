@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/playlistName"
-            style="@style/TrackName"
+            style="@style/YsDisplayRegular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"

@@ -7,10 +7,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
-import com.example.playlistmaker.databinding.AddToPlaylistItemViewBinding
+import com.example.playlistmaker.databinding.PlaylistListItemViewBinding
 import com.example.playlistmaker.mvvm.library.domain.models.Playlist
 
-class AddToPlaylistViewHolder(private val viewBinding: AddToPlaylistItemViewBinding) :
+class AddToPlaylistViewHolder(private val viewBinding: PlaylistListItemViewBinding) :
     RecyclerView.ViewHolder(viewBinding.root) {
 
     fun bind(playlist: Playlist) {
@@ -36,7 +36,7 @@ class AddToPlaylistViewHolder(private val viewBinding: AddToPlaylistItemViewBind
     companion object {
         fun from(parent: ViewGroup): AddToPlaylistViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = AddToPlaylistItemViewBinding.inflate(layoutInflater, parent, false)
+            val binding = PlaylistListItemViewBinding.inflate(layoutInflater, parent, false)
             return AddToPlaylistViewHolder(binding)
         }
     }
