@@ -1,26 +1,26 @@
 package com.example.playlistmaker.mvvm.db.domain.use_case
 
-import com.example.playlistmaker.mvvm.db.domain.FavoriteTracksRepository
+import com.example.playlistmaker.mvvm.db.domain.TracksRepositoryDb
 import com.example.playlistmaker.mvvm.search.domain.models.Track
 import kotlinx.coroutines.flow.Flow
 
 class FavoriteTracksInteractorImpl(
-    private val favoriteTracksRepository: FavoriteTracksRepository
+    private val tracksRepositoryDb: TracksRepositoryDb
 ) : FavoriteTracksInteractor {
 
     override fun getFavoriteTracks(): Flow<List<Track>> {
-        return favoriteTracksRepository.getFavoriteTracks()
+        return tracksRepositoryDb.getFavoriteTracks()
     }
 
     override suspend fun setFavoriteTrack(track: Track) {
-        favoriteTracksRepository.setFavoriteTracks(track)
+        tracksRepositoryDb.setTracks(track)
     }
 
     override suspend fun getFavoriteTrackById(trackId: Long): Track? {
-        return favoriteTracksRepository.getFavoriteTrackById(trackId)
+        return tracksRepositoryDb.getTrackById(trackId)
     }
 
     override suspend fun deleteFavoriteTrack(trackId: Long) {
-        favoriteTracksRepository.deleteFavoriteTracks(trackId)
+        tracksRepositoryDb.deleteTracks(trackId)
     }
 }

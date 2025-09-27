@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_graph"
@@ -16,6 +17,9 @@
         <action
             android:id="@+id/action_libraryFragment_to_createPlaylistFragment"
             app:destination="@id/createPlaylistFragment" />
+        <action
+            android:id="@+id/action_libraryFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -48,4 +52,27 @@
         android:name="com.example.playlistmaker.mvvm.library.ui.fragment.createrplaylist.CreatePlaylistFragment"
         android:label="fragment_create_playlist"
         tools:layout="@layout/fragment_create_playlist" />
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.example.playlistmaker.mvvm.playlist.ui.fragment.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist">
+        <argument
+            android:name="playlistId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_playlistFragment_to_audioPlayerFragment"
+            app:destination="@id/audioPlayerFragment" />
+        <action
+            android:id="@+id/action_playlistFragment_to_editableCreatePlaylistFragment"
+            app:destination="@id/editableCreatePlaylistFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editableCreatePlaylistFragment"
+        android:name="com.example.playlistmaker.mvvm.library.ui.fragment.createrplaylist.EditableCreatePlaylistFragment"
+        android:label="EditableCreatePlaylistFragment">
+        <argument
+            android:name="playlistData"
+            app:argType="string" />
+    </fragment>
 </navigation>

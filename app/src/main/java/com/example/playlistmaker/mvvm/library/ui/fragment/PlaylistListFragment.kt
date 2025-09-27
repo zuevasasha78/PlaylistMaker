@@ -7,26 +7,26 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.playlistmaker.databinding.PlaylistFragmentBinding
+import com.example.playlistmaker.databinding.PlaylistListFragmentBinding
 import com.example.playlistmaker.mvvm.library.ui.view_model.PlaylistViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PlaylistFragment : Fragment() {
+class PlaylistListFragment : Fragment() {
 
     private val viewModel: PlaylistViewModel by viewModel()
-    private val viewBinding: PlaylistFragmentBinding get() = _viewBinding!!
-    private var _viewBinding: PlaylistFragmentBinding? = null
+    private val viewBinding: PlaylistListFragmentBinding get() = _viewBinding!!
+    private var _viewBinding: PlaylistListFragmentBinding? = null
 
     companion object {
 
-        fun newInstance() = PlaylistFragment()
+        fun newInstance() = PlaylistListFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _viewBinding = PlaylistFragmentBinding.inflate(inflater, container, false)
+        _viewBinding = PlaylistListFragmentBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
 
@@ -50,7 +50,9 @@ class PlaylistFragment : Fragment() {
                 setVisibleEmptyList()
             } else {
                 setVisiblePlaylist()
-                val adapter = PlaylistAdapter {}
+                val adapter = PlaylistAdapter {
+                    openPlaylist(it.id)
+                }
                 val gridLayout = GridLayoutManager(requireContext(), 2)
                 adapter.setItems(playlist)
                 viewBinding.apply {
@@ -59,6 +61,12 @@ class PlaylistFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun openPlaylist(playlistId: Long) {
+        val action =
+            LibraryFragmentDirections.actionLibraryFragmentToPlaylistFragment(playlistId)
+        findNavController().navigate(action)
     }
 
     private fun setVisibleEmptyList() {

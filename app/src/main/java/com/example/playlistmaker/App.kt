@@ -10,6 +10,8 @@ import com.example.playlistmaker.mvvm.di.appModule
 import com.example.playlistmaker.mvvm.library.ui.di.createPlaylistVMModule
 import com.example.playlistmaker.mvvm.library.ui.di.likedTracksVmModule
 import com.example.playlistmaker.mvvm.library.ui.di.playlistVMModule
+import com.example.playlistmaker.mvvm.playlist.domain.di.playlistDomainModule
+import com.example.playlistmaker.mvvm.playlist.ui.di.playlistUiModule
 import com.example.playlistmaker.mvvm.search.data.di.searchDataModule
 import com.example.playlistmaker.mvvm.search.domain.di.searchDomainModule
 import com.example.playlistmaker.mvvm.search.ui.di.searchUIModule
@@ -46,6 +48,8 @@ class App : Application() {
                 likedTracksVmModule,
                 createPlaylistVMModule,
                 createPlaylistVMModule,
+                playlistDomainModule,
+                playlistUiModule,
             )
         }
 

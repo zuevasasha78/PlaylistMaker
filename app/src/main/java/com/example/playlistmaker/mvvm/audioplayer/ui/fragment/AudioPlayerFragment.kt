@@ -111,7 +111,7 @@ class AudioPlayerFragment : Fragment() {
             message = getString(R.string.track_already_added, playlist.name)
         } else {
             message = getString(R.string.added_to_playlist, playlist.name)
-            viewModel.addTrackToPlaylist(playlist, track.trackId)
+            viewModel.addTrackToPlaylist(playlist, track)
         }
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         bottomSheetBehavior.state = STATE_HIDDEN
@@ -146,8 +146,7 @@ class AudioPlayerFragment : Fragment() {
         }
         viewBinding.likeButton.setOnClickListener {
             setLikeButtonColor(!track.isFavorite)
-            viewModel.track.value.isFavorite = !track.isFavorite
-            viewModel.onFavoriteClicked(viewModel.track.value.isFavorite)
+            viewModel.onFavoriteClicked(!track.isFavorite)
         }
         viewBinding.addButton.setOnClickListener {
             viewModel.updatePlaylistList()

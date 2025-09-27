@@ -26,4 +26,13 @@ class PlaylistsRepositoryImpl(
         val playlistEntity = playlistDbConvertor.map(playlist)
         playlistDto.updatePlaylist(playlistEntity)
     }
+
+    override fun getPlaylistById(playlistId: Long): Playlist {
+        val playlistEntity = playlistDto.getPlaylistById(playlistId)
+        return playlistDbConvertor.map(playlistEntity)
+    }
+
+    override suspend fun deletePlaylist(id: Long) {
+        playlistDto.deletePlaylist(id)
+    }
 }

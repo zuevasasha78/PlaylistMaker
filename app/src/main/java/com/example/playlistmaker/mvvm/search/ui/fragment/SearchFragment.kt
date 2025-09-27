@@ -87,13 +87,17 @@ class SearchFragment : Fragment() {
     }
 
     private fun initTrackListView() {
-        trackAdapter = TrackAdapter { track ->
-            viewModel.updateTrackListHistory(track)
-            startAudioPlayer(track)
-        }
-        trackHistoryAdapter = TrackAdapter { track ->
-            startAudioPlayer(track)
-        }
+        trackAdapter = TrackAdapter(
+            clickListener = { track ->
+                viewModel.updateTrackListHistory(track)
+                startAudioPlayer(track)
+            }
+        )
+        trackHistoryAdapter = TrackAdapter(
+            clickListener = { track ->
+                startAudioPlayer(track)
+            }
+        )
         val layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL, false

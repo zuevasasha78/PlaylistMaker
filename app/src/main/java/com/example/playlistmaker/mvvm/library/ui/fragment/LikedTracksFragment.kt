@@ -50,9 +50,11 @@ class LikedTracksFragment : Fragment() {
                 showEmptyList(true)
             } else {
                 showEmptyList(false)
-                val favoriteTrackAdapter = TrackAdapter { track ->
-                    startAudioPlayer(track)
-                }
+                val favoriteTrackAdapter = TrackAdapter(
+                    clickListener = { track ->
+                        startAudioPlayer(track)
+                    }
+                )
                 favoriteTrackAdapter.setItems(favoriteTracks)
                 val layoutManager = LinearLayoutManager(
                     requireContext(),

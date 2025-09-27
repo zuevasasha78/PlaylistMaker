@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.GetTrackUseCase
 import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.SaveTrackToPlaylistUseCase
-import com.example.playlistmaker.mvvm.audioplayer.domain.use_case.TrackInteractor
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Default
 import com.example.playlistmaker.mvvm.audioplayer.ui.model.PlayerState.Paused
@@ -22,7 +22,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AudioPlayerViewModel(
-    private val trackInteractor: TrackInteractor,
+    private val getTrackUseCase: GetTrackUseCase,
     private val mediaPlayer: MediaPlayer,
     private val favoriteTracksInteractor: FavoriteTracksInteractor,
     private val getPlaylistListUseCase: GetPlaylistListUseCase,
@@ -71,11 +71,15 @@ class AudioPlayerViewModel(
     }
 
     fun onFavoriteClicked(isFavorite: Boolean) {
-        viewModelScope.launch {
-            if (isFavorite) {
-                favoriteTracksInteractor.setFavoriteTrack(track.value)
-            } else {
-                favoriteTracksInteractor.deleteFavoriteTrack(track.value.trackId)
+        _track.value?.let { track ->
+            val track = track.copy(isFavorite = isFavorite)
+            _track.postValue(track)
+            viewModelScope.launch {
+                if (track.isFavorite) {
+                    favoriteTracksInteractor.setFavoriteTrack(track)
+                } else {
+                    favoriteTracksInteractor.deleteFavoriteTrack(track.trackId)
+                }
             }
         }
     }
@@ -88,22 +92,19 @@ class AudioPlayerViewModel(
         }
     }
 
-    fun addTrackToPlaylist(playlist: Playlist, trackId: Long) {
+    fun addTrackToPlaylist(playlist: Playlist, track: Track) {
         viewModelScope.launch {
             val updatedPlaylist = playlist.copy(
-                tracksList = playlist.tracksList + trackId,
+                tracksList = playlist.tracksList + track.trackId,
                 tracksAmount = playlist.tracksList.size + 1
             )
-            saveTrackToPlaylistUseCase.execute(updatedPlaylist)
+            saveTrackToPlaylistUseCase.execute(updatedPlaylist, track)
         }
     }
 
     private fun initPlayer() {
         viewModelScope.launch {
-            val trackData = trackInteractor.getTrack()
-            if (favoriteTracksInteractor.getFavoriteTrackById(trackData.trackId) != null) {
-                trackData.isFavorite = true
-            }
+            val trackData = getTrackUseCase.execute()
             _track.value = trackData
             mediaPlayer.setDataSource(trackData.previewUrl)
 
